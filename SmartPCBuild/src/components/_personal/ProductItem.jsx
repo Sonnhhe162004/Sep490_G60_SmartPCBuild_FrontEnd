@@ -5,9 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { toast } from "sonner";
 
-export default function ProductItem({ item }) {
+export default function ProductItem({ item , onProductSelected }) {
   const onSelected = () => {
     toast("Chọn sản phẩm thành công!");
+    onProductSelected(item);
   };
   return (
     <div className="w-full flex items-center justify-between float-left border p-4 rounded-sm">

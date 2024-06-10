@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ConfigItem } from "@/components/_personal";
-import { configList } from "@/app/_utils/data/data";
+import { configList as initialConfigList } from "@/app/_utils/data/data"; // đổi tên để tránh nhầm lẫn
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,14 +15,33 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import { getData } from "@/service/Api-service/apiProducts";
 
 export default function BuildConfig() {
+    useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getData(); 
+        setData(result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const [configList, setConfigList] = useState(initialConfigList);
+
   const onRefresh = () => {
+    setConfigList(initialConfigList);
     toast("Làm mới cấu hình thành công!");
   };
+
   const onOk = () => {
     toast("Tất cả sản phẩm đã được thêm vào giỏ hàng!");
   };
+
   return (
     <div className="container flex flex-col p-5 lg:py-10 gap-y-4">
       <h2 className="text-[#026db5] text-2xl font-bold w-full text-center py-4">
