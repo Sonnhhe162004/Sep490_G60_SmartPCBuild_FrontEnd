@@ -15,26 +15,13 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { getData } from "@/service/Api-service/apiProducts";
+import { getDataCate } from "@/service/Api-service/apiCategorys";
 
 export default function BuildConfig() {
-    useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getData(); 
-        setData(result);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const [configList, setConfigList] = useState(initialConfigList);
+  const [configList, setConfigList] = useState([]);
 
   const onRefresh = () => {
-    setConfigList(initialConfigList);
+    setConfigList('');
     toast("Làm mới cấu hình thành công!");
   };
 
@@ -42,6 +29,18 @@ export default function BuildConfig() {
     toast("Tất cả sản phẩm đã được thêm vào giỏ hàng!");
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getDataCate(); 
+        setConfigList(res.result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+    
+    },[]);
   return (
     <div className="container flex flex-col p-5 lg:py-10 gap-y-4">
       <h2 className="text-[#026db5] text-2xl font-bold w-full text-center py-4">
@@ -76,7 +75,7 @@ export default function BuildConfig() {
         </div>
         <div className="w-full flex flex-col gap-y-4">
           {configList?.map((item, index) => (
-            <ConfigItem item={item} key={index} />
+            <ConfigItem item={item} key={index}  />
           ))}
         </div>
         <div className="flex flex-col md:flex-row w-full items-center justify-between py-5">

@@ -3,7 +3,7 @@ import authService from './authService';
 
 const environment = {
   defaultauth: 'custom',
-  host: 'https://phamthuyfood.io.vn',
+  host: 'https://localhost:7065/api/',
 };
 
 export const jwtInterceptor = (url, options = {}) => {
@@ -19,17 +19,9 @@ export const jwtInterceptor = (url, options = {}) => {
     if (!url.includes('http') && !url.includes('assets')) {
       modifiedUrl = environment.host + url;
     }
-
     const currentUser = authService.currentUser();
-    const workSpace = localStorage.getItem('workspace');
-    let workSpaceID = '';
-    if (workSpace) {
-      workSpaceID = workSpace;
-    }
-
     if (currentUser && currentUser.token) {
       headers['Authorization'] = `Bearer ${currentUser.token}`;
-      headers['workspace'] = workSpaceID ? workSpaceID : '';
     }
   }
 

@@ -1,9 +1,9 @@
 import { jwtInterceptor } from "../jwtInterceptor";
 
 
-export const getData = async (id) => {
+export const getDataCate = async () => {
   try {
-    const response = await jwtInterceptor('Product/GetProductsByCategory?cateID=' + id );
+    const response = await jwtInterceptor('BuildPC');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -14,7 +14,7 @@ export const getData = async (id) => {
   }
 };
 
-export const postData = async (data) => {
+export const postDataCate = async (data) => {
   try {
     const response = await jwtInterceptor('/data', {
       method: 'POST',
