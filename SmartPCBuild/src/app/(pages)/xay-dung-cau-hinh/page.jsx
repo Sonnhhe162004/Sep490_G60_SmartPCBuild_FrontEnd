@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ConfigItem } from "@/components/_personal";
-import { configList as initialConfigList } from "@/app/_utils/data/data"; // đổi tên để tránh nhầm lẫn
+import { configList, configList as initialConfigList } from "@/app/_utils/data/data"; // đổi tên để tránh nhầm lẫn
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,8 +18,7 @@ import { toast } from "sonner";
 import { getDataCate } from "@/service/Api-service/apiCategorys";
 
 export default function BuildConfig() {
-  const [configList, setConfigList] = useState([]);
-
+  // const [configList, setConfigList] = useState([]);
   const onRefresh = () => {
     setConfigList('');
     toast("Làm mới cấu hình thành công!");
@@ -29,18 +28,18 @@ export default function BuildConfig() {
     toast("Tất cả sản phẩm đã được thêm vào giỏ hàng!");
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getDataCate(); 
-        setConfigList(res.result);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
+  // useEffect(() => {
+    // const fetchData = async () => {
+    //   try {
+    //     const res = await getDataCate(); 
+    //     setConfigList(res.result);
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //   }
+    // };
+    // fetchData();
     
-    },[]);
+    // },[]);
   return (
     <div className="container flex flex-col p-5 lg:py-10 gap-y-4">
       <h2 className="text-[#026db5] text-2xl font-bold w-full text-center py-4">
@@ -74,7 +73,7 @@ export default function BuildConfig() {
           </AlertDialog>
         </div>
         <div className="w-full flex flex-col gap-y-4">
-          {configList?.map((item, index) => (
+          {configList.map((item, index) => (
             <ConfigItem item={item} key={index}  />
           ))}
         </div>

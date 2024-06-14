@@ -26,8 +26,10 @@ import {
 import { Input } from "../ui/input";
 import { Search } from "lucide-react";
 import { ProductItem, ProductSelectedItem } from ".";
+import Filter from "./Filter";
 
 export default function ConfigItem({ item }) {
+  console.log(item);
   const [selectedItem, setSelectedItem] = useState(null);
 
   const handleProductSelected = (selectedItem) => {
@@ -56,7 +58,8 @@ export default function ConfigItem({ item }) {
       <div className="w-full flex flex-col md:flex-row items-center justify-between float-left border p-4 rounded-sm">
         <CollapsibleTrigger asChild>
           <div className="w-full md:w-1/5 text-center md:text-left py-2 px-3 font-bold text-[#222] text-sm uppercase cursor-pointer">
-            {item?.categoryName}
+            {/* {item?.categoryName} */}
+            {item?.name}
           </div>
         </CollapsibleTrigger>
         <div className="w-full md:w-4/5 flex items-center justify-center md:justify-end py-4">
@@ -66,7 +69,7 @@ export default function ConfigItem({ item }) {
                 Chọn
               </Button>
             </DialogTrigger>
-            <DialogContent className="w-full sm:w-3/5 max-w-[800px] h-auto min-h-[350px] lg:min-h-[450px] 2xl:min-h-[600px] flex flex-col">
+            <DialogContent className="w-full sm:w-3/5 max-w-[1200px] h-auto min-h-[350px] lg:min-h-[450px] 2xl:min-h-[600px] flex flex-col">
               <DialogHeader>
                 <DialogTitle>Tìm sản phẩm</DialogTitle>
               </DialogHeader>
@@ -96,11 +99,16 @@ export default function ConfigItem({ item }) {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="w-full flex flex-col gap-y-3 max-h-[300px] lg:max-h-[350px] 2xl:max-h-[450px] overflow-y-scroll">
+                <div className="w-full flex flex-col gap-y-3 max-h-[450px] lg:max-h-[500px] 2xl:max-h-[600px] overflow-y-scroll">
+                  <div>
+                    <Filter />
+                  </div>
+                  <div>
                   <ProductItem
-                    id={item?.categoryId}
-                    onProductSelected={handleProductSelected}
+                  id={item?.categoryId}
+                  onProductSelected={handleProductSelected}
                   />
+                  </div>
                 </div>
               </div>
             </DialogContent>

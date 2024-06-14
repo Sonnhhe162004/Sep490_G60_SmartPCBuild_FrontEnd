@@ -59,7 +59,7 @@ export default function Footer() {
           <Link href={"/kiem-tra-thanh-toan"} className="hover:text-red-500">
             <span>Tra cứu đơn hàng của bạn</span>
           </Link>
-          <Link href={"/my-account"} className="hover:text-red-500">
+          <Link href={"/admin-login"} className="hover:text-red-500">
             <span>Tài khoản cá nhân</span>
           </Link>
           <Link href={"/chuyen-muc/tin-tuc"} className="hover:text-red-500">

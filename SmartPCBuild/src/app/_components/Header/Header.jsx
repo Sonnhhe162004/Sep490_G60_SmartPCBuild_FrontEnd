@@ -32,7 +32,7 @@ import {
 export default function Header() {
   const pathname = usePathname();
   const showHeader =
-    pathname === "/sign-in" || pathname === "/create-account" ? false : true;
+    pathname === "/admin-login" || pathname === "/create-account" ? false : true;
   return (
     <header className={`${!showHeader && "hidden"} w-full bg-[#026db5]`}>
       <div className="flex container items-center justify-between py-2 xl:py-4 gap-x-4">
@@ -67,7 +67,7 @@ export default function Header() {
         <div className="flex items-center gap-x-4 ml-8">
           <Link
             className="lg:flex flex-col items-center px-3 gap-y-1 hidden"
-            href={"/my-account"}>
+            href={"/admin-login"}>
             <CircleUserRound color="#ffffff" size={32} />
             <span className="text-[13px] font-medium text-white w-full text-center">
               Tài khoản
@@ -149,7 +149,7 @@ export default function Header() {
                     </li>
                   ))}
                   <li className="flex w-full justify-start py-1 font-semibold uppercase text-sm">
-                    <Link className="" href={`/my-account`}>
+                    <Link className="" href={`/admin-login`}>
                       Tài khoản
                     </Link>
                   </li>
