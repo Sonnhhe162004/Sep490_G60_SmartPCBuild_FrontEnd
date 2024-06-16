@@ -35,7 +35,7 @@ export default function Footer() {
           </Link>
           <Link href={"/"} className="hover:text-red-500">
             <span>
-              <strong>Địa chỉ:</strong> Khu Giáo dục và Đào tạo – Khu Công nghệ cao Hòa Lạc – Km29 Đại lộ Thăng Long, H. Thạch Thất, TP. Hà Nội
+              <strong>Address:</strong> Khu Giáo dục và Đào tạo – Khu Công nghệ cao Hòa Lạc – Km29 Đại lộ Thăng Long, H. Thạch Thất, TP. Hà Nội
             </span>
           </Link>
           <Link href={"/"} className="hover:text-red-500">
@@ -71,7 +71,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="w-full text-center py-2 lg:py-4 text-sm text-[#df4b4b]">
-        <strong>Copyright 2024 © Hàng chính hiệu</strong>
+        <strong>Copyright 2024 © Build PC Smart</strong>
       </div>
     </footer>
   );
