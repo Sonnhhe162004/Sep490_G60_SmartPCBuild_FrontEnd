@@ -33,17 +33,17 @@ export default function Footer() {
               <strong>Hotline:</strong> 0123.456.789
             </span>
           </Link>
-          <Link href={"/"} className="hover:text-red-500">
+          <Link href={"https://maps.app.goo.gl/yGwCj46oZEW5zNWn7"} className="hover:text-red-500">
             <span>
               <strong>Address:</strong> Khu Giáo dục và Đào tạo – Khu Công nghệ cao Hòa Lạc – Km29 Đại lộ Thăng Long, H. Thạch Thất, TP. Hà Nội
             </span>
           </Link>
-          <Link href={"/"} className="hover:text-red-500">
+          <Link href={"https://www.facebook.com/"} className="hover:text-red-500">
             <span>
               <strong>Facebook:</strong> fb.com
             </span>
           </Link>
-          <Link href={"/"} className="hover:text-red-500">
+          <Link href={"https://maps.app.goo.gl/yGwCj46oZEW5zNWn7"} className="hover:text-red-500">
             <span>
               <strong>Gmail:</strong> daihocfpt@fpt.edu.vn
             </span>
