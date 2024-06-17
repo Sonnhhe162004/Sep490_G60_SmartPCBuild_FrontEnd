@@ -29,11 +29,15 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { useState } from "react";
+import "../Header/header.css"
 export default function Header() {
   const pathname = usePathname();
+ 
   const showHeader =
     pathname === "/sign-in" || pathname === "/create-account" ? false : true;
   return (
+    <>
     <header className={`${!showHeader && "hidden"} w-full bg-[#026db5]`}>
       <div className="flex container items-center justify-between py-2 xl:py-4 gap-x-4">
         {/* Logo */}
@@ -49,15 +53,240 @@ export default function Header() {
         </Link>
 
         {/* Category Product */}
+       
+       <div className="listproduct relative">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
+
             <h2 className="hidden lg:flex gap-2 items-center border rounded-sm p-2 px-4 bg-white cursor-pointer text-sm font-semibold">
-              <LayoutGrid className="h-4 w-4" /> Danh mục sản phẩm
+              <LayoutGrid className="h-4 w-4 " /> Danh mục sản phẩm
             </h2>
+          
+    
           </DropdownMenuTrigger>
 
         </DropdownMenu>
+        
+        <div style={{display:'none'}} className="homepage-slider-2019 absolute">
+      <div className="homepage-slider-left">
+        <ul className="ul ul_menu_2019 boxshadowx2023" id="menu-2019">
+          <li
+            id="vt-1106"
+            className="js-hover-menu li-catcha-menu"
+           
+          >
+            <a href="/laptop-tablet-mobile" className="root">
+              Laptop, Macbook, Surface
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-1087"
+            className="js-hover-menu li-catcha-menu"
+           
+          >
+            <a href="/laptop-gaming-do-hoa" className="root">
+              Laptop Gaming, Đồ Họa
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-455"
+            className="js-hover-menu li-catcha-menu"
+          
+          >
+            <a href="/phu-kien" className="root">
+              Phụ Kiện Laptop, PC, Mobile
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-178"
+            className="js-hover-menu li-catcha-menu"
+           
+          >
+            <a href="/pc-gaming-streaming" className="root">
+              PC - Chơi Game, Học Tập
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-388"
+            className="js-hover-menu li-catcha-menu"
+          
+          >
+            <a href="/pc-workstations" className="root">
+              PC - Đồ Họa, Thiết Kế
+            </a>
+           
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-137"
+            className="js-hover-menu li-catcha-menu"
+            
+          >
+            <a href="/may-tinh-de-ban" className="root">
+              PC - Văn Phòng, L�&nbsp;m Việc
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-6"
+            className="js-hover-menu li-catcha-menu"
+           
+          >
+            <a href="/linh-kien-may-tinh" className="root">
+              Linh Kiện Máy Tính
+            </a>
+           
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-379"
+            className="js-hover-menu li-catcha-menu"
+          >
+            <a href="/tan-nhiet-cooling" className="root">
+              Tản Nhiệt, Fan, Đèn Led
+            </a>
+           
+            <span className="arrow-li-catcha-menu" />
+          </li>
+        
+          <li
+            id="vt-12"
+            className="js-hover-menu li-catcha-menu"
+          
+          >
+            <a href="/thiet-bi-van-phong" className="root">
+              TB Văn Phòng, Hội Nghị
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+         
+        </ul>
+      </div>
+    
+     
 
+
+    </div>
+    {/* <div style={{left:'210px',top:'46px'}} className="homepage-slider-2019child absolute z-50 ">
+      <div className="homepage-slider-left">
+        <ul className="ul ul_menu_2019 boxshadowx2023" id="menu-2019">
+          <li
+            id="vt-1106"
+            className="js-hover-menu li-catcha-menu"
+           
+          >
+            <a href="/laptop-tablet-mobile" className="root">
+              Laptop, Macbook, Surface
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-1087"
+            className="js-hover-menu li-catcha-menu"
+           
+          >
+            <a href="/laptop-gaming-do-hoa" className="root">
+              Laptop Gaming, Đồ Họa
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-455"
+            className="js-hover-menu li-catcha-menu"
+          
+          >
+            <a href="/phu-kien" className="root">
+              Phụ Kiện Laptop, PC, Mobile
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-178"
+            className="js-hover-menu li-catcha-menu"
+           
+          >
+            <a href="/pc-gaming-streaming" className="root">
+              PC - Chơi Game, Học Tập
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-388"
+            className="js-hover-menu li-catcha-menu"
+          
+          >
+            <a href="/pc-workstations" className="root">
+              PC - Đồ Họa, Thiết Kế
+            </a>
+           
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-137"
+            className="js-hover-menu li-catcha-menu"
+            
+          >
+            <a href="/may-tinh-de-ban" className="root">
+              PC - Văn Phòng, L�&nbsp;m Việc
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-6"
+            className="js-hover-menu li-catcha-menu"
+           
+          >
+            <a href="/linh-kien-may-tinh" className="root">
+              Linh Kiện Máy Tính
+            </a>
+           
+            <span className="arrow-li-catcha-menu" />
+          </li>
+          <li
+            id="vt-379"
+            className="js-hover-menu li-catcha-menu"
+          >
+            <a href="/tan-nhiet-cooling" className="root">
+              Tản Nhiệt, Fan, Đèn Led
+            </a>
+           
+            <span className="arrow-li-catcha-menu" />
+          </li>
+        
+          <li
+            id="vt-12"
+            className="js-hover-menu li-catcha-menu"
+          
+          >
+            <a href="/thiet-bi-van-phong" className="root">
+              TB Văn Phòng, Hội Nghị
+            </a>
+          
+            <span className="arrow-li-catcha-menu" />
+          </li>
+         
+        </ul>
+      </div>
+    
+    </div> */}
+
+    </div>
+    
         {/* search input */}
         <div className="ml-auto hidden lg:flex ">
           <SearchInput placeholder="Hôm nay bạn muốn mua gì?" />
@@ -165,5 +394,7 @@ export default function Header() {
         </div>
       </div>
     </header>
+  
+    </>
   );
 }
