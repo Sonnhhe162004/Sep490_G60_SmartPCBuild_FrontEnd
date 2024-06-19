@@ -17,7 +17,7 @@ export default function ProductSelectedItem({ item, onRemove }) {
     <Link href={item?.href || ""} className="w-20 h-20 overflow-hidden rounded-md">
       <Image
         src={
-          item?.src ||
+          item?.imageLink ||
           "https://maytinh.sharekhoahoc.vn/wp-content/uploads/2021/12/8530d87af9fc1bf1a3617728d8954b16_63b594ba72d04e3bb9688047fa42ab2f_master-400x400.jpg"
         }
         unoptimized

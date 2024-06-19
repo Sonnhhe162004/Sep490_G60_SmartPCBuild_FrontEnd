@@ -33,17 +33,17 @@ export default function Footer() {
               <strong>Hotline:</strong> 0123.456.789
             </span>
           </Link>
-          <Link href={"/"} className="hover:text-red-500">
+          <Link href={"https://maps.app.goo.gl/yGwCj46oZEW5zNWn7"} className="hover:text-red-500">
             <span>
-              <strong>Địa chỉ:</strong> Khu Giáo dục và Đào tạo – Khu Công nghệ cao Hòa Lạc – Km29 Đại lộ Thăng Long, H. Thạch Thất, TP. Hà Nội
+              <strong>Address:</strong> Khu Giáo dục và Đào tạo – Khu Công nghệ cao Hòa Lạc – Km29 Đại lộ Thăng Long, H. Thạch Thất, TP. Hà Nội
             </span>
           </Link>
-          <Link href={"/"} className="hover:text-red-500">
+          <Link href={"https://www.facebook.com/"} className="hover:text-red-500">
             <span>
               <strong>Facebook:</strong> fb.com
             </span>
           </Link>
-          <Link href={"/"} className="hover:text-red-500">
+          <Link href={"https://maps.app.goo.gl/yGwCj46oZEW5zNWn7"} className="hover:text-red-500">
             <span>
               <strong>Gmail:</strong> daihocfpt@fpt.edu.vn
             </span>
@@ -59,7 +59,7 @@ export default function Footer() {
           <Link href={"/kiem-tra-thanh-toan"} className="hover:text-red-500">
             <span>Tra cứu đơn hàng của bạn</span>
           </Link>
-          <Link href={"/my-account"} className="hover:text-red-500">
+          <Link href={"/admin-login"} className="hover:text-red-500">
             <span>Tài khoản cá nhân</span>
           </Link>
           <Link href={"/chuyen-muc/tin-tuc"} className="hover:text-red-500">
@@ -71,7 +71,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="w-full text-center py-2 lg:py-4 text-sm text-[#df4b4b]">
-        <strong>Copyright 2024 © Hàng chính hiệu</strong>
+        <strong>Copyright 2024 © Build PC Smart</strong>
       </div>
     </footer>
   );

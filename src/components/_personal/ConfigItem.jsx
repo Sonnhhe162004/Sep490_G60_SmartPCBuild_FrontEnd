@@ -26,14 +26,19 @@ import {
 import { Input } from "../ui/input";
 import { Search } from "lucide-react";
 import { ProductItem, ProductSelectedItem } from ".";
+import Filter from "./Filter";
 
 export default function ConfigItem({ item }) {
   const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState(null);
 
   const handleProductSelected = (selectedItem) => {
     setSelectedItem(selectedItem);
   };
-
+  const handleFilterSelected = (selectedItem) => {
+    selectedFilter(selectedItem);
+  };
+  
   const handleRemove = (item) => {
     setSelectedItem(null);
   };
@@ -66,7 +71,7 @@ export default function ConfigItem({ item }) {
                 Chọn
               </Button>
             </DialogTrigger>
-            <DialogContent className="w-full sm:w-3/5 max-w-[800px] h-auto min-h-[350px] lg:min-h-[450px] 2xl:min-h-[600px] flex flex-col">
+            <DialogContent className="w-full sm:w-3/5 max-w-[1200px] h-auto min-h-[350px] lg:min-h-[450px] 2xl:min-h-[600px] flex flex-col">
               <DialogHeader>
                 <DialogTitle>Tìm sản phẩm</DialogTitle>
               </DialogHeader>
@@ -96,11 +101,16 @@ export default function ConfigItem({ item }) {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="w-full flex flex-col gap-y-3 max-h-[300px] lg:max-h-[350px] 2xl:max-h-[450px] overflow-y-scroll">
-                  <ProductItem
-                    id={item?.categoryId}
-                    onProductSelected={handleProductSelected}
-                  />
+                <div className="w-full flex gap-x-3 max-h-[450px] lg:max-h-[500px] 2xl:max-h-[550px] overflow-y-scroll">
+                  <div className="w-1/4">
+                    <Filter id={item?.categoryId}  onFilterSelected={handleFilterSelected} />
+                  </div>
+                  <div className="w-3/4">
+                    <ProductItem
+                      id={item?.categoryId}
+                      onProductSelected={handleProductSelected}
+                    />
+                  </div>
                 </div>
               </div>
             </DialogContent>

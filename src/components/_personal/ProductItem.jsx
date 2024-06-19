@@ -13,6 +13,7 @@ export default function ProductItem({ id, onProductSelected }) {
     const fetchData = async () => {
       try {
         const res = await getData(id);
+
         setDataproduct(res.result);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -25,15 +26,17 @@ export default function ProductItem({ id, onProductSelected }) {
     toast("Chọn sản phẩm thành công!");
     onProductSelected(productId);
   };
-
+  const formatVND = (price) => {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+}
   return (
-    <div className="w-full flex flex-col gap-y-3 max-h-[300px] lg:max-h-[350px] 2xl:max-h-[450px] overflow-y-scroll">
+    <div className="w-full flex flex-col gap-y-3 max-h-[300px] lg:max-h-[450px] 2xl:max-h-[600px] overflow-y-scroll">
       {Dataproduct.map((item) => (
         <div key={item.productId} className="w-full flex items-center justify-between float-left border p-4 rounded-sm">
           <Link href={item.href || "#"} className="w-20 h-20 overflow-hidden rounded-md">
             <Image
               src={
-                item.src ||
+                item.imageLink ||
                 "https://maytinh.sharekhoahoc.vn/wp-content/uploads/2021/12/8530d87af9fc1bf1a3617728d8954b16_63b594ba72d04e3bb9688047fa42ab2f_master-400x400.jpg"
               }
               unoptimized
@@ -53,7 +56,7 @@ export default function ProductItem({ id, onProductSelected }) {
               </span>
             </div>
             <span className="text-red-600 font-semibold">
-              {item.price ? `${item.price}đ` : "240.000đ"}
+                {item.price ? formatVND(item.price) : formatVND(240000)}
             </span>
           </div>
           <div className="flex items-center justify-end py-4" onClick={() => onSelected(item)}>

@@ -3,7 +3,7 @@ import { jwtInterceptor } from "../jwtInterceptor";
 
 export const getDataCate = async () => {
   try {
-    const response = await jwtInterceptor('BuildPC');
+    const response = await jwtInterceptor('BuildPC/categories');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
