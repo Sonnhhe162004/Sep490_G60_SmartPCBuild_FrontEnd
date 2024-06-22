@@ -6,12 +6,11 @@ import { Input } from "../ui/input";
 
 export default function ProductSelectedItem({ item, onRemove }) {
   if (!item) {
-    return <div>Không có sản phẩm nào được chọn</div>;
+    return <div>There are no products selected</div>;
   }
   const formatCurrency = (price) => {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
   };
-  console.log(item);
   return (
     <div className="w-full flex items-center justify-between float-left border p-4 rounded-sm">
     <Link href={item?.href || ""} className="w-20 h-20 overflow-hidden rounded-md">
@@ -44,18 +43,18 @@ export default function ProductSelectedItem({ item, onRemove }) {
       {formatCurrency(item.price) || "240.000đ"} 
       </span>
       <p className="text-xs text-gray-500">
-        Mã sản phẩm: {item?.productId || "SP001"}
+      Product code: {item?.productId || "SP001"}
       </p>
       <p className="text-xs">
-        Thời gian bảo hành: {item?.warranty || "12 tháng"}
+      Warranty period: {item?.warranty || "12 tháng"}
       </p>
       <p className={`text-xs font-semibold ${item?.stock ? 'text-red-600' : 'text-green-600'}`}>
-        Kho hàng: {item?.stock ? "Hết hàng" : "Còn hàng"}
+      Warehouse: {item?.stock ? "Sold out" : "Available"}
       </p>
      
     </div>
     <div className="flex items-center justify-end py-4">
-      <Button onClick={() => onRemove(item)}>Xoá</Button>
+      <Button onClick={() => onRemove(item)}>Delete</Button>
     </div>
   </div>
   

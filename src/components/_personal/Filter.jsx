@@ -27,12 +27,13 @@ export default function Filter({ id, onFilterSelected }) {
         ...prevState,
         [filterName]: value
     }));
-    console.log(`Selected ${filterName}: ${value}`);
+    onFilterSelected({ ...selectedFilters, [filterName]: value });
+    // console.log(`Selected ${filterName}: ${value}`);
 };
 
   return (
     <div className="w-full p-4 bg-white dark:bg-zinc-800 border-r max-h-[300px] lg:max-h-[450px] 2xl:max-h-[600px] border-gray-300 px-1.5 overflow-y-scroll">
-    <h2 className="font-bold mb-4">Lọc sản phẩm theo</h2>
+    <h2 className="font-bold mb-4">Filter products by</h2>
     <div className="mb-4">
             {DataFilter.map((filter, index) => (
                 <div key={index} className="mb-4">

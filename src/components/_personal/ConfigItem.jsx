@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -28,21 +28,39 @@ import { Search } from "lucide-react";
 import { ProductItem, ProductSelectedItem } from ".";
 import Filter from "./Filter";
 
-export default function ConfigItem({ item }) {
+export default function ConfigItem({ item , onPriceChange ,onRefresh }) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
-
+  const [selected, setSelected] = useState(false);
   const handleProductSelected = (selectedItem) => {
     setSelectedItem(selectedItem);
+    const action = 'add';
+    onPriceChange(selectedItem?.price , action);
   };
   const handleFilterSelected = (selectedItem) => {
-    selectedFilter(selectedItem);
+    console.log(selectedItem);
+    setSelectedFilter(selectedItem);
   };
   
-  const handleRemove = (item) => {
+  const handleRemove = () => {
+    const action = 'remove';
+    onPriceChange(selectedItem?.price , action);
     setSelectedItem(null);
   };
-  const [DataHome, setDataHome] = useState([])
+  const onRefreshRef = useRef();
+
+  useEffect(() => {
+    onRefreshRef.current = () => {
+      setSelectedItem(null);
+      setSelectedFilter(null);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (onRefresh) {
+      onRefreshRef.current();
+    }
+  }, [onRefresh]);
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -68,17 +86,17 @@ export default function ConfigItem({ item }) {
           <Dialog>
             <DialogTrigger asChild>
               <Button className="bg-red-600 hover:bg-red-500 w-full md:w-auto">
-                Chọn
+                Select
               </Button>
             </DialogTrigger>
             <DialogContent className="w-full sm:w-3/5 max-w-[1200px] h-auto min-h-[350px] lg:min-h-[450px] 2xl:min-h-[600px] flex flex-col">
               <DialogHeader>
-                <DialogTitle>Tìm sản phẩm</DialogTitle>
+                <DialogTitle>Search products</DialogTitle>
               </DialogHeader>
               <div className="flex flex-col items-center space-x-2">
                 <div className="w-full bg-[#026db5] p-2 flex flex-col lg:flex-row items-center lg:justify-start gap-2">
                   <div className="relative items-center min-w-[280px]">
-                    <Input placeholder="Nhập tên sản phẩm bạn cần tìm..." />
+                    <Input placeholder="Enter the product name you are looking for..." />
                     <Search
                       color="#026db5"
                       className="absolute bottom-2 right-2 cursor-pointer"
@@ -86,17 +104,17 @@ export default function ConfigItem({ item }) {
                   </div>
                   <Select>
                     <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Lựa chọn tìm kiếm" />
+                      <SelectValue placeholder="Select search" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>Sắp xếp</SelectLabel>
-                        <SelectItem value="newest">Mới nhất</SelectItem>
+                        <SelectLabel>Sort</SelectLabel>
+                        <SelectItem value="newest">Latest</SelectItem>
                         <SelectItem value="expensive">
-                          Giá cao đến thấp
+                        Price high to low
                         </SelectItem>
-                        <SelectItem value="cheap">Giá thấp đến cao</SelectItem>
-                        <SelectItem value="alphabet">Từ A -&gt; Z</SelectItem>
+                        <SelectItem value="cheap">Price low to high</SelectItem>
+                        <SelectItem value="alphabet">From A -&gt; Z</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -122,7 +140,7 @@ export default function ConfigItem({ item }) {
           {selectedItem ? (
             <ProductSelectedItem item={selectedItem} onRemove={handleRemove} />
           ) : (
-            <div>Chưa có sản phẩm được chọn</div>
+            <div>No product is selected</div>
           )}
         </div>
       </CollapsibleContent>

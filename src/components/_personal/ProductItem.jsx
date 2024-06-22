@@ -23,7 +23,7 @@ export default function ProductItem({ id, onProductSelected }) {
   }, [id]);
 
   const onSelected = (productId) => {
-    toast("Chọn sản phẩm thành công!");
+    toast("Choose successful products!");
     onProductSelected(productId);
   };
   const formatVND = (price) => {
@@ -52,7 +52,7 @@ export default function ProductItem({ id, onProductSelected }) {
             </h4>
             <div>
               <span className="text-[#026db5] bg-[#0093623d] font-semibold p-1 rounded-sm">
-                {"Còn hàng"}
+                {"Available"}
               </span>
             </div>
             <span className="text-red-600 font-semibold">
@@ -60,7 +60,7 @@ export default function ProductItem({ id, onProductSelected }) {
             </span>
           </div>
           <div className="flex items-center justify-end py-4" onClick={() => onSelected(item)}>
-            <Button className="bg-red-600 hover:bg-red-500">Chọn</Button>
+            <Button className="bg-red-600 hover:bg-red-500">Select</Button>
           </div>
         </div>
       ))}

@@ -6,7 +6,6 @@ import "../../src/css/style2020_zip.css"
 import "../../src/css/media2020.css"
 import { useEffect, useState } from "react";
 import { getData } from "@/service/Api-service/apiProducts";
-import { formatNumber } from "@/service/convert/convertNumber";
 
 export default function Home() {
 
@@ -52,7 +51,113 @@ export default function Home() {
       <>
   
     <div className="container-2019 ">
-    
+      <div className="homepage-slider-2019">
+        <div className="homepage-slider-left">
+          <ul className="ul ul_menu_2019 boxshadowx2023" id="menu-2019">
+            <li
+              id="vt-1106"
+              className="js-hover-menu li-catcha-menu"
+             
+            >
+              <a href="/laptop-tablet-mobile" className="root">
+                CPU
+              </a>
+            
+              <span className="arrow-li-catcha-menu" />
+            </li>
+            <li
+              id="vt-1087"
+              className="js-hover-menu li-catcha-menu"
+             
+            >
+              <a href="/laptop-gaming-do-hoa" className="root">
+                MainBoard
+              </a>
+            
+              <span className="arrow-li-catcha-menu" />
+            </li>
+            <li
+              id="vt-455"
+              className="js-hover-menu li-catcha-menu"
+            
+            >
+              <a href="/phu-kien" className="root">
+               RAM
+              </a>
+            
+              <span className="arrow-li-catcha-menu" />
+            </li>
+            <li
+              id="vt-178"
+              className="js-hover-menu li-catcha-menu"
+             
+            >
+              <a href="/pc-gaming-streaming" className="root">
+                SSD
+              </a>
+            
+              <span className="arrow-li-catcha-menu" />
+            </li>
+            <li
+              id="vt-388"
+              className="js-hover-menu li-catcha-menu"
+            
+            >
+              <a href="/pc-workstations" className="root">
+                HDD
+              </a>
+             
+              <span className="arrow-li-catcha-menu" />
+            </li>
+            <li
+              id="vt-137"
+              className="js-hover-menu li-catcha-menu"
+              
+            >
+              <a href="/may-tinh-de-ban" className="root">
+                PC - Văn Phòng, L�&nbsp;m Việc
+              </a>
+            
+              <span className="arrow-li-catcha-menu" />
+            </li>
+            <li
+              id="vt-6"
+              className="js-hover-menu li-catcha-menu"
+             
+            >
+              <a href="/linh-kien-may-tinh" className="root">
+                Linh Kiện Máy Tính
+              </a>
+             
+              <span className="arrow-li-catcha-menu" />
+            </li>
+            <li
+              id="vt-379"
+              className="js-hover-menu li-catcha-menu"
+            >
+              <a href="/tan-nhiet-cooling" className="root">
+                Tản Nhiệt, Fan, Đèn Led
+              </a>
+             
+              <span className="arrow-li-catcha-menu" />
+            </li>
+          
+            <li
+              id="vt-12"
+              className="js-hover-menu li-catcha-menu"
+            
+            >
+              <a href="/thiet-bi-van-phong" className="root">
+                TB Văn Phòng, Hội Nghị
+              </a>
+            
+              <span className="arrow-li-catcha-menu" />
+            </li>
+           
+          </ul>
+        </div>
+      
+      </div>
     
       <div id="cate-homepage-2023-com">
         <div
@@ -112,7 +217,7 @@ export default function Home() {
                           </a>
                         </p>
                        
-                        <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
+                        <span className="p-price">  {val.price} VNĐ</span>
                         <span className="p-haskmai">
                           <i className="icons icon-gift" />{" "}
                         </span>
@@ -277,7 +382,7 @@ export default function Home() {
                           </a>
                         </p>
                        
-                        <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
+                        <span className="p-price">  {val.price} VNĐ</span>
                         <span className="p-haskmai">
                           <i className="icons icon-gift" />{" "}
                         </span>
@@ -351,7 +456,7 @@ export default function Home() {
                           </a>
                         </p>
                        
-                        <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
+                        <span className="p-price">  {val.price} VNĐ</span>
                         <span className="p-haskmai">
                           <i className="icons icon-gift" />{" "}
                         </span>
@@ -425,7 +530,7 @@ export default function Home() {
                           </a>
                         </p>
                        
-                        <span className="p-price">   {formatNumber(val.price)} VNĐ</span>
+                        <span className="p-price">  {val.price} VNĐ</span>
                         <span className="p-haskmai">
                           <i className="icons icon-gift" />{" "}
                         </span>
@@ -497,7 +602,7 @@ export default function Home() {
                           </a>
                         </p>
                        
-                        <span className="p-price">   {formatNumber(val.price)} VNĐ</span>
+                        <span className="p-price">  {val.price} VNĐ</span>
                         <span className="p-haskmai">
                           <i className="icons icon-gift" />{" "}
                         </span>

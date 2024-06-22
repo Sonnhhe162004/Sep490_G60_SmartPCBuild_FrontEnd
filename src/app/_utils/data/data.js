@@ -5,7 +5,7 @@ export const NavLinkList = [
   },
   {
     href: "xay-dung-cau-hinh",
-    name: "Xây dựng cấu hình",
+    name: "Build Configuration",
   },
   {
     href: "lien-he",
