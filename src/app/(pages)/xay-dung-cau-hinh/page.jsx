@@ -18,55 +18,69 @@ import { getDataCate } from "@/service/Api-service/apiCategorys";
 
 export default function BuildConfig() {
   const [configList, setConfigList] = useState([]);
-  const onRefresh = () => {
-    setConfigList('');
-    toast("Làm mới cấu hình thành công!");
-  };
+  
+  const [refreshFlag, setRefreshFlag] = useState(false);
 
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const handlePriceChange = (price, action) => {
+    if (action === 'add') {
+      setTotalPrice(prevTotal => prevTotal + price);
+    } else if (action === 'remove') {
+      setTotalPrice(prevTotal => prevTotal - price);
+    }
+  };
+  const onRefresh = () => {
+    setTotalPrice(0);
+    setRefreshFlag((prev) => !prev);
+    toast("Configuration refresh successful!");
+  };
   const onOk = () => {
-    toast("Tất cả sản phẩm đã được thêm vào giỏ hàng!");
+    toast("All products have been added to the cart!");
+  };
+  const formatCurrency = (price) => {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+  };
+  const fetchData = async () => {
+    try {
+      const res = await getDataCate();
+      const sortedData = res.result.sort((a, b) => a.categoryId - b.categoryId);
+      setConfigList(sortedData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getDataCate(); 
-        const sortedData = res.result.sort((a, b) => a.categoryId - b.categoryId);
-        setConfigList(sortedData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
     fetchData();
-    
-    },[]);
+  }, []);
   return (
     <div className="container flex flex-col p-5 lg:py-10 gap-y-4">
       <h2 className="text-[#026db5] text-2xl font-bold w-full text-center py-4">
-        Xây dựng cấu hình PC
+      Build Configuration PC
       </h2>
       <div className="w-full flex flex-col gap-y-4 xl:gap-y-8">
         <div className="flex w-full items-center justify-start">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button className="bg-red-600 hover:bg-red-500 uppercase">
-                Làm mới cấu hình
+              Refresh configuration
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle>
-                  Bạn có chắc muốn làm mới tất cả cấu hình?
+                Are you sure you want to refresh all configurations?
                 </AlertDialogTitle>
                 <AlertDialogDescription>
-                  Tất cả cấu hình bạn đã thêm sẽ bị làm mới. Vui lòng xác nhận
-                  để hoàn thành thao tác.
+                All configurations you added will be refreshed. Please confirm
+                to complete the operation.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Hủy</AlertDialogCancel>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction className="bg-blue-500" onClick={onRefresh}>
-                  Đồng ý
+                  Agree
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
@@ -74,38 +88,43 @@ export default function BuildConfig() {
         </div>
         <div className="w-full flex flex-col gap-y-4">
           {configList.map((item, index) => (
-            <ConfigItem item={item} key={index}  />
-          ))}
+              <ConfigItem
+                item={item}
+                key={index}
+                onPriceChange={handlePriceChange}
+                onRefresh={refreshFlag} 
+              />
+            ))}
         </div>
         <div className="flex flex-col md:flex-row w-full items-center justify-between py-5">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button className="bg-red-600 hover:bg-red-500 uppercase">
-                Thêm tất cả vào giỏ hàng
+              Add all to cart
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle>
-                  Bạn có chắc chắn thêm tất cả?
+                Are you sure to add them all?
                 </AlertDialogTitle>
                 <AlertDialogDescription>
-                  Tất cả sản phẩm sẽ được thêm vào giỏ hàng. Vui lòng xác nhận
-                  để hoàn thành thao tác.
+                All products will be added to the cart. Please confirm
+                to complete the operation.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Hủy</AlertDialogCancel>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction className="bg-blue-500" onClick={onOk}>
-                  Đồng ý
+                Agree
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
 
           <div className="flex items-center gap-x-2 ">
-            <strong className="uppercase">Tổng cộng : </strong>
-            <span className="text-red-600 text-2xl font-semibold">0Đ</span>
+            <strong className="uppercase">Total payment : </strong>
+            <span className="text-red-600 text-2xl font-semibold">{formatCurrency(totalPrice)}</span>
           </div>
         </div>
       </div>
