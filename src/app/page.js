@@ -65,7 +65,7 @@ export default function Home() {
               <h2 className="h_title_2019">CPU</h2>
              
               <a href="/laptop-tablet-mobile" className="viewall">
-                Xem tất cả <i className="fal fa-long-arrow-right" />
+                See all <i className="fal fa-long-arrow-right" />
               </a>
             </div>
           </div>
@@ -230,7 +230,7 @@ export default function Home() {
               <h2 className="h_title_2019">MainBoard</h2>
              
               <a href="/laptop-tablet-mobile" className="viewall">
-                Xem tất cả <i className="fal fa-long-arrow-right" />
+                See all <i className="fal fa-long-arrow-right" />
               </a>
             </div>
           </div>
@@ -304,7 +304,7 @@ export default function Home() {
               <h2 className="h_title_2019">RAM</h2>
              
               <a href="/laptop-tablet-mobile" className="viewall">
-                Xem tất cả <i className="fal fa-long-arrow-right" />
+                See all <i className="fal fa-long-arrow-right" />
               </a>
             </div>
           </div>
@@ -378,7 +378,7 @@ export default function Home() {
               <h2 className="h_title_2019">SSD</h2>
              
               <a href="/laptop-tablet-mobile" className="viewall">
-                Xem tất cả <i className="fal fa-long-arrow-right" />
+                See all <i className="fal fa-long-arrow-right" />
               </a>
             </div>
           </div>
@@ -450,7 +450,7 @@ export default function Home() {
               <h2 className="h_title_2019">HDD</h2>
              
               <a href="/laptop-tablet-mobile" className="viewall">
-                Xem tất cả <i className="fal fa-long-arrow-right" />
+                See all <i className="fal fa-long-arrow-right" />
               </a>
             </div>
           </div>
