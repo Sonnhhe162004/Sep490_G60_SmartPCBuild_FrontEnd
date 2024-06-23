@@ -7,7 +7,8 @@ import "../../src/css/media2020.css"
 import { useEffect, useState } from "react";
 import { getData } from "@/service/Api-service/apiProducts";
 import { formatNumber } from "@/service/convert/convertNumber";
-
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 export default function Home() {
 
   const pathname = usePathname();
@@ -90,7 +91,7 @@ export default function Home() {
                         <span className="bhmr-6m" />
                       </div>
                       <div className="p-img ajax-loading ajax-finished">
-                        <a href="/" />
+                        <a className="hover_detail" href="product-detail" />
                         <div className="a">
                           <img
                             src="https://hanoicomputercdn.com/media/product/250_73001_laptop_asus_vivobook_go_e1404fa_18.png"
@@ -118,96 +119,7 @@ export default function Home() {
                         </span>
                       </div>
                     
-                      <div className="hover_content_pro tooltip-2019">
-                        <a
-                          href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac"
-                          className="hover_name"
-                        >
-                          Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB
-                          RAM/512GB SSD/14 FHD/Win11/Bạc)
-                        </a>
-                        <table>
-                          <tbody>
-                            <tr>
-                              <td>- Giá bán:</td>
-                              <td>
-                                <span className="img_price_full">
-                                  {" "}
-                                  14.499.000₫{" "}
-                                </span>
-                              </td>
-                            </tr>
-                            <tr className="p-extend-minprice">
-                              <td>- Giá HACOM:</td>
-                              <td className="p-extend-minprice-text">
-                                <span className="min_price"> 12.199.000₫</span>
-                                <span className="hover_vat">
-                                  {" "}
-                                  [Đã bao gồm VAT]{" "}
-                                </span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>- Bảo hành:</td>
-                              <td>24 Tháng (Pin 12 Tháng)</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <span className="tooltip-title">
-                          <i className="fal fa-layer-group" /> Thông số sản phẩm
-                        </span>
-                        <div className="hover_offer">
-                          - CPU: AMD Ryzen™ R5 7520U
-                          <br />- Ram: 16GB LPDDR5 (hàn liền)
-                          <br />- Ổ cứng: 512GB M.2 NVMe™
-                          <br />- VGA: AMD Radeon™ Graphics
-                          <br />- Display: 14 inch FHD (1920 x 1080) 16:9, LED ,
-                          60Hz, 250nits, 45% NTSC
-                          <br />
-                        </div>
-                        <span className="tooltip-title">
-                          <i className="fal fa-gift" /> Chương trình khuyến mại
-                        </span>
-                        <div className="hover_offer kmai-ndung">
-                          <div className="km-title">
-                            BỘ QUÀ TẶNG TRỊ GIÁ 999.000Đ
-                          </div>
-                          <ul>
-                            <li>
-                              Tặng phiếu vệ sinh bảo dưỡng Laptop, PC miễn phí
-                              trọn đời trị giá 999.000đ (THEK417)
-                            </li>
-                          </ul>
-                          <div className="km-title">
-                            ƯU ĐÃI HẤP DẪN MUA KÈM LAPTOP
-                          </div>
-                          <ul>
-                            <li>
-                              Giảm ngay 50.000đ khi mua Balo, Cặp, Túi chống sốc
-                              cao cấp thương hiệu WIWU
-                            </li>
-                            <li>
-                              Giảm ngay 100.000đ khi mua Ram Laptop thương hiệu
-                              KINGSTON
-                            </li>
-                            <li>
-                              Giảm ngay 100.000đ khi mua Ram Laptop thương hiệu
-                              LEXAR
-                            </li>
-                            <li>
-                              Giảm ngay 200.000đ khi mua Ghế công thái học thương
-                              hiệu LEGION
-                            </li>
-                            <li>
-                              Giảm ngay 300.000đ khi mua Ghế công thái học thương
-                              hiệu HBADA
-                            </li>
-                          </ul>
-                          <div className="km-title">KHUYẾN MẠI KHÁC</div>
-                          <ul></ul>
-                          <br />
-                        </div>
-                      </div>
+                    
                     </div>
                   </div>
                 ))}
@@ -513,6 +425,70 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <Tooltip anchorSelect=".hover_detail" place="right-end">
+    <div className="tooltip-2019">
+    <a
+      href="/pc-hp-280-pro-tower-g9-9h9c2pt-i7-12700-16gb-ram-512gb-ssd-wl-bt-k-m-win11"
+      className="hover_name"
+    >
+      PC HP 280 Pro Tower G9 (9H9C2PT)(i7-12700/16GB RAM/512GB
+      SSD/WL+BT/K+M/Win11)
+    </a>
+    <table>
+      <tbody>
+        <tr>
+          <td>- Giá bán:</td>
+          <td>
+            <span className="img_price_full">21.099.000₫</span>
+          </td>
+        </tr>
+        <tr className="p-extend-minprice">
+          <td>- Giá HACOM:</td>
+          <td className="p-extend-minprice-text">
+            <span className="min_price"> 18.399.000₫</span>
+            <span className="hover_vat">[Đã bao gồm VAT]</span>
+          </td>
+        </tr>
+        {/*  */}
+        <tr>
+          <td>- Bảo h�&nbsp;nh:</td>
+          <td>12 Tháng</td>
+        </tr>
+        <tr className="classhidden2024">
+          <td>- Kho h�&nbsp;ng:</td>
+          <td>
+            <span
+              className="dongbotonkho js-dongbotonkho dongbotonkho-80652"
+              data-id={80652}
+            >
+              <span
+                className="detail "
+                style={{ color: "red", whiteSpace: "pre-line" }}
+              />
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <span className="tooltip-title">
+      <i className="fal fa-layer-group" /> Thông số sản phẩm
+    </span>
+    <div className="hover_offer ">
+      - CPU: Intel Core i7-12700
+      <br />
+      - Ram: 16GB
+      <br />
+      - Ổ cứng: 512GB SSD
+      <br />
+      - Ổ quang: không có
+      <br />
+      - Kết nối: Wlan + Bluetooth
+      <br />
+    </div>
+    
+  </div>
+</Tooltip>
     </div>
   
    

@@ -806,3 +806,71 @@ h2.home-categories-header-title{color:#333e48;line-height:40px;font-size:30px;fo
 	background-color: #fff;
   	color: #EC1C24
 }
+
+.tooltip-2019 {
+  width: 300px;
+  height: 400px;
+  
+z-index: 9999;
+  border: 1px solid #ccc; /* Đường viền nhẹ cho khung */
+  padding: 10px; /* Khoảng cách bên trong khung */
+  box-sizing: border-box; /* Bao gồm padding và border trong kích thước tổng */
+}
+
+.tooltip-2019 a.hover_name {
+  display: block;
+  
+  color: #0073e6; /* Màu chữ của link */
+  text-decoration: none;
+}
+
+.tooltip-2019 table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.tooltip-2019 td {
+  padding: 5px;
+}
+
+.tooltip-2019 .img_price_full,
+.tooltip-2019 .min_price {
+  font-weight: bold;
+  color: red;
+}
+
+.tooltip-2019 .hover_vat {
+  font-size: 12px;
+  color: #555;
+}
+
+.tooltip-2019 .tooltip-title {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.tooltip-2019 .hover_offer {
+  margin-top: 10px;
+}
+
+.tooltip-2019 .km-title {
+  font-weight: bold;
+  color: #000;
+  margin-top: 5px;
+}
+
+.tooltip-2019 ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tooltip-2019 li {
+  margin-bottom: 5px;
+}
+
+.tooltip-2019 li span {
+  font-weight: bold;
+  color: red;
+}
