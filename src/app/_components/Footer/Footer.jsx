@@ -13,11 +13,11 @@ export default function Footer() {
         <div className="flex flex-col gap-y-4 lg:gap-y-8 px-4 text-left text-sm">
           <h3 className="text-base font-semibold uppercase">GIỚI THIỆU</h3>
           <p>
-            Specializing in buying and selling genuine PC components - in Hanoi. Provide support for CO, CQ, and sales deed documents.
+            Chuyên mua bán các loại linh kiện PC – chính hãng tại Hà Nội. Cung cấp hỗ trợ các loại giấy tờ CO, CQ, chứng thư bán hàng.
           </p>
-          <p>Sales program support </p>
-          <p>Support the best price at the time of transaction</p>
-          <p>Always bring customers the best products and services</p>
+          <p>Hỗ trợ chương trình bán hàng </p>
+          <p>Hỗ trợ giá tốt nhất tại thời điểm giao dịch</p>
+          <p>Luôn mang đến khách hàng sản phẩm và dịch vụ tốt nhất</p>
         </div>
         <div className="flex flex-col gap-y-4 lg:gap-y-8 px-4 text-left text-sm">
           <h3 className="text-base font-semibold uppercase">
