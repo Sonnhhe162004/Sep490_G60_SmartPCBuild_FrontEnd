@@ -59,7 +59,7 @@ export default function Header() {
           <DropdownMenuTrigger asChild>
 
             <h2 className="hidden lg:flex gap-2 items-center border rounded-sm p-2 px-4 bg-white cursor-pointer text-sm font-semibold">
-              <LayoutGrid className="h-4 w-4 " /> Danh mục sản phẩm
+              <LayoutGrid className="h-4 w-4 " /> List Product
             </h2>
           
     
@@ -131,7 +131,7 @@ export default function Header() {
             
           >
             <a href="/may-tinh-de-ban" className="root">
-              PC - Văn Phòng, L�&nbsp;m Việc
+              PC - Văn Phòng, Làm Việc
             </a>
           
             <span className="arrow-li-catcha-menu" />
@@ -289,7 +289,7 @@ export default function Header() {
     
         {/* search input */}
         <div className="ml-auto hidden lg:flex ">
-          <SearchInput placeholder="Hôm nay bạn muốn mua gì?" />
+          <SearchInput placeholder="What do you want to buy?" />
         </div>
 
         {/* account and cart */}
@@ -299,7 +299,7 @@ export default function Header() {
             href={"/admin-login"}>
             <CircleUserRound color="#ffffff" size={32} />
             <span className="text-[13px] font-medium text-white w-full text-center">
-              Tài khoản
+              Account
             </span>
           </Link>
           <Link
@@ -307,7 +307,7 @@ export default function Header() {
             href={"/cart"}>
             <ShoppingCart color="#ffffff" size={32} />
             <span className="text-[13px] font-medium text-white w-full text-center">
-              Giỏ hàng
+              Cart
             </span>
           </Link>
           {/* Navigation mobile */}
