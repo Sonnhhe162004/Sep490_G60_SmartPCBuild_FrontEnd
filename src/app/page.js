@@ -51,7 +51,7 @@ export default function Home() {
     <>
 
       <div className="container-2019 ">
-        <div className="homepage-slider-2019">
+        {/* <div className="homepage-slider-2019">
           <div className="homepage-slider-left">
             <ul className="ul ul_menu_2019 boxshadowx2023" id="menu-2019">
               <li
@@ -157,7 +157,7 @@ export default function Home() {
             </ul>
           </div>
 
-        </div>
+        </div> */}
 
         <div id="cate-homepage-2023-com">
           <div

@@ -75,10 +75,10 @@ export default function Header() {
           </span>
           <div style={{marginTop: '2rem'}} className="absolute bg-white rounded-md shadow-md p-2 mt-4 z-50 hidden group-hover:block">
             <a href="/admin-login" className="block text-gray-700 hover:bg-gray-100 px-4 py-2 rounded-md">
-              Login
+              <span>Login</span>
             </a>
             <a href="/admin-logout" className="block text-gray-700 hover:bg-gray-100 px-4 py-2 rounded-md">
-              Logout
+              <span>Logout</span>
             </a>
           </div>
         </Link>

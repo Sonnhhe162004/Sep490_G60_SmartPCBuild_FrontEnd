@@ -28,12 +28,15 @@ export default function Register() {
           };
     
           const response = await RegisterAdmin(data);
-          console.log(response);
-          alert('Đăng ký thành công');
-          window.location.href = '/admin-login';
+          if(response.statusCode === 200) {
+            alert('Đăng ký thành công');
+            window.location.href = '/admin-login';
+          }
+          else {
+            alert(response.errorMessages)
+          }
         } catch (error) {
-          console.error('Lỗi khi đăng ký:', error);
-          alert('Đăng ký thất bại');
+          alert('Register Fail');
         }
       };
     return (
