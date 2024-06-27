@@ -14,6 +14,23 @@ export const getData = async (id) => {
   }
 };
 
+
+export const searchProductbyDes = async (searchProduct) => {
+  try {
+    if(searchProduct){
+    const response = await jwtInterceptor(`Product/SearchProducts?keyword=${searchProduct}&pageNumber=1&pageSize=50` );
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+  }
+    return response.json();
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+};
+
+
 export const postData = async (data) => {
   try {
     const response = await jwtInterceptor('/data', {

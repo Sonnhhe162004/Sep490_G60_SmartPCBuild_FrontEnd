@@ -29,13 +29,28 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../Header/header.css"
 export default function Header() {
   const pathname = usePathname();
- 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchCate, setSearchCate] = useState('');
+
   const showHeader =
     pathname === "/admin-login" || pathname === "/create-account" ? false : true;
+
+    const handleInputChange = (e) => {
+      setSearchQuery(e.target.value);
+    };
+     useEffect(()=> {
+       localStorage.setItem("searchCate", searchCate)
+     },[searchCate])
+     
+
+   
+      const searchProduct = () => {
+        localStorage.setItem("searchProduct", searchQuery)
+      }
   return (
     <>
     <header className={`${!showHeader && "hidden"} w-full bg-[#026db5]`}>
@@ -75,8 +90,8 @@ export default function Header() {
             className="js-hover-menu li-catcha-menu"
            
           >
-            <a href="/laptop-tablet-mobile" className="root">
-              Laptop, Macbook, Surface
+            <a  onClick={() => setSearchCate(1)} className="root">
+              CPU
             </a>
           
             <span className="arrow-li-catcha-menu" />
@@ -86,8 +101,8 @@ export default function Header() {
             className="js-hover-menu li-catcha-menu"
            
           >
-            <a href="/laptop-gaming-do-hoa" className="root">
-              Laptop Gaming, Đồ Họa
+            <a className="root" onClick={() => setSearchCate(2)}>
+              MainBoard
             </a>
           
             <span className="arrow-li-catcha-menu" />
@@ -97,7 +112,7 @@ export default function Header() {
             className="js-hover-menu li-catcha-menu"
           
           >
-            <a href="/phu-kien" className="root">
+            <a  className="root">
               Phụ Kiện Laptop, PC, Mobile
             </a>
           
@@ -108,7 +123,7 @@ export default function Header() {
             className="js-hover-menu li-catcha-menu"
            
           >
-            <a href="/pc-gaming-streaming" className="root">
+            <a className="root">
               PC - Chơi Game, Học Tập
             </a>
           
@@ -288,8 +303,10 @@ export default function Header() {
     </div>
     
         {/* search input */}
-        <div className="ml-auto hidden lg:flex ">
-          <SearchInput placeholder="What do you want to buy?" />
+        <div style={{width:'40%'}} className="ml-auto hidden lg:flex ">
+          <form onSubmit={searchProduct}>
+          <input type="text" placeholder="What do you want to buy?" value={searchQuery} onChange={handleInputChange} />
+          </form>
         </div>
 
         {/* account and cart */}

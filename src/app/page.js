@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import "../../src/css/style2020_zip.css"
 import "../../src/css/media2020.css"
 import { useEffect, useState } from "react";
-import { getData } from "@/service/Api-service/apiProducts";
+import { getData, searchProductbyDes } from "@/service/Api-service/apiProducts";
 import { formatNumber } from "@/service/convert/convertNumber";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
@@ -24,8 +24,12 @@ export default function Home() {
   const [listKeyboard,setListKeyboard] = useState([]);
   const [listMouse,setListMouse] = useState([]);
   const [listMonitor,setListMonitor] = useState([]);
+  const [searchProduct,setSearchProduct] = useState("")
+  const [cateID,setCateID] = useState("")
 
+  const [listSearchProduct,setListSearchProduct]  = useState([]);
   useEffect(() => {
+    
     const fetchData = async () => {
       try {
         const resCPU = await getData(1); 
@@ -46,7 +50,25 @@ export default function Home() {
     fetchData();
     
     },[]);
+      useEffect(() => {
+        const searchProduct = async() => {
+          setSearchProduct(localStorage.getItem("searchProduct"))
+          const searchPro = await searchProductbyDes(searchProduct); 
+          setListSearchProduct(resCPU.result);
+        }
+        searchProduct();
+      },[searchProduct])
 
+      useEffect(() => {
+        const searchProductbyCate = async() => {
+          setCateID(localStorage.getItem("searchCate"))
+          const searchPro = await getData(catedid); 
+          setListSearchProduct(searchPro.result);
+        }
+        console.log(cateID)
+        searchProductbyCate();
+      },[cateID])
+ 
   const showHeader =
     pathname === "/sign-in" || pathname === "/create-account" ? false : true;
     return (
