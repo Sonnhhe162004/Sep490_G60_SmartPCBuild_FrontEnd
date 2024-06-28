@@ -9,7 +9,7 @@ import { getData, searchProductbyDes } from "@/service/Api-service/apiProducts";
 import { formatNumber } from "@/service/convert/convertNumber";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
-export default function Home() {
+export default function Home({searchValue}) {
 
   const pathname = usePathname();
   const [listCPU,setListCPU] = useState([]);
@@ -28,6 +28,9 @@ export default function Home() {
   const [cateID,setCateID] = useState("")
 
   const [listSearchProduct,setListSearchProduct]  = useState([]);
+
+
+  
   useEffect(() => {
     
     const fetchData = async () => {
@@ -50,22 +53,28 @@ export default function Home() {
     fetchData();
     
     },[]);
+    useEffect(() => {
+      console.log(searchValue)
+    },[searchValue])
+   
       useEffect(() => {
-        const searchProduct = async() => {
-          setSearchProduct(localStorage.getItem("searchProduct"))
-          const searchPro = await searchProductbyDes(searchProduct); 
-          setListSearchProduct(resCPU.result);
-        }
-        searchProduct();
-      },[searchProduct])
-
+      
+        // const searchProduct = async() => {
+        //   setSearchProduct(localStorage.getItem("searchProduct"))
+        //   const searchPro = await searchProductbyDes(searchProduct); 
+        //   setListSearchProduct(resCPU.result);
+        // }
+        // searchProduct();
+      },[localStorage.getItem("searchProduct")])
+    
       useEffect(() => {
         const searchProductbyCate = async() => {
+          
           setCateID(localStorage.getItem("searchCate"))
-          const searchPro = await getData(catedid); 
+          const searchPro = await getData(cateID); 
           setListSearchProduct(searchPro.result);
         }
-        console.log(cateID)
+       
         searchProductbyCate();
       },[cateID])
  
@@ -75,8 +84,7 @@ export default function Home() {
       <>
   
     <div className="container-2019 ">
-    
-    
+  
       <div id="cate-homepage-2023-com">
         <div
           className=" homepage-product-2019 d-inline-block w-100 js-category-home"

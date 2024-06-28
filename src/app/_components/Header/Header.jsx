@@ -31,11 +31,11 @@ import {
 } from "@/components/ui/hover-card";
 import { useEffect, useState } from "react";
 import "../Header/header.css"
-export default function Header() {
+export default function Header({ setSearchValue }) {
   const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchCate, setSearchCate] = useState('');
-
+  
   const showHeader =
     pathname === "/admin-login" || pathname === "/create-account" ? false : true;
 
@@ -48,8 +48,10 @@ export default function Header() {
      
 
    
-      const searchProduct = () => {
-        localStorage.setItem("searchProduct", searchQuery)
+      const searchProduct = (event) => {
+        event.preventDefault();
+        setSearchValue(searchQuery);
+       
       }
   return (
     <>

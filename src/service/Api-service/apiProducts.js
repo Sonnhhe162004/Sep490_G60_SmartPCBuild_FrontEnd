@@ -20,10 +20,11 @@ export const searchProductbyDes = async (searchProduct) => {
     if(searchProduct){
     const response = await jwtInterceptor(`Product/SearchProducts?keyword=${searchProduct}&pageNumber=1&pageSize=50` );
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      console.log('Network response was not ok');
     }
-  }
     return response.json();
+  }
+   
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;
