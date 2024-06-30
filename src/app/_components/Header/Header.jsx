@@ -42,15 +42,25 @@ export default function Header({ setSearchValue }) {
     const handleInputChange = (e) => {
       setSearchQuery(e.target.value);
     };
+    useEffect(() => {
+    
+      localStorage.removeItem("searchProduct");
+      localStorage.removeItem("searchCate");
+    }, []);
+
      useEffect(()=> {
        localStorage.setItem("searchCate", searchCate)
+  
      },[searchCate])
      
 
    
       const searchProduct = (event) => {
         event.preventDefault();
-        setSearchValue(searchQuery);
+       
+          localStorage.setItem("searchProduct",searchQuery)
+         
+          setSearchValue(searchQuery);
        
       }
   return (
