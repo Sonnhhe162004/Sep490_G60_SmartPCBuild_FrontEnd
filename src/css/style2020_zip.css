@@ -2,6 +2,58 @@ body,button,input,select,textarea{font-family:"Open Sans",Arial,sans-serif}
 .user-action-item,a,button{cursor:pointer}
 .hover_content_pro,.sub_nav{position:absolute;background:#fff}
 .col,img{max-width:100%}
+.cpu-list li {
+  margin-bottom: 8px;
+}
+
+.cpu-list input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+
+
+.filter-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.filter-form select,
+.filter-form input[type="text"],
+.filter-form button {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.filter-form button {
+  background-color: #0044cc;
+  color: white;
+  cursor: pointer;
+}
+
+.filter-form button:hover {
+  background-color: #0033aa;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-button {
+  padding: 8px;
+  border: 1px dashed #ddd;
+  background-color: white;
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  border-color: #aaa;
+}
 .atext1 a:after,.atext1 a:before{animation-duration:1s;animation-iteration-count:infinite;animation-fill-mode:both}
 .border-hover-ttdv a,.border-hover-hotro a,.border-hover-khuyen-mai a,.header-2019 .main-search .select .title,.hotline .sub .item,.store-list-group-2022 .store-list .item{text-overflow:ellipsis;white-space:nowrap}
 body{color:#333e48;font-size:13px;margin:0;padding:0;background:#fff;overflow-x:hidden;overflow-y:auto;min-width:1200px;word-break: break-word;}

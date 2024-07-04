@@ -101,7 +101,7 @@ export default function Home() {
     pathname === "/sign-in" || pathname === "/create-account" ? false : true;
     return (
       <>
-  {listSearchProduct.length > 0 ? (
+  {listSearchProduct?.length > 0 ? (
       <>
          <div className="container-2019 ">
           
@@ -113,7 +113,7 @@ export default function Home() {
             >
               <div className="js-glee-block">
                 <div className="title_box_center_2019 wow">
-                  <h2 className="h_title_2019">TÌM KIẾM : {searchProduct} ({(listSearchProduct.length)} sản phẩm) </h2>
+                  <h2 className="h_title_2019">TÌM KIẾM : {searchProduct} ({(listSearchProduct?.length)} sản phẩm) </h2>
                  
                   <a href="/laptop-tablet-mobile" className="viewall">
                     See all <i className="fal fa-long-arrow-right" />
@@ -131,7 +131,7 @@ export default function Home() {
                       
                     >
         
-                    {listSearchProduct.slice(0,5).map((val, index) => (
+                    {listSearchProduct?.slice(0,5).map((val, index) => (
                       <div className="owl-item active" style={{ width: 236 }}>
                         <div
                           className="p-component loaded p-frame-bhmr-6m"

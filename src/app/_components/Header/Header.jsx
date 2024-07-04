@@ -94,7 +94,7 @@ export default function Header({ setSearchValue }) {
 
         </DropdownMenu>
         
-        <div style={{display:'none'}} className="homepage-slider-2019 absolute">
+        <div style={{display:'none',marginTop:'1px'}} className="homepage-slider-2019 absolute">
       <div className="homepage-slider-left">
         <ul className="ul ul_menu_2019 boxshadowx2023" id="menu-2019">
           <li
