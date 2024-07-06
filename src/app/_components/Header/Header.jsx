@@ -1,5 +1,5 @@
 "use client";
-import { CategoryProductItem, SearchInput } from "@/components/_personal";
+import { useRouter } from "next/router";
 import {
   ChevronRight,
   CircleUserRound,
@@ -31,7 +31,9 @@ import {
 } from "@/components/ui/hover-card";
 import { useEffect, useState } from "react";
 import "../Header/header.css"
-export default function Header({ setSearchValue }) {
+
+
+export default function Header() {
   const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchCate, setSearchCate] = useState('');
@@ -57,7 +59,7 @@ export default function Header({ setSearchValue }) {
    
       const searchProduct = (event) => {
         event.preventDefault();
-       
+        window.location.href = `/productSearch?query=${searchQuery}`;
           localStorage.setItem("searchProduct",searchQuery)
          
           setSearchValue(searchQuery);
@@ -102,7 +104,7 @@ export default function Header({ setSearchValue }) {
             className="js-hover-menu li-catcha-menu"
            
           >
-            <a  onClick={() => setSearchCate(1)} className="root">
+              <a href={`/productSearch?searchCate=1`} className="root">
               CPU
             </a>
           
@@ -113,7 +115,7 @@ export default function Header({ setSearchValue }) {
             className="js-hover-menu li-catcha-menu"
            
           >
-            <a className="root" onClick={() => setSearchCate(2)}>
+            <a className="root" href={`/productSearch?searchCate=2`}>
               MainBoard
             </a>
           

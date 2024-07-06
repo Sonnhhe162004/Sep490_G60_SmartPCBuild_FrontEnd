@@ -56,41 +56,7 @@ export default function Home() {
     
 
     
-    useEffect(() => {
-      const interval = setInterval(async() => {
-        const newValue = localStorage.getItem('searchProduct');
-        if (newValue !== searchProduct) {
-          setSearchProduct(newValue);
-          const searchPro = await searchProductbyDes(newValue); 
-          setListSearchProduct(searchPro?.result);       
-        }
-        // const newValuebyCate = localStorage.getItem('searchProduct');
-        //   setCateID(newValuebyCate);
-        //   const searchPro = await getData(cateID); 
-        //   setListSearchProduct(searchPro.result);
-      }, 1000); // Kiểm tra mỗi giây
-     
-      return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
-         
-    }, [searchProduct]);
    
-    useEffect(() => {
-      const interval = setInterval(async() => {
-        const newValue = localStorage.getItem('searchCate');
-        if (newValue !== cateID) {
-          setCateID(newValue);
-          const searchPro = await getData(newValue); 
-          setListSearchProduct(searchPro?.result);       
-        }
-        // const newValuebyCate = localStorage.getItem('searchProduct');
-        //   setCateID(newValuebyCate);
-        //   const searchPro = await getData(cateID); 
-        //   setListSearchProduct(searchPro.result);
-      }, 1000); // Kiểm tra mỗi giây
-     
-      return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
-         
-    }, [cateID]);
 
 
      
@@ -185,7 +151,8 @@ export default function Home() {
             </div>
        </>
   ) :
-   <> <div className="container-2019 ">
+   <> 
+   <div className="container-2019 ">
           
   <div id="cate-homepage-2023-com">
     <div

@@ -9,6 +9,7 @@ import { getData, searchProductbyDes } from "@/service/Api-service/apiProducts";
 import { formatNumber } from "@/service/convert/convertNumber";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
+import { useParams } from "react-router-dom";
 export default function ProductSearch() {
 
     const pathname = usePathname();
@@ -29,72 +30,48 @@ export default function ProductSearch() {
 
     const [listSearchProduct, setListSearchProduct] = useState([]);
 
-
+    useEffect(() => {
+        const fetchData = async() => {
+        const queryString = window.location.search;
+        // Xử lý nếu query string không tồn tại
+        if (!queryString) {
+          return;
+        }
+        // Xử lý nếu query string có tồn tại
+        const urlParams = new URLSearchParams(queryString);
+        const searchQuery = urlParams.get('query');
+        
+            setSearchProduct(searchQuery);
+            const searchPro = await searchProductbyDes(searchQuery); 
+            setListSearchProduct(searchPro?.result);  
+            console.log(searchPro)  
+    }   
+    fetchData();
+      }, [searchProduct]);
 
     useEffect(() => {
-
-        const fetchData = async () => {
-            try {
-                const resCPU = await getData(1);
-                setListCPU(resCPU.result);
-                const resMainboard = await getData(2);
-                setListMainboard(resMainboard.result);
-
-                const resRAM = await getData(3);
-                setListRAM(resRAM.result);
-                const resSSD = await getData(4);
-                setListSSD(resSSD.result);
-                const resHDD = await getData(5);
-                setListHDD(resHDD.result);
-            } catch (error) {
-                console.error('Error fetching data:', error);
+        const fetchData = async() => {
+            const queryString = window.location.search;
+            // Xử lý nếu query string không tồn tại
+            if (!queryString) {
+              return;
             }
-        };
+            // Xử lý nếu query string có tồn tại
+            const urlParams = new URLSearchParams(queryString);
+            const searchQuery = urlParams.get('searchCate');
+            
+                setSearchProduct(searchQuery);
+                const searchPro = await getData(searchQuery); 
+                setListSearchProduct(searchPro?.result);  
+                console.log(searchPro)  
+        }   
         fetchData();
-
-    }, []);
-
-
-
-    useEffect(() => {
-        const interval = setInterval(async () => {
-            const newValue = localStorage.getItem('searchProduct');
-            if (newValue !== searchProduct) {
-                setSearchProduct(newValue);
-                const searchPro = await searchProductbyDes(newValue);
-                setListSearchProduct(searchPro?.result);
-            }
-            // const newValuebyCate = localStorage.getItem('searchProduct');
-            //   setCateID(newValuebyCate);
-            //   const searchPro = await getData(cateID); 
-            //   setListSearchProduct(searchPro.result);
-        }, 1000); // Kiểm tra mỗi giây
-
-        return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
-
-    }, [searchProduct]);
-
-    useEffect(() => {
-        const interval = setInterval(async () => {
-            const newValue = localStorage.getItem('searchCate');
-            if (newValue !== cateID) {
-                setCateID(newValue);
-                const searchPro = await getData(newValue);
-                setListSearchProduct(searchPro?.result);
-            }
-            // const newValuebyCate = localStorage.getItem('searchProduct');
-            //   setCateID(newValuebyCate);
-            //   const searchPro = await getData(cateID); 
-            //   setListSearchProduct(searchPro.result);
-        }, 1000); // Kiểm tra mỗi giây
-
-        return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
 
     }, [cateID]);
 
 
 
-
+   
 
 
     const showHeader =
@@ -146,25 +123,25 @@ export default function ProductSearch() {
                                                     </ul>
                                                 </div>
                                                 <div
-                                                    className="owl-stage"
+                                                    className="owl-stage col-md-9"
                                                     style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px' }}
                                                 >
                                                     <div style={{backgroundColor:'red',width:'100%'}}>
                                                     <div class="filter-form">
-  <select style={{width:'40%'}}>
+  <select style={{width:'30%'}}>
     <option value="">Tình trạng kho hàng</option>
     <option value="in-stock">In Stock</option>
     <option value="out-of-stock">Out of Stock</option>
   </select>
-  <select style={{width:'40%'}}>
+  <select style={{width:'30%'}}>
     <option value="">Tất cả kho</option>
     <option value="warehouse1">Warehouse 1</option>
     <option value="warehouse2">Warehouse 2</option>
   </select>
-  <div style={{width:'20%'}}>Loc theo giá tiền:</div>
-  <input type="text"  style={{width:'20%'}}  placeholder="15.999.000 đ" />
+  <div style={{width:'10%'}}>Loc theo giá tiền:</div>
+  <input type="text"  style={{width:'10%'}}  placeholder="15.999.000 đ" />
   <div>-</div>
-  <input type="text"  style={{width:'20%'}} placeholder="117.999.000 đ" />
+  <input type="text"  style={{width:'10%'}} placeholder="117.999.000 đ" />
   <button>Lọc</button>
   
 </div>
@@ -172,8 +149,9 @@ export default function ProductSearch() {
                                                     </div>
                                                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px',width:'100%'}}>
 
-                                                    {listCPU?.map((val, index) => (
+                                                    {listSearchProduct?.map((val, index) => (
                                                         <div className="owl-item active" >
+                                                            <a href="product-detail">
                                                             <div
                                                                 className="p-component loaded p-frame-bhmr-6m"
 
@@ -182,7 +160,7 @@ export default function ProductSearch() {
                                                                     <span className="bhmr-6m" />
                                                                 </div>
                                                                 <div className="p-img ajax-loading ajax-finished">
-                                                                    <a className="hover_detail" href="product-detail" />
+                                                                    <a className="hover_detail" />
                                                                     <div className="a">
                                                                         <img
                                                                             src="https://hanoicomputercdn.com/media/product/250_73001_laptop_asus_vivobook_go_e1404fa_18.png"
@@ -212,6 +190,7 @@ export default function ProductSearch() {
 
 
                                                             </div>
+                                                            </a>
                                                         </div>
                                                     ))}
                                                     </div>
