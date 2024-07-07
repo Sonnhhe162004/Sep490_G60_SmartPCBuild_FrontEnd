@@ -186,7 +186,7 @@ export default function Home() {
                   >
 
                     {listCPU.slice(0, 5).map((val, index) => (
-                      <div className="owl-item active" style={{ width: 236 }}>
+                      <div key={val?.id} className="owl-item active" style={{ width: 236 }}>
                         <div
                           className="p-component loaded p-frame-bhmr-6m"
 
@@ -227,10 +227,10 @@ export default function Home() {
                             <a
                               href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac"
                               className="hover_name"
-                            >
-                              Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB
+                            > 7520U/16GB
                               RAM/512GB SSD/14 FHD/Win11/Bạc)
                             </a>
+                              Laptop Asus VivoBook E1404FA-NK177W (R5
                             <table>
                               <tbody>
                                 <tr>
@@ -351,7 +351,7 @@ export default function Home() {
                   >
 
                     {listMainboard.slice(0, 5).map((val, index) => (
-                      <div className="owl-item active" style={{ width: 236 }}>
+                      <div key={val?.id} className="owl-item active" style={{ width: 236 }}>
                         <div
                           className="p-component loaded p-frame-bhmr-6m"
 
@@ -425,7 +425,7 @@ export default function Home() {
                   >
 
                     {listRAM.slice(0, 5).map((val, index) => (
-                      <div className="owl-item active" style={{ width: 236 }}>
+                      <div key={val?.id} className="owl-item active" style={{ width: 236 }}>
                         <div
                           className="p-component loaded p-frame-bhmr-6m"
 
@@ -499,7 +499,7 @@ export default function Home() {
                   >
 
                     {listSSD.slice(0, 5).map((val, index) => (
-                      <div className="owl-item active" style={{ width: 236 }}>
+                      <div key={val?.id} className="owl-item active" style={{ width: 236 }}>
                         <div
                           className="p-component loaded p-frame-bhmr-6m"
 
@@ -571,7 +571,7 @@ export default function Home() {
                   >
 
                     {listHDD.slice(0, 5).map((val, index) => (
-                      <div className="owl-item active" style={{ width: 236 }}>
+                      <div key={val?.id} className="owl-item active" style={{ width: 236 }}>
                         <div
                           className="p-component loaded p-frame-bhmr-6m"
 
