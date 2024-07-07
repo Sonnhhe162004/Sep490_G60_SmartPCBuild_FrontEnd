@@ -15,6 +15,26 @@ export const getData = async (id) => {
 };
 
 
+export const filterProducts = async (body) => {
+  try {
+    const response = await jwtInterceptor('Product/FilterProductsHome', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      console.log(response)
+    }
+    return response.json();
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+
+
 export const searchProductbyDes = async (searchProduct) => {
   try {
     if(searchProduct){

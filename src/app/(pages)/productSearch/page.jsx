@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import "../../../../src/css/style2020_zip.css"
 import "../../../../src/css/media2020.css"
 import { useEffect, useState } from "react";
-import { getData, searchProductbyDes } from "@/service/Api-service/apiProducts";
+import { filterProducts, FilterProducts, getData, searchProductbyDes } from "@/service/Api-service/apiProducts";
 import { formatNumber } from "@/service/convert/convertNumber";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
@@ -13,22 +13,15 @@ import { useParams } from "react-router-dom";
 export default function ProductSearch() {
 
     const pathname = usePathname();
-    const [listCPU, setListCPU] = useState([]);
-    const [listMainboard, setListMainboard] = useState([]);
-    const [listRAM, setListRAM] = useState([]);
-    const [listSSD, setListSSD] = useState([]);
-    const [listHDD, setListHDD] = useState([]);
-    const [listVGA, setListVGA] = useState([]);
-    const [listPSU, setListPSU] = useState([]);
-    const [listCase, setListCase] = useState([]);
-    const [listColling, setListColling] = useState([]);
-    const [listKeyboard, setListKeyboard] = useState([]);
-    const [listMouse, setListMouse] = useState([]);
-    const [listMonitor, setListMonitor] = useState([]);
+   
+    
     const [searchProduct, setSearchProduct] = useState("")
     const [cateID, setCateID] = useState("")
-
+    const [startprice,setStartPrice] = useState("");
+    const [endprice ,setEndPrice] = useState("");
     const [listSearchProduct, setListSearchProduct] = useState([]);
+
+  
 
     useEffect(() => {
         const fetchData = async() => {
@@ -42,9 +35,16 @@ export default function ProductSearch() {
         const searchQuery = urlParams.get('query');
         
             setSearchProduct(searchQuery);
+            if(cateID != null) {
+            const body = {
+                storeName: searchProduct,
+                priceFrom: startprice,
+                priceTo: endprice,
+                category: cateID
+              }
             const searchPro = await searchProductbyDes(searchQuery); 
             setListSearchProduct(searchPro?.result);  
-            console.log(searchPro)  
+        }
     }   
     fetchData();
       }, [searchProduct]);
@@ -60,7 +60,7 @@ export default function ProductSearch() {
             const urlParams = new URLSearchParams(queryString);
             const searchQuery = urlParams.get('searchCate');
             
-                setSearchProduct(searchQuery);
+                setCateID(searchQuery);
                 const searchPro = await getData(searchQuery); 
                 setListSearchProduct(searchPro?.result);  
                 console.log(searchPro)  
@@ -68,8 +68,37 @@ export default function ProductSearch() {
         fetchData();
 
     }, [cateID]);
-
-
+    const onChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        if(name == "startprice"){
+            setStartPrice(value);
+        }
+        if(name == "endprice"){
+            setEndPrice(value);
+        }
+    }
+     const filterProduct = async() => {
+        if(cateID != null) {
+        const body = {
+            storeName: searchProduct,
+            priceFrom: startprice,
+            priceTo: endprice,
+            category: cateID
+          }
+          const searchPro = await filterProducts(body); 
+          setListSearchProduct(searchPro?.result);  
+        } else {
+            const body = {
+                storeName: searchProduct,
+                priceFrom: startprice,
+                priceTo: endprice,
+                
+              }
+              const searchPro = await filterProducts(body); 
+              setListSearchProduct(searchPro?.result); 
+        }
+     }
 
    
 
@@ -139,10 +168,10 @@ export default function ProductSearch() {
     <option value="warehouse2">Warehouse 2</option>
   </select>
   <div style={{width:'10%'}}>Loc theo giá tiền:</div>
-  <input type="text"  style={{width:'10%'}}  placeholder="15.999.000 đ" />
+  <input type="text"  style={{width:'10%'}} name="startprice" onChange={onChange}  placeholder="15.999.000 đ" />
   <div>-</div>
-  <input type="text"  style={{width:'10%'}} placeholder="117.999.000 đ" />
-  <button>Lọc</button>
+  <input type="text"  style={{width:'10%'}} name="endprice" onChange={onChange} placeholder="117.999.000 đ" />
+  <button onClick={filterProduct}>Lọc</button>
   
 </div>
 
