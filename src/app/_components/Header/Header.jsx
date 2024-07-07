@@ -32,7 +32,7 @@ import {
 export default function Header() {
   const pathname = usePathname();
   const showHeader =
-    pathname === "/admin-login" || pathname === "/create-account" ? false : true;
+    pathname === "/login" || pathname === "/admin-login" || pathname === "/create-account" ? false : true;
   return (
     <header className={`${!showHeader && "hidden"} w-full bg-[#026db5]`}>
       <div className="flex container items-center justify-between py-2 xl:py-4 gap-x-4">
@@ -67,14 +67,14 @@ export default function Header() {
         <div className="flex items-center gap-x-4 ml-8">
         <Link
           className="lg:flex flex-col items-center px-3 gap-y-1 hidden group"
-          href="/admin-login"
+          href="/login"
         >
           <CircleUserRound color="#ffffff" size={32} />
           <span className="text-[13px] font-medium text-white w-full text-center">
             Account
           </span>
           <div style={{marginTop: '2rem'}} className="absolute bg-white rounded-md shadow-md p-2 mt-4 z-50 hidden group-hover:block">
-            <a href="/admin-login" className="block text-gray-700 hover:bg-gray-100 px-4 py-2 rounded-md">
+            <a href="/login" className="block text-gray-700 hover:bg-gray-100 px-4 py-2 rounded-md">
               <span>Login</span>
             </a>
             <a href="/admin-logout" className="block text-gray-700 hover:bg-gray-100 px-4 py-2 rounded-md">
@@ -158,7 +158,7 @@ export default function Header() {
                     </li>
                   ))}
                   <li className="flex w-full justify-start py-1 font-semibold uppercase text-sm">
-                    <Link className="" href={`/admin-login`}>
+                    <Link className="" href={`/login`}>
                       Account
                     </Link>
                   </li>

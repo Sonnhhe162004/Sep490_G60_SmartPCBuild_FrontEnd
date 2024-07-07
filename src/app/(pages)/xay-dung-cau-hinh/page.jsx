@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { getDataCate } from "@/service/Api-service/apiCategorys";
+import Cookies from 'js-cookie';
 
 export default function BuildConfig() {
   const [configList, setConfigList] = useState([]);
@@ -22,7 +23,15 @@ export default function BuildConfig() {
   const [refreshFlag, setRefreshFlag] = useState(false);
 
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const [selectedItem, setSelectedItem] = useState([]);
+  
+  const handleProductSelected = (item, action) => {
+    if (action === 'add') {
+      setSelectedItem(prevTotal => [...prevTotal, item]);
+    } else if (action === 'remove') {
+      setSelectedItem(prevTotal => prevTotal.filter(i => i !== item));
+    }
+  };
   const handlePriceChange = (price, action) => {
     if (action === 'add') {
       setTotalPrice(prevTotal => prevTotal + price);
@@ -35,9 +44,52 @@ export default function BuildConfig() {
     setRefreshFlag((prev) => !prev);
     toast("Configuration refresh successful!");
   };
+  // const onOk = () => {
+  //   const updatedItems = selectedItem.map(item => ({
+  //     ...item,
+  //     quantity: item.quantity || 1,
+  //   }));
+  
+  //   console.log(updatedItems);
+    
+  //   const selectedItemStr = JSON.stringify(updatedItems);
+    
+  //   Cookies.set('selectedItem', selectedItemStr, { expires: 7 });
+    
+  //   toast("All products have been added to the cart!");
+  // };
   const onOk = () => {
+    const existingItemsStr = Cookies.get('selectedItem');
+    let existingItems = [];
+  
+    if (existingItemsStr) {
+      try {
+        existingItems = JSON.parse(decodeURIComponent(existingItemsStr));
+      } catch (e) {
+        console.error("Error parsing JSON from cookie:", e);
+      }
+    }
+  
+    const updatedItems = selectedItem.map(item => {
+      const existingItem = existingItems.find(i => i.productId === item.productId);
+      if (existingItem) {
+        existingItem.quantity += 1;
+        return existingItem;
+      } else {
+        return { ...item, quantity: 1 };
+      }
+    });
+  
+    existingItems = [
+      ...existingItems.filter(i => !updatedItems.find(u => u.productId === i.productId)),
+      ...updatedItems
+    ];
+  
+    const selectedItemStr = JSON.stringify(existingItems);
+    Cookies.set('selectedItem', selectedItemStr, { expires: 7 });
     toast("All products have been added to the cart!");
   };
+  
   const formatCurrency = (price) => {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
   };
@@ -93,6 +145,7 @@ export default function BuildConfig() {
                 key={index}
                 onPriceChange={handlePriceChange}
                 onRefresh={refreshFlag} 
+                onSelected={handleProductSelected}
               />
             ))}
         </div>

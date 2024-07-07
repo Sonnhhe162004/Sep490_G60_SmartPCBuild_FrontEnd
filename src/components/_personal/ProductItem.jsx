@@ -6,9 +6,14 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { getData } from "@/service/Api-service/apiProducts";
 
-export default function ProductItem({ id, onProductSelected }) {
+export default function ProductItem({ 
+  id,
+  onProductSelected,
+  selectedSearch,
+  inputValue,
+  selectedFilter,
+}) {
   const [Dataproduct, setDataproduct] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {

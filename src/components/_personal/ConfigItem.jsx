@@ -28,25 +28,49 @@ import { Search } from "lucide-react";
 import { ProductItem, ProductSelectedItem } from ".";
 import Filter from "./Filter";
 
-export default function ConfigItem({ item , onPriceChange ,onRefresh }) {
+export default function ConfigItem({ item, onPriceChange, onRefresh , onSelected }) {
+  const options = [
+    { value: "newest", label: "Latest" },
+    { value: "expensive", label: "Price high to low" },
+    { value: "cheap", label: "Price low to high" },
+    { value: "alphabet", label: "From A -> Z" },
+  ];
+
+  const [selectedSearch, setSelectedSearch] = useState("");
+  const [inputValue, setInputValue] = useState("");
+
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
-  const [selected, setSelected] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const handleProductSelected = (selectedItem) => {
     setSelectedItem(selectedItem);
-    const action = 'add';
-    onPriceChange(selectedItem?.price , action);
+    const action = "add";
+    onSelected(selectedItem, action);
+    onPriceChange(selectedItem?.price, action);
+    setIsDialogOpen(false); // Đóng popup sau khi chọn sản phẩm
   };
+
   const handleFilterSelected = (selectedItem) => {
-    console.log(selectedItem);
     setSelectedFilter(selectedItem);
   };
-  
+
   const handleRemove = () => {
-    const action = 'remove';
-    onPriceChange(selectedItem?.price , action);
+    const action = "remove";
+    onSelected(selectedItem, action);
+    onPriceChange(selectedItem?.price, action);
     setSelectedItem(null);
   };
+
+  const handleValueChange = (value) => {
+    setSelectedSearch(value);
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+  };
+
   const onRefreshRef = useRef();
 
   useEffect(() => {
@@ -61,19 +85,7 @@ export default function ConfigItem({ item , onPriceChange ,onRefresh }) {
       onRefreshRef.current();
     }
   }, [onRefresh]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await getData(); 
-  //       setDataHome(res.result);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-  //   fetchData();
 
-  //   },[]);
-//  console.log(item);
   return (
     <Collapsible open={true}>
       <div className="w-full flex flex-col md:flex-row items-center justify-between float-left border p-4 rounded-sm">
@@ -83,9 +95,9 @@ export default function ConfigItem({ item , onPriceChange ,onRefresh }) {
           </div>
         </CollapsibleTrigger>
         <div className="w-full md:w-4/5 flex items-center justify-center md:justify-end py-4">
-          <Dialog>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-red-600 hover:bg-red-500 w-full md:w-auto">
+              <Button className="bg-red-600 hover:bg-red-500 w-full md:w-auto" onClick={() => setIsDialogOpen(true)}>
                 Select
               </Button>
             </DialogTrigger>
@@ -96,37 +108,46 @@ export default function ConfigItem({ item , onPriceChange ,onRefresh }) {
               <div className="flex flex-col items-center space-x-2">
                 <div className="w-full bg-[#026db5] p-2 flex flex-col lg:flex-row items-center lg:justify-start gap-2">
                   <div className="relative items-center min-w-[280px]">
-                    <Input placeholder="Enter the product name you are looking for..." />
+                    <Input
+                      placeholder="Enter name product you are looking..."
+                      value={inputValue}
+                      onChange={handleInputChange}
+                    />
                     <Search
                       color="#026db5"
                       className="absolute bottom-2 right-2 cursor-pointer"
                     />
                   </div>
-                  <Select>
+                  <Select onValueChange={handleValueChange}>
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select search" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Sort</SelectLabel>
-                        <SelectItem value="newest">Latest</SelectItem>
-                        <SelectItem value="expensive">
-                        Price high to low
-                        </SelectItem>
-                        <SelectItem value="cheap">Price low to high</SelectItem>
-                        <SelectItem value="alphabet">From A -&gt; Z</SelectItem>
+                        {options.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="w-full flex gap-x-3 max-h-[450px] lg:max-h-[500px] 2xl:max-h-[550px] overflow-y-scroll">
                   <div className="w-1/4">
-                    <Filter id={item?.categoryId}  onFilterSelected={handleFilterSelected} />
+                    <Filter
+                      id={item?.categoryId}
+                      onFilterSelected={handleFilterSelected}
+                    />
                   </div>
                   <div className="w-3/4">
                     <ProductItem
                       id={item?.categoryId}
                       onProductSelected={handleProductSelected}
+                      selectedSearch={selectedSearch}
+                      inputValue={inputValue}
+                      selectedFilter={selectedFilter}
                     />
                   </div>
                 </div>
