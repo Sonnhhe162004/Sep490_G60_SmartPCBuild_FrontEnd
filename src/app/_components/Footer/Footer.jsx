@@ -21,9 +21,9 @@ export default function Footer() {
         </div>
         <div className="flex flex-col gap-y-4 lg:gap-y-8 px-4 text-left text-sm">
           <h3 className="text-base font-semibold uppercase">
-            THÔNG TIN LIÊN HỆ
+            CONTACT
           </h3>
-          <Link href={"/"} className="hover:text-red-500">
+          <Link href={"https://zalo.me/pc"} className="hover:text-red-500">
             <span>
               <strong>Zalo:</strong> 0123.456.789
             </span>
