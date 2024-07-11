@@ -51,7 +51,7 @@ export default function Footer() {
         </div>
         <div className="flex flex-col gap-y-4 lg:gap-y-8 px-4 text-left text-sm">
           <h3 className="text-base font-semibold uppercase">
-            HỖ TRỢ KHÁCH HÀNG
+            SUPPORT
           </h3>
           <Link href={"/san-pham"} className="hover:text-red-500">
             <span>Danh sách sản phẩm</span>
