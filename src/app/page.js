@@ -525,10 +525,10 @@ export default function Home() {
     </div>
   </div>
 
-  <Tooltip anchorSelect=".hover_detail" place="right-end">
+  <Tooltip style={{backgroundColor:'white'}}  anchorSelect=".hover_detail" place="right-end">
 <div className="tooltip-2019">
 <a
-  href="/pc-hp-280-pro-tower-g9-9h9c2pt-i7-12700-16gb-ram-512gb-ssd-wl-bt-k-m-win11"
+  href=""
   className="hover_name"
 >
   PC HP 280 Pro Tower G9 (9H9C2PT)(i7-12700/16GB RAM/512GB

@@ -156,6 +156,7 @@ export default function ProductSearch() {
                                                     style={{ boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px' }}
                                                 >
                                                     <div style={{backgroundColor:'red',width:'100%'}}>
+                                                {searchProduct  && (
                                                     <div class="filter-form">
   <select style={{width:'30%'}}>
     <option value="">Tình trạng kho hàng</option>
@@ -174,7 +175,7 @@ export default function ProductSearch() {
   <button onClick={filterProduct}>Lọc</button>
   
 </div>
-
+                                                )}
                                                     </div>
                                                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px',width:'100%'}}>
 

@@ -862,7 +862,8 @@ h2.home-categories-header-title{color:#333e48;line-height:40px;font-size:30px;fo
 .tooltip-2019 {
   width: 300px;
   height: 400px;
-  
+  background-color: white;
+  color: black;
 z-index: 9999;
   border: 1px solid #ccc; /* Đường viền nhẹ cho khung */
   padding: 10px; /* Khoảng cách bên trong khung */
@@ -872,6 +873,7 @@ z-index: 9999;
 .tooltip-2019 a.hover_name {
   display: block;
   
+  
   color: #0073e6; /* Màu chữ của link */
   text-decoration: none;
 }
@@ -880,6 +882,9 @@ z-index: 9999;
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 10px;
+  background-color: white;
+  color: black;
+
 }
 
 .tooltip-2019 td {

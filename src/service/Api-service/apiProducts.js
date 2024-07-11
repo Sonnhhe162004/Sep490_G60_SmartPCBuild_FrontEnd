@@ -10,7 +10,7 @@ export const getData = async (id) => {
     return response.json();
   } catch (error) {
     console.error('Error fetching data:', error);
-    throw error;
+    return error;
   }
 };
 
@@ -30,7 +30,7 @@ export const filterProducts = async (body) => {
     return response.json();
   } catch (error) {
     console.error('Error posting data:', error);
-    throw error;
+    return error;
   }
 };
 
@@ -47,7 +47,7 @@ export const searchProductbyDes = async (searchProduct) => {
    
   } catch (error) {
     console.error('Error fetching data:', error);
-    throw error;
+    return error;
   }
 };
 
@@ -67,7 +67,7 @@ export const postData = async (data) => {
     return response.json();
   } catch (error) {
     console.error('Error posting data:', error);
-    throw error;
+    return error;
   }
 };
 export const FilterProducts = async (id) => {
@@ -79,6 +79,6 @@ export const FilterProducts = async (id) => {
     return response.json();
   } catch (error) {
     console.error('Error fetching data:', error);
-    throw error;
+    return error;
   }
 };
