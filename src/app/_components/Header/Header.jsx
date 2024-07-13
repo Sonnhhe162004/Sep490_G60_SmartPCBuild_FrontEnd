@@ -31,13 +31,14 @@ import {
 } from "@/components/ui/hover-card";
 import { useEffect, useState } from "react";
 import "../Header/header.css"
+import { listAllCate } from "@/service/Api-service/apiCategorys";
 
 
 export default function Header() {
   const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchCate, setSearchCate] = useState('');
-  
+  const [listCate,setListCate] = useState([]);
   const showHeader =
     pathname === "/admin-login" || pathname === "/create-account" ? false : true;
 
@@ -50,21 +51,27 @@ export default function Header() {
       localStorage.removeItem("searchCate");
     }, []);
 
+    useEffect(() => {
+      const allCate = async() => {
+       const response = await listAllCate();
+       setListCate(response);
+      }
+      allCate();
+    },[])
+
+
      useEffect(()=> {
        localStorage.setItem("searchCate", searchCate)
   
      },[searchCate])
      
-
-   
       const searchProduct = (event) => {
         event.preventDefault();
         window.location.href = `/productSearch?query=${searchQuery}`;
           localStorage.setItem("searchProduct",searchQuery)
-         
-          setSearchValue(searchQuery);
-       
+          setSearchValue(searchQuery);       
       }
+      console.log(listCate)
   return (
     <>
     <header className={`${!showHeader && "hidden"} w-full bg-[#026db5]`}>
@@ -86,118 +93,27 @@ export default function Header() {
        <div className="listproduct relative">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-
             <h2 className="hidden lg:flex gap-2 items-center border rounded-sm p-2 px-4 bg-white cursor-pointer text-sm font-semibold">
               <LayoutGrid className="h-4 w-4 " /> List Product
             </h2>
-          
-    
           </DropdownMenuTrigger>
-
         </DropdownMenu>
         
         <div style={{display:'none',marginTop:'1px'}} className="homepage-slider-2019 absolute">
       <div className="homepage-slider-left">
         <ul className="ul ul_menu_2019 boxshadowx2023" id="menu-2019">
+        {listCate?.result?.map(item => (
           <li
             id="vt-1106"
-            className="js-hover-menu li-catcha-menu"
-           
+            className="js-hover-menu li-catcha-menu" 
           >
-              <a href={`/productSearch?searchCate=1`} className="root">
-              CPU
+              <a href={`/productSearch?searchCate=${item.categoryId}`} className="root">
+              {item.categoryName}
             </a>
-          
             <span className="arrow-li-catcha-menu" />
           </li>
-          <li
-            id="vt-1087"
-            className="js-hover-menu li-catcha-menu"
-           
-          >
-            <a className="root" href={`/productSearch?searchCate=2`}>
-              MainBoard
-            </a>
-          
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-455"
-            className="js-hover-menu li-catcha-menu"
-          
-          >
-            <a  className="root">
-              Phụ Kiện Laptop, PC, Mobile
-            </a>
-          
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-178"
-            className="js-hover-menu li-catcha-menu"
-           
-          >
-            <a className="root">
-              PC - Chơi Game, Học Tập
-            </a>
-          
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-388"
-            className="js-hover-menu li-catcha-menu"
-          
-          >
-            <a href="/pc-workstations" className="root">
-              PC - Đồ Họa, Thiết Kế
-            </a>
-           
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-137"
-            className="js-hover-menu li-catcha-menu"
-            
-          >
-            <a href="/may-tinh-de-ban" className="root">
-              PC - Văn Phòng, Làm Việc
-            </a>
-          
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-6"
-            className="js-hover-menu li-catcha-menu"
-           
-          >
-            <a href="/linh-kien-may-tinh" className="root">
-              Linh Kiện Máy Tính
-            </a>
-           
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-379"
-            className="js-hover-menu li-catcha-menu"
-          >
-            <a href="/tan-nhiet-cooling" className="root">
-              Tản Nhiệt, Fan, Đèn Led
-            </a>
-           
-            <span className="arrow-li-catcha-menu" />
-          </li>
-        
-          <li
-            id="vt-12"
-            className="js-hover-menu li-catcha-menu"
-          
-          >
-            <a href="/thiet-bi-van-phong" className="root">
-              TB Văn Phòng, Hội Nghị
-            </a>
-          
-            <span className="arrow-li-catcha-menu" />
-          </li>
+        ))}
+         
          
         </ul>
       </div>
