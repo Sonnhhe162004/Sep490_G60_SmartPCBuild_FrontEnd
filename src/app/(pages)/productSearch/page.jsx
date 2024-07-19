@@ -193,7 +193,7 @@ export default function ProductSearch() {
                                                                     <a className="hover_detail" />
                                                                     <div className="a">
                                                                         <img
-                                                                            src="https://hanoicomputercdn.com/media/product/250_73001_laptop_asus_vivobook_go_e1404fa_18.png"
+                                                                            src={val.imageLink}
                                                                             alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
                                                                             width={250}
                                                                             height={250}
