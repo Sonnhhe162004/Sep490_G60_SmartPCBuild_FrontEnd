@@ -13,6 +13,19 @@ export const getData = async (id) => {
     return error;
   }
 };
+export const getDetailProduct = async (id) => {
+  try {
+    const response = await jwtInterceptor('Product/GetProducts?id=' + id );
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return error;
+  }
+};
+
 
 
 export const filterProducts = async (body) => {

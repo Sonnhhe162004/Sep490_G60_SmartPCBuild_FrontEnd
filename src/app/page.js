@@ -107,7 +107,9 @@ export default function Home() {
                             <span className="bhmr-6m" />
                           </div>
                           <div className="p-img ajax-loading ajax-finished">
-                            <a className="hover_detail" href="product-detail" />
+
+                        
+                            <a className="hover_detail" href={`product-detail?idProduct=${item.id}`} />
                             <div className="a">
                               <img
                                 src="https://hanoicomputercdn.com/media/product/250_73001_laptop_asus_vivobook_go_e1404fa_18.png"
@@ -190,7 +192,7 @@ export default function Home() {
                     <span className="bhmr-6m" />
                   </div>
                   <div className="p-img ajax-loading ajax-finished">
-                    <a className="hover_detail" href="product-detail" />
+                    <a className="hover_detail" href={`product-detail?idProduct=${val.productId}`} />
                     <div className="a">  
                       <img
                         src={val.imageLink}

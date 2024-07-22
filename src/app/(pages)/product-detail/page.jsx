@@ -2,10 +2,37 @@
 import "../../../css/style2020_zip.css"
 import "../../../css/media2020.css"
 import "../../../css/otherstyle2020.css"
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getDetailProduct } from "@/service/Api-service/apiProducts";
 
 
 
 export default function ProductDetal() {
+  const [productdetail,setProductDetail] = useState("");
+    useEffect(() => {
+      const fetchData = async() => {
+      
+        const queryString = window.location.search;
+
+   
+        // Xử lý nếu query string không tồn tại
+        if (!queryString) {
+          return;
+        }
+        // Xử lý nếu query string có tồn tại
+        const urlParams = new URLSearchParams(queryString);
+        const searchQuery = urlParams.get('idProduct');
+       
+        const response = await getDetailProduct(searchQuery);
+        setProductDetail(response.result);
+           
+    }   
+    fetchData();
+     
+    },[])
+
+
     return (
         <>
  
@@ -18,13 +45,19 @@ export default function ProductDetal() {
               <div className="product_detail-header">
                 <div className="product_detail-title">
                   <h1>
-                    PC HP 280 Pro Tower G9 (9H9C2PT)(i7-12700/16GB RAM/512GB
-                    SSD/WL+BT/K+M/Win11)
+                    {productdetail?.productName}
                   </h1>
                 </div>
               </div>
               <div className="product-detail-top-left d-flex flex-wrap">
-                <div className="product-detail-img"></div>
+                <div className="product-detail-img">
+                <img
+                        src={productdetail?.imageLink}
+                        alt="Product"
+                        width={250}
+                        height={250}
+                      />
+                </div>
               </div>
               {/*  product-detail-top-right */}
               <div className=" product-detail-top-right">
@@ -64,18 +97,18 @@ export default function ProductDetal() {
                         className="product-summary-item-ul d-flex flex-wrap mb-0"
                         id="js-tskt-item"
                       >
-                        <li>CPU: Intel Core i7-12700</li>
-                        <li>Ram: 16GB</li>
-                        <li>Ổ cứng: 512GB SSD</li>
-                        <li>Ổ quang: không có</li>
-                        <li>Kết nối: Wlan + Bluetooth</li>
-                        <li>Phụ kiện: phím &amp; chuột</li>
-                        <li>OS: Windows 11 Home SL</li>
+                        <li>CategoryName: {productdetail?.categoryName}</li>
+                        <li>Price: {productdetail?.price}</li>
+                        <li>Warranty: {productdetail?.warranty}</li>
+                        <li>Brand: {productdetail?.brand}</li>
+                        <li>Tag: {productdetail?.tag}</li>
+                        <li>Tdp: {productdetail?.tdp}</li>
+                      
                       </ul>
                     </div>
                 
                     <div className="box-number-quan-detail">
-                      <span className="so-luong">Số lượng:</span>
+                      <span className="so-luong">Quantity:</span>
                       <span className="new-cart-quantity">
                         <a
                           href="javascript:void(0);"
@@ -122,7 +155,7 @@ export default function ProductDetal() {
                           className="mua-ngay th1"
                         >
                           <span>Đặt mua ngay</span> Giao nhanh tận nơi, miễn phí
-                          to�&nbsp;n quốc
+                          toàn quốc
                         </a>
                       </div>
                     </div>
@@ -218,8 +251,7 @@ export default function ProductDetal() {
                   >
                     <div className="nd title_box_scroll_content_2019 showmore">
                       <h2 className="ddnb-title spct-title">
-                        Đánh giá: PC HP 280 Pro Tower G9 (9H9C2PT) i7-12700/16GB
-                        RAM/512GB SSD/WL+BT/K+M/Win11
+                        Đánh giá: {productdetail?.productName}
                       </h2>
                       <div id="js-product-description">
                         <p>
@@ -239,22 +271,15 @@ export default function ProductDetal() {
                           </strong>
                         </h3>
                         <p>
-                          Máy tính để b�&nbsp;n HP 200 Series cung cấp cho doanh
-                          nghiệp một chiếc PC giá cả phải chăng, mạnh mẽ v�&nbsp; có
-                          thể mở rộng, được thiết kế để phát triển cùng doanh nghiệp
-                          của bạn. Chúng l�&nbsp; sự kết hợp ho�&nbsp;n hảo giữa hiệu
-                          suất, độ tin cậy v�&nbsp; bảo vệ đầu tư cho mọi môi trường.
-                          Kiểu dáng tiết kiệm diện tích song vẫn đảm bảo tính bền bỉ
-                          vốn có của dòng máy đồng bộ. Máy được tích hợp sẵn hệ điều
-                          h�&nbsp;nh bản quyền, nâng cấp hơn về mặt bảo mật dữ liệu.
-                          L�&nbsp; một trong những sản phẩm phù hợp d�&nbsp;nh cho đa
-                          số các doanh nghiệp.
+                        {productdetail?.description}
                         </p>
                         <p />
                       </div>
                     </div>
                   </div>
                 </div>
+              
+
                 <div className="right-column">
                   <div className="content_scroll_tab_2019" id="tab2">
                     <div className="nd title_box_scroll_content_2019">
@@ -263,152 +288,26 @@ export default function ProductDetal() {
                         <table className="tb-product-spec">
                           <tbody>
                             <tr>
-                              <td className="spec-key">Dòng CPU</td>
-                              <td className="spec-value">Core i7</td>
+                              <td className="spec-key">CategoryName</td>
+                              <td className="spec-value">{productdetail?.categoryName}</td>
                             </tr>
                             <tr>
-                              <td className="spec-key">Công nghệ CPU</td>
-                              <td className="spec-value">�&nbsp;</td>
+                              <td className="spec-key">Warranty</td>
+                              <td className="spec-value">{productdetail?.warranty}</td>
                             </tr>
                             <tr>
-                              <td className="spec-key">Mã CPU</td>
-                              <td className="spec-value">12700</td>
+                              <td className="spec-key">Brand</td>
+                              <td className="spec-value">{productdetail?.brand}</td>
                             </tr>
                             <tr>
-                              <td className="spec-key">Tốc độ CPU</td>
-                              <td className="spec-value">2.10GHz</td>
+                              <td className="spec-key">Tag</td>
+                              <td className="spec-value">{productdetail?.tag}</td>
                             </tr>
                             <tr>
-                              <td className="spec-key">Tần số turbo tối đa</td>
-                              <td className="spec-value">Up to 4.90GHz</td>
+                              <td className="spec-key">TDP</td>
+                              <td className="spec-value">{productdetail?.tdp}</td>
                             </tr>
-                            <tr>
-                              <td className="spec-key">Số lõi CPU</td>
-                              <td className="spec-value">8 Cores</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Số luồng</td>
-                              <td className="spec-value">16 Threads</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Bộ nhớ đệm</td>
-                              <td className="spec-value">25Mb Cache</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Chipset</td>
-                              <td className="spec-value">Intel H670</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Bộ nhớ RAM</td>
-                              <td className="spec-value">16Gb</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Hỗ trợ RAM tối đa</td>
-                              <td className="spec-value">64GB</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Khe cắm RAM</td>
-                              <td className="spec-value">2</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Card đồ họa</td>
-                              <td className="spec-value">Intel UHD Graphics 770</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Card tích hợp</td>
-                              <td className="spec-value">VGA onboard</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-header" colSpan={2}>
-                                Ổ CỨNG
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Dung lượng ổ cứng</td>
-                              <td className="spec-value">512GB</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Loại ổ cứng</td>
-                              <td className="spec-value">SSD</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Chuẩn ổ cứng</td>
-                              <td className="spec-value">PCIe®NVMeTMM.2 SSD</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Ổ quang</td>
-                              <td className="spec-value">NO DVD</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-header" colSpan={2}>
-                                KẾT NỐI
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Kết nối không dây</td>
-                              <td className="spec-value">
-                                Realtek RTL8821CE 802.11a/b/g/n/ac (1x1) Wi-Fi and
-                                Bluetooth 4.2 combo
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Thông số (Lan/Wireless)</td>
-                              <td className="spec-value">Gigabit LAN</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Cổng giao tiếp trước</td>
-                              <td className="spec-value">�&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Cổng giao tiếp sau</td>
-                              <td className="spec-value">
-                                1 cổng kết hợp tai nghe/micrô; 2 cổng Super Speed
-                                USBType-C® có tốc độ truyền tín hiệu 10Gbps; 4 cổng
-                                <br />
-                                Super Speed USBType-A có tốc độ truyền tín hiệu 5Gbps
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Khe cắm mở rộng</td>
-                              <td className="spec-value">
-                                1 cổng PCI có chiều cao đầy đủ; 2M.2; 1 PCIe 3 x1; 1
-                                cổng PCIe 4 x16
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="spec-header" colSpan={2}>
-                                PHẦN MỀM
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Hệ điều h�&nbsp;nh</td>
-                              <td className="spec-value">Windows 11 Home</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-header" colSpan={2}>
-                                THÔNG TIN KHÁC
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Bộ nguồn</td>
-                              <td className="spec-value">�&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Phụ kiện</td>
-                              <td className="spec-value">Key/mouse</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Kiểu dáng</td>
-                              <td className="spec-value">Case đứng to</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Kích thước</td>
-                              <td className="spec-value">15,5 x 30,3 x 33,7 cm</td>
-                            </tr>
-                            <tr>
-                              <td className="spec-key">Trọng lượng</td>
-                              <td className="spec-value">4,7 Kg</td>
-                            </tr>
+                           
                           </tbody>
                         </table>
                       </div>
