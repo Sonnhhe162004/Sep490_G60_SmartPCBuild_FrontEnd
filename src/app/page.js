@@ -12,595 +12,817 @@ import { Tooltip } from 'react-tooltip'
 export default function Home() {
 
   const pathname = usePathname();
-  const [listCPU,setListCPU] = useState([]);
-  const [listMainboard,setListMainboard] = useState([]);
-  const [listRAM,setListRAM] = useState([]);
-  const [listSSD,setListSSD] = useState([]);
-  const [listHDD,setListHDD] = useState([]);
-  const [listVGA,setListVGA] = useState([]);
-  const [listPSU,setListPSU] = useState([]);
-  const [listCase,setListCase] = useState([]);
-  const [listColling,setListColling] = useState([]);
-  const [listKeyboard,setListKeyboard] = useState([]);
-  const [listMouse,setListMouse] = useState([]);
-  const [listMonitor,setListMonitor] = useState([]);
-  const [searchProduct,setSearchProduct] = useState("")
-  const [cateID,setCateID] = useState("")
+  const [listCPU, setListCPU] = useState([]);
+  const [listMainboard, setListMainboard] = useState([]);
+  const [listRAM, setListRAM] = useState([]);
+  const [listSSD, setListSSD] = useState([]);
+  const [listHDD, setListHDD] = useState([]);
+  const [listVGA, setListVGA] = useState([]);
+  const [listPSU, setListPSU] = useState([]);
+  const [listCase, setListCase] = useState([]);
+  const [listColling, setListColling] = useState([]);
+  const [listKeyboard, setListKeyboard] = useState([]);
+  const [listMouse, setListMouse] = useState([]);
+  const [listMonitor, setListMonitor] = useState([]);
+  const [searchProduct, setSearchProduct] = useState("")
+  const [cateID, setCateID] = useState("")
 
-  const [listSearchProduct,setListSearchProduct]  = useState([]);
+  const [listSearchProduct, setListSearchProduct] = useState([]);
 
 
-  
+
   useEffect(() => {
-    
+
     const fetchData = async () => {
       try {
-        const resCPU = await getData(1); 
+        const resCPU = await getData(1);
         setListCPU(resCPU.result);
-        const resMainboard = await getData(2); 
+        const resMainboard = await getData(2);
         setListMainboard(resMainboard.result);
-     
-        const resRAM = await getData(3); 
+
+        const resRAM = await getData(3);
         setListRAM(resRAM.result);
-        const resSSD = await getData(4); 
+        const resSSD = await getData(4);
         setListSSD(resSSD.result);
-        const resHDD = await getData(5); 
+        const resHDD = await getData(5);
         setListHDD(resHDD.result);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
-    
-    },[]);
-    
 
-    
-   
+  }, []);
 
 
-     
-    
-      
- 
+
+
+
+
+
+
+
+
   const showHeader =
     pathname === "/sign-in" || pathname === "/create-account" ? false : true;
-    return (
-      <>
-  {listSearchProduct?.length > 0 ? (
-      <>
-         <div className="container-2019 ">
-          
-          <div id="cate-homepage-2023-com">
-            <div
-              className=" homepage-product-2019 d-inline-block w-100 js-category-home"
-              id="boxcate-1106"
-              style={{ minHeight: 400 }}
-            >
-              <div className="js-glee-block">
-                <div className="title_box_center_2019 wow">
-                  <h2 className="h_title_2019">TÌM KIẾM : {searchProduct} ({(listSearchProduct?.length)} sản phẩm) </h2>
-                 
-                  <a href="/laptop-tablet-mobile" className="viewall">
-                    See all <i className="fal fa-long-arrow-right" />
-                  </a>
-                </div>
-              </div>
-              <div className="js-glee-block">
-                <div
-                  className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
-                 
-                >
-                  <div className="owl-stage-outer">
-                    <div
-                      className="owl-stage flex"
-                      
-                    >
-        
-                    {listSearchProduct?.slice(0,5).map((val, index) => (
-                      <div className="owl-item active" style={{ width: 236 }}>
-                        <div
-                          className="p-component loaded p-frame-bhmr-6m"
-                        
-                        >
-                          <div className="p-iconLTAU811">
-                            <span className="bhmr-6m" />
-                          </div>
-                          <div className="p-img ajax-loading ajax-finished">
+  return (
+    <>
+      {listSearchProduct?.length > 0 ? (
+        <>
+          <div className="container-2019 ">
 
-                        
-                            <a className="hover_detail" href={`product-detail?idProduct=${item.id}`} />
-                            <div className="a">
-                              <img
-                                src="https://hanoicomputercdn.com/media/product/250_73001_laptop_asus_vivobook_go_e1404fa_18.png"
-                                alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
-                                width={250}
-                                height={250}
-                              />
+            <div id="cate-homepage-2023-com">
+              <div
+                className=" homepage-product-2019 d-inline-block w-100 js-category-home"
+                id="boxcate-1106"
+                style={{ minHeight: 400 }}
+              >
+                <div className="js-glee-block">
+                  <div className="title_box_center_2019 wow">
+                    <h2 className="h_title_2019">TÌM KIẾM : {searchProduct} ({(listSearchProduct?.length)} sản phẩm) </h2>
+
+                    <a href="/laptop-tablet-mobile" className="viewall">
+                      See all <i className="fal fa-long-arrow-right" />
+                    </a>
+                  </div>
+                </div>
+                <div className="js-glee-block">
+                  <div
+                    className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
+
+                  >
+                    <div className="owl-stage-outer">
+                      <div
+                        className="owl-stage flex"
+
+                      >
+
+                        {listSearchProduct?.slice(0, 5).map((val, index) => (
+                          <div className="owl-item active" style={{ width: 236 }}>
+                            <div
+                              className="p-component loaded p-frame-bhmr-6m"
+
+                            >
+                              <div className="p-iconLTAU811">
+                                <span className="bhmr-6m" />
+                              </div>
+                              <div className="p-img ajax-loading ajax-finished">
+
+
+                                <a className="hover_detail" href={`product-detail?idProduct=${item.id}`} />
+                                <div className="a">
+                                  <img
+                                    src="https://hanoicomputercdn.com/media/product/250_73001_laptop_asus_vivobook_go_e1404fa_18.png"
+                                    alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
+                                    width={250}
+                                    height={250}
+                                  />
+                                </div>
+                              </div>
+                              <div className="align-items-center d-flex flex-wrap my-2">
+
+                                <p className="p-sku">Brand: {val.brand}</p>
+                              </div>
+                              <div className="p-info">
+                                <p className="p-name" style={{ height: '30px' }}>
+                                  <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
+                                    {" "}
+                                    {val.productName}
+                                  </a>
+                                </p>
+
+                                <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
+                                <span className="p-haskmai">
+                                  <i className="icons icon-gift" />{" "}
+                                </span>
+                              </div>
+
+
                             </div>
                           </div>
-                          <div className="align-items-center d-flex flex-wrap my-2">
-                           
-                            <p className="p-sku">Brand: {val.brand}</p>
-                          </div>
-                          <div className="p-info">
-                            <p className="p-name" style={{height:'30px'}}>
-                              <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
-                                {" "}
-                               {val.productName}
-                              </a>
-                            </p>
-                           
-                            <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
-                            <span className="p-haskmai">
-                              <i className="icons icon-gift" />{" "}
-                            </span>
-                          </div>
-                        
-                        
-                        </div>
+                        ))}
                       </div>
-                    ))}
                     </div>
-                  </div>
-                 
-        
-                 
-                </div>
-              </div>
-            </div>
-            </div>
-            </div>
-       </>
-  ) :
-   <> 
-   <div className="container-2019 ">
-          
-  <div id="cate-homepage-2023-com">
-    <div
-      className=" homepage-product-2019 d-inline-block w-100 js-category-home"
-      id="boxcate-1106"
-      style={{ minHeight: 400 }}
-    >
-      <div className="js-glee-block">
-        <div className="title_box_center_2019 wow">
-          <h2 className="h_title_2019">CPU</h2>
-         
-          <a href="/laptop-tablet-mobile" className="viewall">
-            See all <i className="fal fa-long-arrow-right" />
-          </a>
-        </div>
-      </div>
-      <div className="js-glee-block">
-        <div
-          className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
-         
-        >
-          <div className="owl-stage-outer">
-            <div
-              className="owl-stage flex"
-              
-            >
 
-            {listCPU.slice(0,5).map((val, index) => (
-              <div className="owl-item active" style={{ width: 236 }}>
-                <div
-                  className="p-component loaded p-frame-bhmr-6m"
-                
-                >
-                  <div className="p-iconLTAU811">
-                    <span className="bhmr-6m" />
+
+
                   </div>
-                  <div className="p-img ajax-loading ajax-finished">
-                    <a className="hover_detail" href={`product-detail?idProduct=${val.productId}`} />
-                    <div className="a">  
-                      <img
-                        src={val.imageLink}
-                        alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
-                        width={250}
-                        height={250}
-                      />
-                    </div>
-                  </div>
-                  <div className="align-items-center d-flex flex-wrap my-2">
-                   
-                    <p className="p-sku">Brand: {val.brand}</p>
-                  </div>
-                  <div className="p-info">
-                    <p className="p-name" style={{height:'30px'}}>
-                      <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
-                        {" "}
-                       {val.productName}
-                      </a>
-                    </p>
-                   
-                    <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
-                    <span className="p-haskmai">
-                      <i className="icons icon-gift" />{" "}
-                    </span>
-                  </div>
-                
-                
                 </div>
               </div>
-            ))}
             </div>
           </div>
-         
+        </>
+      ) :
+        <>
+          <div className="container-2019 ">
 
-         
-        </div>
-      </div>
-    </div>
- 
-    <div
-      className=" homepage-product-2019 d-inline-block w-100 js-category-home"
-      id="boxcate-1106"
-      style={{ minHeight: 400 }}
-    >
-      <div className="js-glee-block">
-        <div className="title_box_center_2019 wow">
-          <h2 className="h_title_2019">MainBoard</h2>
-         
-          <a href="/laptop-tablet-mobile" className="viewall">
-            See all <i className="fal fa-long-arrow-right" />
-          </a>
-        </div>
-      </div>
-      <div className="js-glee-block">
-        <div
-          className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
-         
-        >
-          <div className="owl-stage-outer">
-            <div
-              className="owl-stage flex"
-              
-            >
+            <div id="cate-homepage-2023-com">
+              <div
+                className=" homepage-product-2019 d-inline-block w-100 js-category-home"
+                id="boxcate-1106"
+                style={{ minHeight: 400 }}
+              >
+                <div className="js-glee-block">
+                  <div className="title_box_center_2019 wow">
+                    <h2 className="h_title_2019">CPU</h2>
 
-            {listMainboard.slice(0,5).map((val, index) => (
-              <div className="owl-item active" style={{ width: 236 }}>
-                <div
-                  className="p-component loaded p-frame-bhmr-6m"
-                
-                >
-                  <div className="p-iconLTAU811">
-                    <span className="bhmr-6m" />
+                    <a href="/laptop-tablet-mobile" className="viewall">
+                      See all <i className="fal fa-long-arrow-right" />
+                    </a>
                   </div>
-                  <div className="p-img ajax-loading ajax-finished">
-                    <a href="/" />
-                    <div className="a">
-                      <img
-                        src={val.imageLink}
-                        alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
-                        width={250}
-                        height={250}
-                      />
+                </div>
+                <div className="js-glee-block">
+                  <div
+                    className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
+
+                  >
+                    <div className="owl-stage-outer">
+                      <div
+                        className="owl-stage flex"
+
+                      >
+
+                        {listCPU.slice(0, 5).map((val, index) => (
+                          <>
+                            <div className="owl-item active" style={{ width: 236 }}>
+                              <div
+                                className="p-component loaded p-frame-bhmr-6m"
+
+                              >
+                                <div className="p-iconLTAU811">
+                                  <span className="bhmr-6m" />
+                                </div>
+                                <div className="p-img ajax-loading ajax-finished">
+                                  <a className="hover_detail1" href={`product-detail?idProduct=${val.productId}`} />
+                                  <div className="a">
+                                    <img
+                                      src={val.imageLink}
+                                      alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
+                                      width={250}
+                                      height={250}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="align-items-center d-flex flex-wrap my-2">
+
+                                  <p className="p-sku">Brand: {val.brand}</p>
+                                </div>
+                                <div className="p-info">
+                                  <p className="p-name" style={{ height: '30px' }}>
+                                    <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
+                                      {" "}
+                                      {val.productName}
+                                    </a>
+                                  </p>
+
+                                  <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
+                                  <span className="p-haskmai">
+                                    <i className="icons icon-gift" />{" "}
+                                  </span>
+                                </div>
+
+
+                              </div>
+                            </div>
+                            <Tooltip style={{ backgroundColor: 'white' }} anchorSelect=".hover_detail1" place="right-end">
+                              <div className="tooltip-2019">
+                                <a
+                                  href=""
+                                  className="hover_name"
+                                >
+                                  {val.productName}
+                                </a>
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                      <td>- Giá bán:</td>
+                                      <td>
+                                        <span className="img_price_full">{formatNumber(val.price)}₫</span>
+                                      </td>
+                                    </tr>
+
+                                    {/*  */}
+                                    <tr>
+                                      <td>- Bảo hành</td>
+                                      <td>12 Tháng</td>
+                                    </tr>
+                                    <tr className="classhidden2024">
+                                      <td>- Kho hàng:</td>
+                                      <td>
+                                        <span
+                                          className="dongbotonkho js-dongbotonkho dongbotonkho-80652"
+                                          data-id={80652}
+                                        >
+                                          <span
+                                            className="detail "
+                                            style={{ color: "red", whiteSpace: "pre-line" }}
+                                          />
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <span className="tooltip-title">
+                                  <i className="fal fa-layer-group" /> Thông số sản phẩm
+                                </span>
+                                <div className="hover_offer ">
+                                  - Brand: {val.brand}
+                                  <br />
+                                  - Warranty: {val.warranty}
+                                  <br />
+                                  - Tag: {val.tag}
+                                  <br />
+                                  - TDP: {val.tdp}
+                                  <br />
+
+                                </div>
+
+                              </div>
+                            </Tooltip></>
+
+
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <div className="align-items-center d-flex flex-wrap my-2">
-                   
-                    <p className="p-sku">Brand: {val.brand}</p>
-                  </div>
-                  <div className="p-info">
-                    <p className="p-name" style={{height:'30px'}}>
-                      <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
-                        {" "}
-                       {val.productName}
-                      </a>
-                    </p>
-                   
-                    <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
-                    <span className="p-haskmai">
-                      <i className="icons icon-gift" />{" "}
-                    </span>
-                  </div>
 
+
+
+                  </div>
                 </div>
               </div>
-            ))}
-            </div>
-          </div>
-         
 
-         
-        </div>
-      </div>
-    </div>
-    <div
-      className=" homepage-product-2019 d-inline-block w-100 js-category-home"
-      id="boxcate-1106"
-      style={{ minHeight: 400 }}
-    >
-      <div className="js-glee-block">
-        <div className="title_box_center_2019 wow">
-          <h2 className="h_title_2019">RAM</h2>
-         
-          <a href="/laptop-tablet-mobile" className="viewall">
-            See all <i className="fal fa-long-arrow-right" />
-          </a>
-        </div>
-      </div>
-      <div className="js-glee-block">
-        <div
-          className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
-         
-        >
-          <div className="owl-stage-outer">
-            <div
-              className="owl-stage flex"
-              
-            >
+              <div
+                className=" homepage-product-2019 d-inline-block w-100 js-category-home"
+                id="boxcate-1106"
+                style={{ minHeight: 400 }}
+              >
+                <div className="js-glee-block">
+                  <div className="title_box_center_2019 wow">
+                    <h2 className="h_title_2019">MainBoard</h2>
 
-            {listRAM.slice(0,5).map((val, index) => (
-              <div className="owl-item active" style={{ width: 236 }}>
-                <div
-                  className="p-component loaded p-frame-bhmr-6m"
-                
-                >
-                  <div className="p-iconLTAU811">
-                    <span className="bhmr-6m" />
+                    <a href="/laptop-tablet-mobile" className="viewall">
+                      See all <i className="fal fa-long-arrow-right" />
+                    </a>
                   </div>
-                  <div className="p-img ajax-loading ajax-finished">
-                    <a href="/" />
-                    <div className="a">
-                      <img
-                         src={val.imageLink}
-                        alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
-                        width={250}
-                        height={250}
-                      />
+                </div>
+                <div className="js-glee-block">
+                  <div
+                    className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
+
+                  >
+                    <div className="owl-stage-outer">
+                      <div
+                        className="owl-stage flex"
+
+                      >
+
+                        {listMainboard.slice(0, 5).map((val, index) => (
+                          <>
+                            <div className="owl-item active" style={{ width: 236 }}>
+                              <div
+                                className="p-component loaded p-frame-bhmr-6m"
+
+                              >
+                                <div className="p-iconLTAU811">
+                                  <span className="bhmr-6m" />
+                                </div>
+                                <div className="p-img ajax-loading ajax-finished">
+                                  <a className="hover_detail2" href={`product-detail?idProduct=${val.productId}`} />
+                                  <div className="a">
+                                    <img
+                                      src={val.imageLink}
+                                      alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
+                                      width={250}
+                                      height={250}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="align-items-center d-flex flex-wrap my-2">
+
+                                  <p className="p-sku">Brand: {val.brand}</p>
+                                </div>
+                                <div className="p-info">
+                                  <p className="p-name" style={{ height: '30px' }}>
+                                    <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
+                                      {" "}
+                                      {val.productName}
+                                    </a>
+                                  </p>
+
+                                  <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
+                                  <span className="p-haskmai">
+                                    <i className="icons icon-gift" />{" "}
+                                  </span>
+                                </div>
+
+                              </div>
+                            </div>
+                            <Tooltip style={{ backgroundColor: 'white' }} anchorSelect=".hover_detail2" place="right-end">
+                              <div className="tooltip-2019">
+                                <a
+                                  href=""
+                                  className="hover_name"
+                                >
+                                  {val.productName}
+                                </a>
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                      <td>- Giá bán:</td>
+                                      <td>
+                                        <span className="img_price_full">{formatNumber(val.price)}₫</span>
+                                      </td>
+                                    </tr>
+
+                                    {/*  */}
+                                    <tr>
+                                      <td>- Bảo hành</td>
+                                      <td>12 Tháng</td>
+                                    </tr>
+                                    <tr className="classhidden2024">
+                                      <td>- Kho hàng:</td>
+                                      <td>
+                                        <span
+                                          className="dongbotonkho js-dongbotonkho dongbotonkho-80652"
+                                          data-id={80652}
+                                        >
+                                          <span
+                                            className="detail "
+                                            style={{ color: "red", whiteSpace: "pre-line" }}
+                                          />
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <span className="tooltip-title">
+                                  <i className="fal fa-layer-group" /> Thông số sản phẩm
+                                </span>
+                                <div className="hover_offer ">
+                                  - Brand: {val.brand}
+                                  <br />
+                                  - Warranty: {val.warranty}
+                                  <br />
+                                  - Tag: {val.tag}
+                                  <br />
+                                  - TDP: {val.tdp}
+                                  <br />
+
+                                </div>
+
+                              </div>
+                            </Tooltip></>
+
+
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <div className="align-items-center d-flex flex-wrap my-2">
-                   
-                    <p className="p-sku">Brand: {val.brand}</p>
-                  </div>
-                  <div className="p-info">
-                    <p className="p-name" style={{height:'30px'}}>
-                      <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
-                        {" "}
-                       {val.productName}
-                      </a>
-                    </p>
-                   
-                    <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
-                    <span className="p-haskmai">
-                      <i className="icons icon-gift" />{" "}
-                    </span>
-                  </div>
 
+
+
+                  </div>
                 </div>
               </div>
-            ))}
-            </div>
-          </div>
-         
+              <div
+                className=" homepage-product-2019 d-inline-block w-100 js-category-home"
+                id="boxcate-1106"
+                style={{ minHeight: 400 }}
+              >
+                <div className="js-glee-block">
+                  <div className="title_box_center_2019 wow">
+                    <h2 className="h_title_2019">RAM</h2>
 
-         
-        </div>
-      </div>
-    </div>
-    <div
-      className=" homepage-product-2019 d-inline-block w-100 js-category-home"
-      id="boxcate-1106"
-      style={{ minHeight: 400 }}
-    >
-      <div className="js-glee-block">
-        <div className="title_box_center_2019 wow">
-          <h2 className="h_title_2019">SSD</h2>
-         
-          <a href="/laptop-tablet-mobile" className="viewall">
-            See all <i className="fal fa-long-arrow-right" />
-          </a>
-        </div>
-      </div>
-      <div className="js-glee-block">
-        <div
-          className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
-         
-        >
-          <div className="owl-stage-outer">
-            <div
-              className="owl-stage flex"
-              
-            >
-
-            {listSSD.slice(0,5).map((val, index) => (
-              <div className="owl-item active" style={{ width: 236 }}>
-                <div
-                  className="p-component loaded p-frame-bhmr-6m"
-                
-                >
-                  <div className="p-iconLTAU811">
-                    <span className="bhmr-6m" />
+                    <a href="/laptop-tablet-mobile" className="viewall">
+                      See all <i className="fal fa-long-arrow-right" />
+                    </a>
                   </div>
-                  <div className="p-img ajax-loading ajax-finished">
-                    <a href="/" />
-                    <div className="a">
-                      <img
-                       src={val.imageLink}
-                        alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
-                        width={250}
-                        height={250}
-                      />
+                </div>
+                <div className="js-glee-block">
+                  <div
+                    className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
+
+                  >
+                    <div className="owl-stage-outer">
+                      <div
+                        className="owl-stage flex"
+
+                      >
+
+                        {listRAM.slice(0, 5).map((val, index) => (
+                          <>
+                            <div className="owl-item active" style={{ width: 236 }}>
+                              <div
+                                className="p-component loaded p-frame-bhmr-6m"
+
+                              >
+                                <div className="p-iconLTAU811">
+                                  <span className="bhmr-6m" />
+                                </div>
+                                <div className="p-img ajax-loading ajax-finished">
+                                  <a className="hover_detail4" href={`product-detail?idProduct=${val.productId}`} />
+                                  <div className="a">
+                                    <img
+                                      src={val.imageLink}
+                                      alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
+                                      width={250}
+                                      height={250}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="align-items-center d-flex flex-wrap my-2">
+
+                                  <p className="p-sku">Brand: {val.brand}</p>
+                                </div>
+                                <div className="p-info">
+                                  <p className="p-name" style={{ height: '30px' }}>
+                                    <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
+                                      {" "}
+                                      {val.productName}
+                                    </a>
+                                  </p>
+
+                                  <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
+                                  <span className="p-haskmai">
+                                    <i className="icons icon-gift" />{" "}
+                                  </span>
+                                </div>
+
+                              </div>
+                            </div>
+                            <Tooltip style={{ backgroundColor: 'white' }} anchorSelect=".hover_detail4" place="right-end">
+                              <div className="tooltip-2019">
+                                <a
+                                  href=""
+                                  className="hover_name"
+                                >
+                                  {val.productName}
+                                </a>
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                      <td>- Giá bán:</td>
+                                      <td>
+                                        <span className="img_price_full">{formatNumber(val.price)}₫</span>
+                                      </td>
+                                    </tr>
+
+                                    {/*  */}
+                                    <tr>
+                                      <td>- Bảo hành</td>
+                                      <td>12 Tháng</td>
+                                    </tr>
+                                    <tr className="classhidden2024">
+                                      <td>- Kho hàng:</td>
+                                      <td>
+                                        <span
+                                          className="dongbotonkho js-dongbotonkho dongbotonkho-80652"
+                                          data-id={80652}
+                                        >
+                                          <span
+                                            className="detail "
+                                            style={{ color: "red", whiteSpace: "pre-line" }}
+                                          />
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <span className="tooltip-title">
+                                  <i className="fal fa-layer-group" /> Thông số sản phẩm
+                                </span>
+                                <div className="hover_offer ">
+                                  - Brand: {val.brand}
+                                  <br />
+                                  - Warranty: {val.warranty}
+                                  <br />
+                                  - Tag: {val.tag}
+                                  <br />
+                                  - TDP: {val.tdp}
+                                  <br />
+
+                                </div>
+
+                              </div>
+                            </Tooltip></>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <div className="align-items-center d-flex flex-wrap my-2">
-                   
-                    <p className="p-sku">Brand: {val.brand}</p>
-                  </div>
-                  <div className="p-info">
-                    <p className="p-name" style={{height:'30px'}}>
-                      <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
-                        {" "}
-                       {val.productName}
-                      </a>
-                    </p>
-                   
-                    <span className="p-price">   {formatNumber(val.price)} VNĐ</span>
-                    <span className="p-haskmai">
-                      <i className="icons icon-gift" />{" "}
-                    </span>
-                  </div>
 
+
+
+                  </div>
                 </div>
               </div>
-            ))}
-            </div>
-          </div>
+              <div
+                className=" homepage-product-2019 d-inline-block w-100 js-category-home"
+                id="boxcate-1106"
+                style={{ minHeight: 400 }}
+              >
+                <div className="js-glee-block">
+                  <div className="title_box_center_2019 wow">
+                    <h2 className="h_title_2019">SSD</h2>
 
-        </div>
-      </div>
-    </div>
-    <div
-      className=" homepage-product-2019 d-inline-block w-100 js-category-home"
-      id="boxcate-1106"
-      style={{ minHeight: 400 }}
-    >
-      <div className="js-glee-block">
-        <div className="title_box_center_2019 wow">
-          <h2 className="h_title_2019">HDD</h2>
-         
-          <a href="/laptop-tablet-mobile" className="viewall">
-            See all <i className="fal fa-long-arrow-right" />
-          </a>
-        </div>
-      </div>
-      <div className="js-glee-block">
-        <div
-          className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
-         
-        >
-          <div className="owl-stage-outer">
-            <div
-              className="owl-stage flex"
-              
-            >
-
-            {listHDD.slice(0,5).map((val, index) => (
-              <div className="owl-item active" style={{ width: 236 }}>
-                <div
-                  className="p-component loaded p-frame-bhmr-6m"
-                
-                >
-                  <div className="p-iconLTAU811">
-                    <span className="bhmr-6m" />
+                    <a href="/laptop-tablet-mobile" className="viewall">
+                      See all <i className="fal fa-long-arrow-right" />
+                    </a>
                   </div>
-                  <div className="p-img ajax-loading ajax-finished">
-                    <a href="/" />
-                    <div className="a">
-                      <img
-                         src={val.imageLink}
-                        alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
-                        width={250}
-                        height={250}
-                      />
+                </div>
+                <div className="js-glee-block">
+                  <div
+                    className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
+
+                  >
+                    <div className="owl-stage-outer">
+                      <div
+                        className="owl-stage flex"
+
+                      >
+
+                        {listSSD.slice(0, 5).map((val, index) => (
+                          <>
+                            <div className="owl-item active" style={{ width: 236 }}>
+                              <div
+                                className="p-component loaded p-frame-bhmr-6m"
+
+                              >
+                                <div className="p-iconLTAU811">
+                                  <span className="bhmr-6m" />
+                                </div>
+                                <div className="p-img ajax-loading ajax-finished">
+                                  <a className="hover_detail5" href={`product-detail?idProduct=${val.productId}`} />
+                                  <div className="a">
+                                    <img
+                                      src={val.imageLink}
+                                      alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
+                                      width={250}
+                                      height={250}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="align-items-center d-flex flex-wrap my-2">
+
+                                  <p className="p-sku">Brand: {val.brand}</p>
+                                </div>
+                                <div className="p-info">
+                                  <p className="p-name" style={{ height: '30px' }}>
+                                    <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
+                                      {" "}
+                                      {val.productName}
+                                    </a>
+                                  </p>
+
+                                  <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
+                                  <span className="p-haskmai">
+                                    <i className="icons icon-gift" />{" "}
+                                  </span>
+                                </div>
+
+                              </div>
+                            </div>
+                            <Tooltip style={{ backgroundColor: 'white' }} anchorSelect=".hover_detail5" place="right-end">
+                              <div className="tooltip-2019">
+                                <a
+                                  href=""
+                                  className="hover_name"
+                                >
+                                  {val.productName}
+                                </a>
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                      <td>- Giá bán:</td>
+                                      <td>
+                                        <span className="img_price_full">{formatNumber(val.price)}₫</span>
+                                      </td>
+                                    </tr>
+
+                                    {/*  */}
+                                    <tr>
+                                      <td>- Bảo hành</td>
+                                      <td>12 Tháng</td>
+                                    </tr>
+                                    <tr className="classhidden2024">
+                                      <td>- Kho hàng:</td>
+                                      <td>
+                                        <span
+                                          className="dongbotonkho js-dongbotonkho dongbotonkho-80652"
+                                          data-id={80652}
+                                        >
+                                          <span
+                                            className="detail "
+                                            style={{ color: "red", whiteSpace: "pre-line" }}
+                                          />
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <span className="tooltip-title">
+                                  <i className="fal fa-layer-group" /> Thông số sản phẩm
+                                </span>
+                                <div className="hover_offer ">
+                                  - Brand: {val.brand}
+                                  <br />
+                                  - Warranty: {val.warranty}
+                                  <br />
+                                  - Tag: {val.tag}
+                                  <br />
+                                  - TDP: {val.tdp}
+                                  <br />
+
+                                </div>
+
+                              </div>
+                            </Tooltip></>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <div className="align-items-center d-flex flex-wrap my-2">
-                   
-                    <p className="p-sku">Brand: {val.brand}</p>
-                  </div>
-                  <div className="p-info">
-                    <p className="p-name" style={{height:'30px'}}>
-                      <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
-                        {" "}
-                       {val.productName}
-                      </a>
-                    </p>
-                   
-                    <span className="p-price">   {formatNumber(val.price)} VNĐ</span>
-                    <span className="p-haskmai">
-                      <i className="icons icon-gift" />{" "}
-                    </span>
-                  </div>
 
+                  </div>
                 </div>
               </div>
-            ))}
+              <div
+                className=" homepage-product-2019 d-inline-block w-100 js-category-home"
+                id="boxcate-1106"
+                style={{ minHeight: 400 }}
+              >
+                <div className="js-glee-block">
+                  <div className="title_box_center_2019 wow">
+                    <h2 className="h_title_2019">HDD</h2>
+
+                    <a href="/laptop-tablet-mobile" className="viewall">
+                      See all <i className="fal fa-long-arrow-right" />
+                    </a>
+                  </div>
+                </div>
+                <div className="js-glee-block">
+                  <div
+                    className="product-home custom-nav js-productslide-cate1106 owl-theme owl-loaded owl-drag"
+
+                  >
+                    <div className="owl-stage-outer">
+                      <div
+                        className="owl-stage flex"
+
+                      >
+
+                        {listHDD.slice(0, 5).map((val, index) => (
+                          <>
+                            <div className="owl-item active" style={{ width: 236 }}>
+                              <div
+                                className="p-component loaded p-frame-bhmr-6m"
+
+                              >
+                                <div className="p-iconLTAU811">
+                                  <span className="bhmr-6m" />
+                                </div>
+                                <div className="p-img ajax-loading ajax-finished">
+                                  <a className="hover_detail6" href={`product-detail?idProduct=${val.productId}`} />
+                                  <div className="a">
+                                    <img
+                                      src={val.imageLink}
+                                      alt="Laptop Asus VivoBook E1404FA-NK177W (R5 7520U/16GB RAM/512GB SSD/14 FHD/Win11/Bạc)"
+                                      width={250}
+                                      height={250}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="align-items-center d-flex flex-wrap my-2">
+
+                                  <p className="p-sku">Brand: {val.brand}</p>
+                                </div>
+                                <div className="p-info">
+                                  <p className="p-name" style={{ height: '30px' }}>
+                                    <a href="/laptop-asus-vivobook-e1404fa-nk177w-r5-7520u-16gb-ram-512gb-ssd-14-fhd-win11-bac">
+                                      {" "}
+                                      {val.productName}
+                                    </a>
+                                  </p>
+
+                                  <span className="p-price">  {formatNumber(val.price)} VNĐ</span>
+                                  <span className="p-haskmai">
+                                    <i className="icons icon-gift" />{" "}
+                                  </span>
+                                </div>
+
+                              </div>
+                            </div>
+                            <Tooltip style={{ backgroundColor: 'white' }} anchorSelect=".hover_detail6" place="right-end">
+                              <div className="tooltip-2019">
+                                <a
+                                  href=""
+                                  className="hover_name"
+                                >
+                                  {val.productName}
+                                </a>
+                                <table>
+                                  <tbody>
+                                    <tr>
+                                      <td>- Giá bán:</td>
+                                      <td>
+                                        <span className="img_price_full">{formatNumber(val.price)}₫</span>
+                                      </td>
+                                    </tr>
+
+                                    {/*  */}
+                                    <tr>
+                                      <td>- Bảo hành</td>
+                                      <td>12 Tháng</td>
+                                    </tr>
+                                    <tr className="classhidden2024">
+                                      <td>- Kho hàng:</td>
+                                      <td>
+                                        <span
+                                          className="dongbotonkho js-dongbotonkho dongbotonkho-80652"
+                                          data-id={80652}
+                                        >
+                                          <span
+                                            className="detail "
+                                            style={{ color: "red", whiteSpace: "pre-line" }}
+                                          />
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <span className="tooltip-title">
+                                  <i className="fal fa-layer-group" /> Thông số sản phẩm
+                                </span>
+                                <div className="hover_offer ">
+                                  - Brand: {val.brand}
+                                  <br />
+                                  - Warranty: {val.warranty}
+                                  <br />
+                                  - Tag: {val.tag}
+                                  <br />
+                                  - TDP: {val.tdp}
+                                  <br />
+
+                                </div>
+
+                              </div>
+                            </Tooltip></>
+                        ))}
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
 
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <Tooltip style={{backgroundColor:'white'}}  anchorSelect=".hover_detail" place="right-end">
-<div className="tooltip-2019">
-<a
-  href=""
-  className="hover_name"
->
-  PC HP 280 Pro Tower G9 (9H9C2PT)(i7-12700/16GB RAM/512GB
-  SSD/WL+BT/K+M/Win11)
-</a>
-<table>
-  <tbody>
-    <tr>
-      <td>- Giá bán:</td>
-      <td>
-        <span className="img_price_full">21.099.000₫</span>
-      </td>
-    </tr>
-    <tr className="p-extend-minprice">
-      <td>- Giá HACOM:</td>
-      <td className="p-extend-minprice-text">
-        <span className="min_price"> 18.399.000₫</span>
-        <span className="hover_vat">[Đã bao gồm VAT]</span>
-      </td>
-    </tr>
-    {/*  */}
-    <tr>
-      <td>- Bảo h�&nbsp;nh:</td>
-      <td>12 Tháng</td>
-    </tr>
-    <tr className="classhidden2024">
-      <td>- Kho h�&nbsp;ng:</td>
-      <td>
-        <span
-          className="dongbotonkho js-dongbotonkho dongbotonkho-80652"
-          data-id={80652}
-        >
-          <span
-            className="detail "
-            style={{ color: "red", whiteSpace: "pre-line" }}
-          />
-        </span>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<span className="tooltip-title">
-  <i className="fal fa-layer-group" /> Thông số sản phẩm
-</span>
-<div className="hover_offer ">
-  - CPU: Intel Core i7-12700
-  <br />
-  - Ram: 16GB
-  <br />
-  - Ổ cứng: 512GB SSD
-  <br />
-  - Ổ quang: không có
-  <br />
-  - Kết nối: Wlan + Bluetooth
-  <br />
-</div>
-
-</div>
-</Tooltip>
-</div> </>} 
-   
-  
-   
-  </>
-  
-     
-    
-    );
+          </div> </>}
 
 
 
- 
+    </>
+
+
+
+  );
+
+
+
+
 }
