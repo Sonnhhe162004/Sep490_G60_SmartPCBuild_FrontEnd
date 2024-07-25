@@ -3,13 +3,12 @@ import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { FilterProducts } from "@/service/Api-service/apiProducts";
 
 export default function Filter({ id, onFilterSelected }) {
   const [DataFilter, setDataFilter] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,17 +21,22 @@ export default function Filter({ id, onFilterSelected }) {
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    onFilterSelected(selectedFilters);
+  }, [selectedFilters, onFilterSelected]);
+
   const handleCheckboxChange = (filterName, value) => {
-    setSelectedFilters((prevState) => {
-      const newFilters = prevState.filter(
-        (filter) => !filter.hasOwnProperty(filterName)
-      );
-      newFilters.push({ [filterName]: value });
-      onFilterSelected(newFilters);
+    setSelectedFilters(prevState => {
+      let newFilters = prevState.filter(filter => Object.keys(filter)[0] !== filterName);
+      const isSelected = prevState.some(filter => filter[filterName] === value);
+  
+      if (!isSelected) {
+        newFilters = [...newFilters, { [filterName]: value }];
+      }
       return newFilters;
     });
   };
-
+  
   return (
     <div className="w-full p-4 bg-white dark:bg-zinc-800 border-r max-h-[300px] lg:max-h-[450px] 2xl:max-h-[600px] border-gray-300 px-1.5 overflow-y-scroll">
       <h2 className="font-bold mb-4">Filter products by</h2>
@@ -63,4 +67,5 @@ export default function Filter({ id, onFilterSelected }) {
       </div>
     </div>
   );
+  
 }

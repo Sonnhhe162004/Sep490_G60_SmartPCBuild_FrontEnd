@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import {  RegisterAdmin } from '@/service/Login/login';
-
+import { toast } from 'react-hot-toast';
 export default function Register() {
     const [fullname, setFullname] = useState('');
     const [username, setUsername] = useState('');
@@ -15,11 +15,11 @@ export default function Register() {
     
         try {
           if (password !== repeatPassword) {
-            alert('Mật khẩu lặp lại không khớp');
+            toast.error('Repeated passwords do not match');
             return;
           }
           const data = {
-            fullname: fullname,
+            fullName: fullname,
             email: email,
             phone: phone,
             address: address,
@@ -28,15 +28,15 @@ export default function Register() {
           };
     
           const response = await RegisterAdmin(data);
-          if(response.statusCode === 200) {
-            alert('Đăng ký thành công');
-            window.location.href = '/admin-login';
+          if(response.statusCode === 200 || response.statusCode === 201) {
+            toast.success('Register Success');
+            window.location.href = '/login';
           }
           else {
-            alert(response.errorMessages)
+            toast.error(response.errorMessages)
           }
         } catch (error) {
-          alert('Register Fail');
+          toast.error('Register Fail');
         }
       };
     return (

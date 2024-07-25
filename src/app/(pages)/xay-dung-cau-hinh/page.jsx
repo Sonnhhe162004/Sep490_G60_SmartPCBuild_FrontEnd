@@ -13,7 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { getDataCate } from "@/service/Api-service/apiCategorys";
 import Cookies from 'js-cookie';
 
@@ -42,7 +42,7 @@ export default function BuildConfig() {
   const onRefresh = () => {
     setTotalPrice(0);
     setRefreshFlag((prev) => !prev);
-    toast("Configuration refresh successful!");
+    toast.success("Configuration refresh successful!");
   };
   // const onOk = () => {
   //   const updatedItems = selectedItem.map(item => ({
@@ -87,7 +87,7 @@ export default function BuildConfig() {
   
     const selectedItemStr = JSON.stringify(existingItems);
     Cookies.set('selectedItem', selectedItemStr, { expires: 7 });
-    toast("All products have been added to the cart!");
+    toast.success("All products have been added to the cart!");
   };
   
   const formatCurrency = (price) => {

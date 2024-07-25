@@ -13,7 +13,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Cookies from "js-cookie";
-
+import toast from "react-hot-toast";
 export default function Cart() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -134,7 +134,7 @@ export default function Cart() {
                 <img
                   src={
                     item.imageLink ||
-                    "https://maytinh.sharekhoahoc.vn/wp-content/uploads/2021/12/8530d87af9fc1bf1a3617728d8954b16_63b594ba72d04e3bb9688047fa42ab2f_master-400x400.jpg"
+                    "https://drive.google.com/file/d/1ieHm5StVSB_mciaAk80jIYjQCdFBL8Ji/view?usp=sharing"
                   }
                   alt={item.productName}
                   className="w-24 h-24 mr-4"
