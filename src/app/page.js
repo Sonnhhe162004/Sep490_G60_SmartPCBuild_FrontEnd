@@ -98,6 +98,7 @@ export default function Home() {
                       >
 
                         {listSearchProduct?.slice(0, 5).map((val, index) => (
+                          <>
                           <div className="owl-item active" style={{ width: 236 }}>
                             <div
                               className="p-component loaded p-frame-bhmr-6m"
@@ -109,7 +110,7 @@ export default function Home() {
                               <div className="p-img ajax-loading ajax-finished">
 
 
-                                <a className="hover_detail" href={`product-detail?idProduct=${item.id}`} />
+                                <a className="hover_detailsearch" href={`product-detail?idProduct=${item.id}`} />
                                 <div className="a">
                                   <img
                                     src="https://hanoicomputercdn.com/media/product/250_73001_laptop_asus_vivobook_go_e1404fa_18.png"
@@ -140,6 +141,62 @@ export default function Home() {
 
                             </div>
                           </div>
+                           <Tooltip style={{ backgroundColor: 'white' }} anchorSelect=".hover_detailsearch" place="right-end">
+                           <div className="tooltip-2019">
+                             <a
+                               href=""
+                               className="hover_name"
+                             >
+                               {val.productName}
+                             </a>
+                             <table>
+                               <tbody>
+                                 <tr>
+                                   <td>- Giá bán:</td>
+                                   <td>
+                                     <span className="img_price_full">{formatNumber(val.price)}₫</span>
+                                   </td>
+                                 </tr>
+
+                                 {/*  */}
+                                 <tr>
+                                   <td>- Bảo hành</td>
+                                   <td>12 Tháng</td>
+                                 </tr>
+                                 <tr className="classhidden2024">
+                                   <td>- Kho hàng:</td>
+                                   <td>
+                                     <span
+                                       className="dongbotonkho js-dongbotonkho dongbotonkho-80652"
+                                       data-id={80652}
+                                     >
+                                       <span
+                                         className="detail "
+                                         style={{ color: "red", whiteSpace: "pre-line" }}
+                                       />
+                                     </span>
+                                   </td>
+                                 </tr>
+                               </tbody>
+                             </table>
+                             <span className="tooltip-title">
+                               <i className="fal fa-layer-group" /> Thông số sản phẩm
+                             </span>
+                             <div className="hover_offer ">
+                               - Brand: {val.brand}
+                               <br />
+                               - Warranty: {val.warranty}
+                               <br />
+                               - Tag: {val.tag}
+                               <br />
+                               - TDP: {val.tdp}
+                               <br />
+
+                             </div>
+
+                           </div>
+                         </Tooltip>
+                         </>
                         ))}
                       </div>
                     </div>
