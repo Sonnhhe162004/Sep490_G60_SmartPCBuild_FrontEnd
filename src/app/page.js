@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import "../../src/css/style2020_zip.css"
 import "../../src/css/media2020.css"
 import { useEffect, useState } from "react";
-import { getData, searchProductbyDes } from "@/service/Api-service/apiProducts";
+import { getDataProduct, searchProductbyDes } from "@/service/Api-service/apiProducts";
 import { formatNumber } from "@/service/convert/convertNumber";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
@@ -35,16 +35,16 @@ export default function Home() {
 
     const fetchData = async () => {
       try {
-        const resCPU = await getData(1);
+        const resCPU = await getDataProduct(1);
         setListCPU(resCPU.result);
-        const resMainboard = await getData(2);
+        const resMainboard = await getDataProduct(2);
         setListMainboard(resMainboard.result);
 
-        const resRAM = await getData(3);
+        const resRAM = await getDataProduct(3);
         setListRAM(resRAM.result);
-        const resSSD = await getData(4);
+        const resSSD = await getDataProduct(4);
         setListSSD(resSSD.result);
-        const resHDD = await getData(5);
+        const resHDD = await getDataProduct(5);
         setListHDD(resHDD.result);
       } catch (error) {
         console.error('Error fetching data:', error);

@@ -19,6 +19,26 @@ export const getData = async (data) => {
     return error;
   }
 };
+
+export const getDataProduct = async (id) => {
+  try {
+    const response = await jwtInterceptor(`Product/GetProductsByCategory?cateID=${id}` ,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    } );
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return error;
+  }
+};
+
+
 export const getDetailProduct = async (id) => {
   try {
     const response = await jwtInterceptor('Product/GetProducts?id=' + id );

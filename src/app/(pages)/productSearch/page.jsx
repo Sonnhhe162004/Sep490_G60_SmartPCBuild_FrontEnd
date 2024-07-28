@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import "../../../../src/css/style2020_zip.css"
 import "../../../../src/css/media2020.css"
 import { useEffect, useState } from "react";
-import { filterProducts, FilterProducts, getData, searchProductbyDes } from "@/service/Api-service/apiProducts";
+import { filterProducts, FilterProducts, getDataProduct, searchProductbyDes } from "@/service/Api-service/apiProducts";
 import { formatNumber } from "@/service/convert/convertNumber";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
@@ -61,7 +61,7 @@ export default function ProductSearch() {
             const searchQuery = urlParams.get('searchCate');
 
             setCateID(searchQuery);
-            const searchPro = await getData(searchQuery);
+            const searchPro = await getDataProduct(searchQuery);
             setListSearchProduct(searchPro?.result);
             console.log(searchPro)
         }
@@ -182,7 +182,7 @@ export default function ProductSearch() {
                                                         {listSearchProduct?.map((val, index) => (
                                                             <>
                                                             <div className="owl-item active" >
-                                                                {/* <a href="product-detail">
+                                                                <a href="product-detail">
                                                                     <div
                                                                         className="p-component loaded p-frame-bhmr-6m"
 
@@ -221,7 +221,7 @@ export default function ProductSearch() {
 
 
                                                                     </div>
-                                                                </a> */}
+                                                                </a>
                                                             </div>
                                                             <Tooltip style={{ backgroundColor: 'white' }} anchorSelect=".hover_detailsearch" place="right-end">
                            <div className="tooltip-2019">
