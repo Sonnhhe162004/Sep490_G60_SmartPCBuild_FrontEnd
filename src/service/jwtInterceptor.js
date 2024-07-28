@@ -3,7 +3,7 @@ import authService from './authService';
 
 const environment = {
   defaultauth: 'custom',
-  host: 'https://localhost:7065/api/',
+  host: 'https://apismartpc.developvn.click/api/',
 };
 
 export const jwtInterceptor = (url, options = {}) => {
@@ -21,7 +21,7 @@ export const jwtInterceptor = (url, options = {}) => {
     }
     const currentUser = authService.currentUser();
     if (currentUser && currentUser.token) {
-      headers['Authorization'] = `Bearer ${currentUser.token}`;
+      headers['Authorization'] = `Bearer ${currentUsergit.token}`;
     }
   }
 
