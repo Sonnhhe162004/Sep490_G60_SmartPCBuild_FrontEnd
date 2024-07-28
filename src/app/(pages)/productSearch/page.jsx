@@ -182,7 +182,7 @@ export default function ProductSearch() {
                                                         {listSearchProduct?.map((val, index) => (
                                                             <>
                                                             <div className="owl-item active" >
-                                                                <a href="product-detail">
+                                                                {/* <a href="product-detail">
                                                                     <div
                                                                         className="p-component loaded p-frame-bhmr-6m"
 
@@ -221,7 +221,7 @@ export default function ProductSearch() {
 
 
                                                                     </div>
-                                                                </a>
+                                                                </a> */}
                                                             </div>
                                                             <Tooltip style={{ backgroundColor: 'white' }} anchorSelect=".hover_detailsearch" place="right-end">
                            <div className="tooltip-2019">

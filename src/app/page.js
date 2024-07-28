@@ -239,7 +239,7 @@ export default function Home() {
 
                       >
 
-                        {listCPU.slice(0, 5).map((val, index) => (
+                        {listCPU?.slice(0, 5).map((val, index) => (
                           <>
                             <div className="owl-item active" style={{ width: 236 }}>
                               <div
@@ -373,7 +373,7 @@ export default function Home() {
 
                       >
 
-                        {listMainboard.slice(0, 5).map((val, index) => (
+                        {listMainboard?.slice(0, 5).map((val, index) => (
                           <>
                             <div className="owl-item active" style={{ width: 236 }}>
                               <div
@@ -505,7 +505,7 @@ export default function Home() {
 
                       >
 
-                        {listRAM.slice(0, 5).map((val, index) => (
+                        {listRAM?.slice(0, 5).map((val, index) => (
                           <>
                             <div className="owl-item active" style={{ width: 236 }}>
                               <div
@@ -635,7 +635,7 @@ export default function Home() {
 
                       >
 
-                        {listSSD.slice(0, 5).map((val, index) => (
+                        {listSSD?.slice(0, 5).map((val, index) => (
                           <>
                             <div className="owl-item active" style={{ width: 236 }}>
                               <div
@@ -763,7 +763,7 @@ export default function Home() {
 
                       >
 
-                        {listHDD.slice(0, 5).map((val, index) => (
+                        {listHDD?.slice(0, 5).map((val, index) => (
                           <>
                             <div className="owl-item active" style={{ width: 236 }}>
                               <div
