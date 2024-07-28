@@ -39,8 +39,9 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchCate, setSearchCate] = useState('');
   const [listCate,setListCate] = useState([]);
+
   const showHeader =
-    pathname === "/admin-login" || pathname === "/create-account" ? false : true;
+    pathname === "/login" || pathname === "/admin-login" || pathname === "/create-account" ? false : true;
 
     const handleInputChange = (e) => {
       setSearchQuery(e.target.value);
@@ -73,7 +74,6 @@ export default function Header() {
       }
       console.log(listCate)
   return (
-    <>
     <header className={`${!showHeader && "hidden"} w-full bg-[#026db5]`}>
       <div className="flex container items-center justify-between py-2 xl:py-4 gap-x-4">
         {/* Logo */}
@@ -89,12 +89,10 @@ export default function Header() {
         </Link>
 
         {/* Category Product */}
-       
-       <div className="listproduct relative">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <h2 className="hidden lg:flex gap-2 items-center border rounded-sm p-2 px-4 bg-white cursor-pointer text-sm font-semibold">
-              <LayoutGrid className="h-4 w-4 " /> List Product
+              <LayoutGrid className="h-4 w-4" />Product portfolio
             </h2>
           </DropdownMenuTrigger>
         </DropdownMenu>
@@ -120,118 +118,6 @@ export default function Header() {
     
      
 
-
-    </div>
-    {/* <div style={{left:'210px',top:'46px'}} className="homepage-slider-2019child absolute z-50 ">
-      <div className="homepage-slider-left">
-        <ul className="ul ul_menu_2019 boxshadowx2023" id="menu-2019">
-          <li
-            id="vt-1106"
-            className="js-hover-menu li-catcha-menu"
-           
-          >
-            <a href="/laptop-tablet-mobile" className="root">
-              Laptop, Macbook, Surface
-            </a>
-          
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-1087"
-            className="js-hover-menu li-catcha-menu"
-           
-          >
-            <a href="/laptop-gaming-do-hoa" className="root">
-              Laptop Gaming, Đồ Họa
-            </a>
-          
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-455"
-            className="js-hover-menu li-catcha-menu"
-          
-          >
-            <a href="/phu-kien" className="root">
-              Phụ Kiện Laptop, PC, Mobile
-            </a>
-          
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-178"
-            className="js-hover-menu li-catcha-menu"
-           
-          >
-            <a href="/pc-gaming-streaming" className="root">
-              PC - Chơi Game, Học Tập
-            </a>
-          
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-388"
-            className="js-hover-menu li-catcha-menu"
-          
-          >
-            <a href="/pc-workstations" className="root">
-              PC - Đồ Họa, Thiết Kế
-            </a>
-           
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-137"
-            className="js-hover-menu li-catcha-menu"
-            
-          >
-            <a href="/may-tinh-de-ban" className="root">
-              PC - Văn Phòng, L�&nbsp;m Việc
-            </a>
-          
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-6"
-            className="js-hover-menu li-catcha-menu"
-           
-          >
-            <a href="/linh-kien-may-tinh" className="root">
-              Linh Kiện Máy Tính
-            </a>
-           
-            <span className="arrow-li-catcha-menu" />
-          </li>
-          <li
-            id="vt-379"
-            className="js-hover-menu li-catcha-menu"
-          >
-            <a href="/tan-nhiet-cooling" className="root">
-              Tản Nhiệt, Fan, Đèn Led
-            </a>
-           
-            <span className="arrow-li-catcha-menu" />
-          </li>
-        
-          <li
-            id="vt-12"
-            className="js-hover-menu li-catcha-menu"
-          
-          >
-            <a href="/thiet-bi-van-phong" className="root">
-              TB Văn Phòng, Hội Nghị
-            </a>
-          
-            <span className="arrow-li-catcha-menu" />
-          </li>
-         
-        </ul>
-      </div>
-    
-    </div> */}
-
-    </div>
-    
         {/* search input */}
         <div style={{width:'40%'}} className="ml-auto hidden lg:flex ">
         <form style={{width:'100%'}} onSubmit={searchProduct}>
@@ -281,14 +167,23 @@ export default function Header() {
        
         {/* account and cart */}
         <div className="flex items-center gap-x-4 ml-8">
-          <Link
-            className="lg:flex flex-col items-center px-3 gap-y-1 hidden"
-            href={"/admin-login"}>
-            <CircleUserRound color="#ffffff" size={32} />
-            <span className="text-[13px] font-medium text-white w-full text-center">
-              Account
-            </span>
-          </Link>
+        <Link
+          className="lg:flex flex-col items-center px-3 gap-y-1 hidden group"
+          href="/login"
+        >
+          <CircleUserRound color="#ffffff" size={32} />
+          <span className="text-[13px] font-medium text-white w-full text-center">
+            Account
+          </span>
+          <div style={{marginTop: '2rem'}} className="absolute bg-white rounded-md shadow-md p-2 mt-4 z-50 hidden group-hover:block">
+            <a href="/login" className="block text-gray-700 hover:bg-gray-100 px-4 py-2 rounded-md">
+              <span>Login</span>
+            </a>
+            <a href="/admin-logout" className="block text-gray-700 hover:bg-gray-100 px-4 py-2 rounded-md">
+              <span>Logout</span>
+            </a>
+          </div>
+        </Link>
           <Link
             className="lg:flex flex-col items-center px-3 gap-y-1 hidden"
             href={"/cart"}>
@@ -355,18 +250,14 @@ export default function Header() {
                       </SheetHeader>
                     </SheetContent>
                   </Sheet>
-                  {NavLinkList?.map((item, index) => (
-                    <li
-                      key={index}
-                      className="flex w-full justify-start py-1 font-semibold uppercase text-sm">
-                      <Link className="" href={`/${item?.href}`}>
-                        {item?.name}
-                      </Link>
-                    </li>
-                  ))}
                   <li className="flex w-full justify-start py-1 font-semibold uppercase text-sm">
-                    <Link className="" href={`/admin-login`}>
-                      Tài khoản
+                    <Link className="" href={`/xay-dung-cau-hinh`}>
+                    Build Configuration
+                    </Link>
+                  </li>
+                  <li className="flex w-full justify-start py-1 font-semibold uppercase text-sm">
+                    <Link className="" href={`/login`}>
+                      Account
                     </Link>
                   </li>
                   <li className="flex w-full justify-start py-1 font-semibold uppercase text-sm">
@@ -380,8 +271,7 @@ export default function Header() {
           </Sheet>
         </div>
       </div>
+      </div>
     </header>
-  
-    </>
   );
 }

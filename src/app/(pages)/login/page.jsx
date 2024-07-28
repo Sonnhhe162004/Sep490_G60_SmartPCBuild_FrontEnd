@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import {  LoginAdmin } from '@/service/Login/login';
-import AdminLayout from '@/app/_components/AdminLayout/AdminLayout';
-
+// import { toast } from 'sonner';
+import toast from "react-hot-toast";
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -10,20 +10,29 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      if(username == '' || password == ''){
+        toast.error("Do not leave your account or password blank")
+        return
+      }
       const data = {email: username, password: password}
-      const user = await LoginAdmin(data);
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      alert('Đăng nhập thành công');
-      window.location.href = '/';
+      const response = await LoginAdmin(data);
+      if(response.statusCode === 200 || response.statusCode === 201) {
+        toast.success(response.message);
+        localStorage.setItem('currentUser', JSON.stringify(response));
+        window.location.href = '/';
+      }
+      else {
+        toast.error(response.errorMessages)
+      }
     } catch (error) {
-      console.error('Lỗi khi đăng nhập:', error);
-      alert('Đăng nhập thất bại');
+      console.log(error);
+      toast.error('Login Fail');
     }
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-zinc-100 dark:bg-zinc-900">
       <div className="bg-white dark:bg-zinc-800 p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-center text-2xl font-bold text-zinc-800 dark:text-zinc-200 mb-6">Smart PC Build Login-Admin</h2>
+        <h2 className="text-center text-2xl font-bold text-zinc-800 dark:text-zinc-200 mb-6">Welcome To Smart PC Build</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-zinc-700 dark:text-zinc-300 mb-2" htmlFor="username">Username</label>
@@ -54,6 +63,10 @@ export default function Login() {
             Login
           </button>
         </form>
+        <div className="mt-4 flex">
+        <p>Do you have account?</p>
+        <a className="text-success ml-2 underline" href="/create-account">Sign Up</a>
+        </div>
       </div>
     </div>
   );

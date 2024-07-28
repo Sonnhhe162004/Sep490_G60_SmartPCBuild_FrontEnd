@@ -5,26 +5,37 @@ import "./globals.css";
 import StoreProvider from "./StoreProvider";
 import { Footer, Header, Navigation } from "./_components";
 import { BackToTop } from "@/components/_personal";
-import { Toaster } from "@/components/ui/sonner";
-import React, { useEffect, useState } from "react";
-import { SearchCheck } from "lucide-react";
+import { usePathname } from 'next/navigation';
+import AdminLayout from './_components/AdminLayout/AdminLayout'; 
+import  { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 
-
 export default function RootLayout({ children }) {
-  const [searchValue, setSearchValue] = useState('');
-  
- 
+  const pathname = usePathname(); 
+  const isAdmin = pathname.startsWith('/admin');
+  if (isAdmin) {
+    return (
+      <html lang="en">
+        <body className={inter.className}>
+          <AdminLayout>
+            {children}
+          </AdminLayout>
+        </body>
+      </html>
+    );
+  }
+
   return (
     <html lang="en">
       <body className={inter.className}>
+      <Toaster   
+      position="bottom-center"
+      reverseOrder={false}
+    />
         <StoreProvider>
-          <Header setSearchValue={setSearchValue} />
-          <Navigation />
-         
-         {children}
-         
-          <Toaster />
+          <Header />
+          {/* <Navigation /> */}
+          {children}
           <Footer />
           <BackToTop />
         </StoreProvider>

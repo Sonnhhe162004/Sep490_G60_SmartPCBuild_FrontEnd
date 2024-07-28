@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -26,36 +26,71 @@ import {
 import { Input } from "../ui/input";
 import { Search } from "lucide-react";
 import { ProductItem, ProductSelectedItem } from ".";
+import { useSelector } from "react-redux";
 import Filter from "./Filter";
-
-export default function ConfigItem({ item }) {
+import toast from "react-hot-toast";
+import { setSelectedProduct, removeSelectedProduct } from "@/app/_utils/store/product.slice";
+import { useDispatch } from "react-redux";
+export default function ConfigItem({ item, onPriceChange, onRefresh, onSelected }) {
+  const options = [
+    { value: "newest", label: "Latest" },
+    { value: "expensive", label: "Price high to low" },
+    { value: "cheap", label: "Price low to high" },
+  ];
+  const dispatch = useDispatch();
+  const selectedProduct = useSelector((state) => state.product.selectedProductIds);
+  const [selectedSearch, setSelectedSearch] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleProductSelected = (selectedItem) => {
     setSelectedItem(selectedItem);
+    const action = "add";
+    onSelected(selectedItem, action);
+    onPriceChange(selectedItem?.price, action);
+    dispatch(setSelectedProduct(selectedItem.productId));
+    setIsDialogOpen(false);
   };
-  const handleFilterSelected = (selectedItem) => {
-    selectedFilter(selectedItem);
-  };
-  
-  const handleRemove = (item) => {
-    setSelectedItem(null);
-  };
-  const [DataHome, setDataHome] = useState([])
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await getData(); 
-  //       setDataHome(res.result);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-  //   fetchData();
 
-  //   },[]);
-//  console.log(item);
+  const handleFilterSelected = (selectedItem) => {
+    setSelectedFilter(selectedItem);
+  };
+
+  const handleRemove = () => {
+    const action = "remove";
+    onSelected(selectedItem, action);
+    onPriceChange(selectedItem?.price, action);
+    setSelectedItem(null);
+    dispatch(removeSelectedProduct(selectedItem.productId));
+    toast.success("Deleted successfully");
+  };
+
+  const handleValueChange = (value) => {
+    setSelectedSearch(value);
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+  };
+
+  const onRefreshRef = useRef();
+
+  useEffect(() => {
+    onRefreshRef.current = () => {
+      setSelectedItem(null);
+      setSelectedFilter(null);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (onRefresh) {
+      onRefreshRef.current();
+    }
+  }, [onRefresh]);
+
   return (
     <Collapsible open={true}>
       <div className="w-full flex flex-col md:flex-row items-center justify-between float-left border p-4 rounded-sm">
@@ -65,50 +100,60 @@ export default function ConfigItem({ item }) {
           </div>
         </CollapsibleTrigger>
         <div className="w-full md:w-4/5 flex items-center justify-center md:justify-end py-4">
-          <Dialog>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-red-600 hover:bg-red-500 w-full md:w-auto">
-                Chọn
+              <Button className="bg-red-600 hover:bg-red-500 w-full md:w-auto" onClick={() => setIsDialogOpen(true)}>
+                Select
               </Button>
             </DialogTrigger>
             <DialogContent className="w-full sm:w-3/5 max-w-[1200px] h-auto min-h-[350px] lg:min-h-[450px] 2xl:min-h-[600px] flex flex-col">
               <DialogHeader>
-                <DialogTitle>Tìm sản phẩm</DialogTitle>
+                <DialogTitle>Search products</DialogTitle>
               </DialogHeader>
               <div className="flex flex-col items-center space-x-2">
                 <div className="w-full bg-[#026db5] p-2 flex flex-col lg:flex-row items-center lg:justify-start gap-2">
                   <div className="relative items-center min-w-[280px]">
-                    <Input placeholder="Nhập tên sản phẩm bạn cần tìm..." />
+                    <Input
+                      placeholder="Enter name product you are looking..."
+                      value={inputValue}
+                      onChange={handleInputChange}
+                    />
                     <Search
                       color="#026db5"
                       className="absolute bottom-2 right-2 cursor-pointer"
                     />
                   </div>
-                  <Select>
+                  <Select onValueChange={handleValueChange}>
                     <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Lựa chọn tìm kiếm" />
+                      <SelectValue placeholder="Select search" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>Sắp xếp</SelectLabel>
-                        <SelectItem value="newest">Mới nhất</SelectItem>
-                        <SelectItem value="expensive">
-                          Giá cao đến thấp
-                        </SelectItem>
-                        <SelectItem value="cheap">Giá thấp đến cao</SelectItem>
-                        <SelectItem value="alphabet">Từ A -&gt; Z</SelectItem>
+                        <SelectLabel>Sort</SelectLabel>
+                        {options.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="w-full flex gap-x-3 max-h-[450px] lg:max-h-[500px] 2xl:max-h-[550px] overflow-y-scroll">
                   <div className="w-1/4">
-                    <Filter id={item?.categoryId}  onFilterSelected={handleFilterSelected} />
+                    <Filter
+                      id={item?.categoryId}
+                      onFilterSelected={handleFilterSelected}
+                    />
                   </div>
                   <div className="w-3/4">
                     <ProductItem
                       id={item?.categoryId}
                       onProductSelected={handleProductSelected}
+                      selectedSearch={selectedSearch}
+                      inputValue={inputValue}
+                      selectedFilter={selectedFilter}
+                      onProductSelectedId={selectedProduct}
                     />
                   </div>
                 </div>
@@ -122,7 +167,7 @@ export default function ConfigItem({ item }) {
           {selectedItem ? (
             <ProductSelectedItem item={selectedItem} onRemove={handleRemove} />
           ) : (
-            <div>Chưa có sản phẩm được chọn</div>
+            <div>No product is selected</div>
           )}
         </div>
       </CollapsibleContent>

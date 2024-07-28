@@ -3,35 +3,85 @@ import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 import { getData } from "@/service/Api-service/apiProducts";
 
-export default function ProductItem({ id, onProductSelected }) {
+
+export default function ProductItem({
+  id,
+  onProductSelected,
+  selectedSearch,
+  inputValue,
+  selectedFilter,
+  onProductSelectedId,
+}) {
   const [Dataproduct, setDataproduct] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; 
+
 
   useEffect(() => {
     const fetchData = async () => {
+      const data = {
+        cate_id: id,
+        filters: selectedFilter,
+        smartbuild: onProductSelectedId
+      };
       try {
-        const res = await getData(id);
-
+        const res = await getData(data);
         setDataproduct(res.result);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, selectedFilter]);
 
-  const onSelected = (productId) => {
-    toast("Chọn sản phẩm thành công!");
-    onProductSelected(productId);
+  const applySorting = (products) => {
+    switch (selectedSearch) {
+      case "newest":
+        return products.sort((a, b) => new Date(b.date) - new Date(a.date));
+      case "expensive":
+        return products.sort((a, b) => b.price - a.price);
+      case "cheap":
+        return products.sort((a, b) => a.price - b.price);
+      default:
+        return products;
+    }
   };
+
+  const filteredProducts = Dataproduct.filter((item) =>
+    item.productName.toLowerCase().includes(inputValue.toLowerCase())
+  );
+
+  const sortedProducts = applySorting(filteredProducts);
+
+  const onSelected = (product) => {
+    toast.success("Choose a successful product!");
+    onProductSelected(product);
+  };
+
   const formatVND = (price) => {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
-}
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+
+  const goToPreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+
   return (
     <div className="w-full flex flex-col gap-y-3 max-h-[300px] lg:max-h-[450px] 2xl:max-h-[600px] overflow-y-scroll">
-      {Dataproduct.map((item) => (
+      {currentItems.map((item) => (
         <div key={item.productId} className="w-full flex items-center justify-between float-left border p-4 rounded-sm">
           <Link href={item.href || "#"} className="w-20 h-20 overflow-hidden rounded-md">
             <Image
@@ -52,7 +102,7 @@ export default function ProductItem({ id, onProductSelected }) {
             </h4>
             <div>
               <span className="text-[#026db5] bg-[#0093623d] font-semibold p-1 rounded-sm">
-                {"Còn hàng"}
+                {"Available"}
               </span>
             </div>
             <span className="text-red-600 font-semibold">
@@ -60,10 +110,19 @@ export default function ProductItem({ id, onProductSelected }) {
             </span>
           </div>
           <div className="flex items-center justify-end py-4" onClick={() => onSelected(item)}>
-            <Button className="bg-red-600 hover:bg-red-500">Chọn</Button>
+            <Button className="bg-red-600 hover:bg-red-500">Select</Button>
           </div>
         </div>
       ))}
+      <div className="flex justify-between mt-4">
+        <Button className="bg-gray-500 hover:bg-gray-400" onClick={goToPreviousPage} disabled={currentPage === 1}>
+          Previous
+        </Button>
+        <span>Page {currentPage} of {totalPages}</span>
+        <Button className="bg-gray-500 hover:bg-gray-400" onClick={goToNextPage} disabled={currentPage === totalPages}>
+          Next
+        </Button>
+      </div>
     </div>
   );
 }
