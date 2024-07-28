@@ -79,7 +79,7 @@ img.icon-top{float:left;height:16px;margin-top:9px;margin-right:4px}
 .space{height:5px;clear:both;display:block}
 .space2{height:10px;clear:both;display:block}
 #text_search{width:370px!important;height:36px;border:none;background:0 0;float:left;outline:0;padding:0 10px}
-.bg{background:url(../images/sprite.png) no-repeat;display:inline-block}
+
 .container{width:1200px!important;max-width:1200px!important;margin:auto;padding:0 10px!important}
 #top{background:#f2f2f2;font-size:11px;position:fixed;width:100%;z-index:999;top:0;transform:translate3d(0,0,0);-webkit-transform:translate3d(0,0,0)}
 #top>.container>ul>li{float:left;line-height:34px;margin-right:7px;position:relative;white-space:nowrap}

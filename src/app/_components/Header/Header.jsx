@@ -89,15 +89,16 @@ export default function Header() {
         </Link>
 
         {/* Category Product */}
+        <div className="listproduct" style={{position:'relative'}}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <h2 className="hidden lg:flex gap-2 items-center border rounded-sm p-2 px-4 bg-white cursor-pointer text-sm font-semibold">
-              <LayoutGrid className="h-4 w-4" />Product portfolio
+              <LayoutGrid className="h-4 w-4 listproduct" />Product portfolio
             </h2>
           </DropdownMenuTrigger>
 
         </DropdownMenu>
-
+            
         <div style={{ display: 'none', marginTop: '1px' }} className="homepage-slider-2019 absolute">
           <div className="homepage-slider-left">
             <ul className="ul ul_menu_2019 boxshadowx2023" id="menu-2019">
@@ -117,7 +118,7 @@ export default function Header() {
             </ul>
           </div>
         </div>
-
+        </div>
 
 
         {/* search input */}
