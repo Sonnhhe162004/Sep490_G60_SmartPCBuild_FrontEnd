@@ -44,13 +44,10 @@ export default function Header() {
     pathname === "/login" || pathname === "/admin-login" || pathname === "/create-account" ? false : true;
 
   const handleInputChange = (e) => {
+    
     setSearchQuery(e.target.value);
   };
-  useEffect(() => {
-
-    localStorage.removeItem("searchProduct");
-    localStorage.removeItem("searchCate");
-  }, []);
+ 
 
   useEffect(() => {
     const allCate = async () => {
@@ -60,20 +57,20 @@ export default function Header() {
     allCate();
   }, [])
 
-
-  useEffect(() => {
-    localStorage.setItem("searchCate", searchCate)
-
-  }, [searchCate])
+  const navigate = (id) => {
+  
+   window.location.href = `/productSearch?searchCate=${id}`;
+  }
 
   const searchProduct = (event) => {
     event.preventDefault();
+    
     window.location.href = `/productSearch?query=${searchQuery}`;
     // localStorage.setItem("searchProduct", searchQuery)
     // setSearchValue(searchQuery);
 
   }
-  console.log(listCate)
+
   return (
     <header className={`${!showHeader && "hidden"} w-full bg-[#026db5]`}>
       <div className="flex container items-center justify-between py-2 xl:py-4 gap-x-4">
@@ -93,7 +90,7 @@ export default function Header() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <h2 className="hidden lg:flex gap-2 items-center border rounded-sm p-2 px-4 bg-white cursor-pointer text-sm font-semibold">
-              <LayoutGrid className="h-4 w-4 listproduct" />Product portfolio
+              <LayoutGrid className="h-4 w-4 listproduct" />Category
             </h2>
           </DropdownMenuTrigger>
 
@@ -107,9 +104,9 @@ export default function Header() {
                   id="vt-1106"
                   className="js-hover-menu li-catcha-menu"
                 >
-                  <Link href={`/productSearch?searchCate=${item.categoryId}`} className="root">
+                  <a onClick={() => navigate(item.categoryId)} className="root">
                     {item.categoryName}
-                  </Link>
+                  </a>
                   <span className="arrow-li-catcha-menu" />
                 </li>
               ))}
@@ -151,10 +148,11 @@ export default function Header() {
               <input
                 type="search"
                 id="default-search"
-                value={searchProduct ?? ''}
+                value={searchQuery}
                 className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="What do you want..."
                 required=""
+                
                 onChange={handleInputChange}
               />
               <button

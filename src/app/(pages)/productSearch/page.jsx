@@ -5,37 +5,29 @@ import { usePathname } from "next/navigation";
 import "../../../../src/css/style2020_zip.css"
 import "../../../../src/css/media2020.css"
 import { useEffect, useState } from "react";
-import { filterProducts, FilterProducts, getDataProduct, searchProductbyDes } from "@/service/Api-service/apiProducts";
+import { filterProducts, FilterProducts, getBrandbyCate, getDataProduct, getProductByBrandandCate, searchProductbyDes } from "@/service/Api-service/apiProducts";
 import { formatNumber } from "@/service/convert/convertNumber";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
-import { useParams } from "react-router-dom";
+
 export default function ProductSearch() {
 
     const pathname = usePathname();
-
-
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
     const [searchProduct, setSearchProduct] = useState("")
-    const [cateID, setCateID] = useState("")
+    const [cateID, setCateID] = useState(urlParams.get('searchCate'))
     const [startprice, setStartPrice] = useState("");
     const [endprice, setEndPrice] = useState("");
     const [listSearchProduct, setListSearchProduct] = useState([]);
-
-
+    const [listBrand, setListBrand] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const queryString = window.location.search;
-            // Xử lý nếu query string không tồn tại
-            if (!queryString) {
-                return;
-            }
-            // Xử lý nếu query string có tồn tại
-            const urlParams = new URLSearchParams(queryString);
+        const fetchData = async () => {   
             const searchQuery = urlParams.get('query');
 
             setSearchProduct(searchQuery);
-            if (cateID != null) {
+            if (searchQuery != null) {
                 const body = {
                     storeName: searchProduct,
                     priceFrom: startprice,
@@ -63,11 +55,13 @@ export default function ProductSearch() {
             setCateID(searchQuery);
             const searchPro = await getDataProduct(searchQuery);
             setListSearchProduct(searchPro?.result);
-            console.log(searchPro)
+            const searchBrand = await getBrandbyCate(searchQuery);
+            setListBrand(searchBrand?.result);
         }
         fetchData();
 
     }, [cateID]);
+  
     const onChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -100,7 +94,10 @@ export default function ProductSearch() {
         }
     }
 
-
+    const searchbyBrand = async(name) =>{
+        const response = await getProductByBrandandCate(cateID,name);
+        setListSearchProduct(response)
+    }
 
 
     const showHeader =
@@ -141,14 +138,13 @@ export default function ProductSearch() {
                                                         <span className="cpu-list-title" style={{ fontSize: '16px' }}>CPU</span>
                                                     </h3>
                                                     <ul className="cpu-list" style={{ listStyleType: 'none', paddingLeft: 0, marginTop: '30px' }}>
-                                                        <li>
-                                                            <input type="checkbox" />
-                                                            Intel Core i5 (6)
-                                                        </li>
-                                                        <li>
-                                                            <input type="checkbox" />
-                                                            Intel Core i7 (6)
-                                                        </li>
+                                                    {listBrand?.map((val, index) => (
+                                                     <li>
+                                                     <input type="checkbox" onClick={() => searchbyBrand(val)} />
+                                                     {val}
+                                                 </li>
+                                                    ))}
+                                                       
                                                     </ul>
                                                 </div>
                                                 <div
