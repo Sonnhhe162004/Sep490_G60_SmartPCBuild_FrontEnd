@@ -3,7 +3,7 @@ import authService from './authService';
 
 const environment = {
   defaultauth: 'custom',
-  host: 'https://localhost:7065/api/',
+  host: 'https://apismartpc.developvn.click/api/',
 };
 
 export const jwtInterceptor = (url, options = {}) => {

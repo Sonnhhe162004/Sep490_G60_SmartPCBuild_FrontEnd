@@ -37,7 +37,7 @@ export default function ProductDetal() {
         <>
  
         <div className="body-new-2019">
-          <div className="container-2019 ">
+          <div className="container-2019 " style={{marginTop:'40px'}}>
             <div
               className="bg-white d-flex flex-wrap product-detail-top"
               style={{ borderRadius: 3 }}
@@ -143,13 +143,14 @@ export default function ProductDetal() {
                     </div>
                     <div className="clear" />
                     <div
-                      id="button_buy_2019"
+                      id="button_buy_2019" 
                       className="d-flex flex-wrap justify-content-start"
                     >
                       {/* kiểm tra có giá kmai hay ko */}
                       <div className="top-buttons-th1">
                         <a
-                          style={{}}
+                         
+                          style={{backgroundColor: '#026DB5'}}
                           href="javascript:;"
                           onclick="listenBuyProDetail('80652',0,1,'','/cart?step=3')"
                           className="mua-ngay th1"
@@ -161,8 +162,8 @@ export default function ProductDetal() {
                     </div>
                   </div>
                   <div className="product-detail-static-content">
-                    <div className="static-item san-pham-chung">
-                      <div className="title">REST ASSURED TO BUY</div>
+                    <div  className="static-item san-pham-chung">
+                      <div style={{backgroundColor: '#026DB5'}} className="title">REST ASSURED TO BUY</div>
                       <div className="static-nd">
                         <ul className="m-0 d-flex align-items-center flex-wrap list-unstyled pl-2">
                           <li>
@@ -222,7 +223,7 @@ export default function ProductDetal() {
                       </div>
                     </div>
                     <div className="static-item">
-                      <div className="title">FREE SHIP</div>
+                      <div style={{backgroundColor: '#026DB5'}} className="title">FREE SHIP</div>
                       <div className="static-nd">
                         <ul className="m-0 d-flex align-items-center flex-wrap list-unstyled pl-2">
                        
@@ -256,9 +257,9 @@ export default function ProductDetal() {
                       <div id="js-product-description">
                         <p>
                           <strong>Note: </strong>
-                          <em>
+                          <div>
                           The image is for reference only because the product specification may vary according to the market for each version. If you need a specific configuration, please see the technical specification sheet or ask the business before purchasing. Note: The image is for reference only because the product specification may vary according to the market for each version. If you need a specific configuration, please see the technical specification sheet or ask the business before purchasing. 
-                          </em>
+                          </div>
                         </p>
                         <h3>
                           <strong>
