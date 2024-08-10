@@ -1,15 +1,15 @@
 "use client";
 
-import { getData } from "@/service/Admin-service/admin-product";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getListOrders } from "@/service/Admin-service/admin-orders";
 
-export default function Product() {
+export default function Orders() {
   const [listData, setlistData] = useState([]);
   const fetchData = async () => {
     try {
-      const res = await getData();
+      const res = await getListOrders();
       setlistData(res?.result);
       console.log(listData);
     } catch (error) {
@@ -24,7 +24,7 @@ export default function Product() {
       className="p-4 bg-card text-card-foreground bg-slate-100"
       style={{ marginLeft: "256px" }}
     >
-      <h2 className="text-xl font-semibold mb-4">Danh Sách Sản Phẩm</h2>
+      <h2 className="text-xl font-semibold mb-4">List Orders</h2>
       {/* <div className="flex flex-wrap gap-4 mb-4">
             <div>
               <label htmlFor="date" className="block text-sm font-medium">Chọn ngày:</label>
@@ -60,7 +60,7 @@ export default function Product() {
             </tr>
           </thead>
           <tbody>
-            {listData.map((data, index) => (
+            {listData?.map((data, index) => (
               <tr key={index}>
                 <td className="px-1 py-1 text-center border">{index + 1}</td>
                 <td className="px-1 py-1 text-center border">
