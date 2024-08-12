@@ -14,7 +14,7 @@ export default function Login() {
       const user = await LoginAdmin(data);
       localStorage.setItem('currentUser', JSON.stringify(user));
       alert('Đăng nhập thành công');
-      window.location.href = '/';
+      window.location.href = '/admin-add-product';
     } catch (error) {
       console.error('Lỗi khi đăng nhập:', error);
       alert('Đăng nhập thất bại');

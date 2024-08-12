@@ -32,11 +32,11 @@ export const getDetailProduct = async (id) => {
 
 
 
-export const filterProducts = async (body) => {
+export const GetAllProducts = async (body) => {
   try {
-    const response = await jwtInterceptor('Product/FilterProductsHome', {
-      method: 'POST',
-      body: JSON.stringify(body),
+    const response = await jwtInterceptor('Product/GetAllProducts', {
+      method: 'GET',
+      // body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
       },

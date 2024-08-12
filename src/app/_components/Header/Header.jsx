@@ -54,7 +54,7 @@ export default function Header() {
     const storedUser = localStorage.getItem("currentUser");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      const decodedToken = jwtDecode(parsedUser.tokenInformation.accessToken);
+      const decodedToken = jwtDecode(parsedUser?.tokenInformation?.accessToken);
       setCurrentUser(decodedToken?.Username)
     }
   }, []);

@@ -1,6 +1,6 @@
 "use client";
 
-import { getData } from "@/service/Admin-service/admin-product";
+import {GetAllProducts} from "@/service/Admin-service/admin-product";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,7 +9,7 @@ export default function Product() {
   const [listData, setlistData] = useState([]);
   const fetchData = async () => {
     try {
-      const res = await getData();
+      const res = await GetAllProducts();
       setlistData(res?.result);
       console.log(listData);
     } catch (error) {
