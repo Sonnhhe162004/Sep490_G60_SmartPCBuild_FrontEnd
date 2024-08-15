@@ -1,30 +1,48 @@
 "use client";
 
-import {GetAllProducts} from "@/service/Admin-service/admin-product";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function Product() {
+import { changeStatus, ListAccountForAdmin } from "@/service/Admin-service/admin-orders";
+
+export default function Account() {
   const [listData, setlistData] = useState([]);
   const fetchData = async () => {
     try {
-      const res = await GetAllProducts();
+      const res = await ListAccountForAdmin();
       setlistData(res?.result);
-      console.log(listData);
+
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [listData]);
+
+  const changeUnbanStatus = async(id) => {
+    const body = {
+        "status": 1,
+        "accountID": id
+      }
+      await changeStatus(body);
+      await fetchData();
+  }
+
+  const changeBanStatus = async(id) => {
+    const body = {
+        "status": 0,
+        "accountID": id
+      }
+      await changeStatus(body);
+      await fetchData();
+  }
   return (
     <div
       className="p-4 bg-card text-card-foreground bg-slate-100"
       style={{ marginLeft: "256px" }}
     >
-      <h2 className="text-xl font-semibold mb-4">Danh Sách Sản Phẩm</h2>
+      <h2 className="text-xl font-semibold mb-4">List Account</h2>
       {/* <div className="flex flex-wrap gap-4 mb-4">
             <div>
               <label htmlFor="date" className="block text-sm font-medium">Chọn ngày:</label>
@@ -49,55 +67,38 @@ export default function Product() {
           <thead className="bg-stone-500 text-primary-foreground">
             <tr>
               <th className="px-4 py-2 border border-border">#</th>
-              <th className="px-4 py-2 border border-border">Ảnh</th>
-              <th className="px-4 py-2 border border-border">Mã sản phẩm</th>
-              <th className="px-4 py-2 border border-border">Tên Sản Phẩm</th>
-              <th className="px-4 py-2 border border-border">Còn lại</th>
-              <th className="px-4 py-2 border border-border">Số tiền</th>
-              <th className="px-4 py-2 border border-border">Hãng</th>
-              <th className="px-4 py-2 border border-border">Bảo hành</th>
-              <th className="px-4 py-2 border border-border">Quản lý</th>
+              <th className="px-4 py-2 border border-border">UserName</th>
+              <th className="px-4 py-2 border border-border">Email</th>
+              <th className="px-4 py-2 border border-border">AccountType</th>
+              <th className="px-4 py-2 border border-border">Status</th>
+              <th className="px-4 py-2 border border-border">Action</th>
+          
             </tr>
           </thead>
           <tbody>
-            {listData.length >0 &&  listData?.map((data, index) => (
+            {listData?.filter(x => x.accountType != "ADMIN").map((data, index) => (
               <tr key={index}>
                 <td className="px-1 py-1 text-center border">{index + 1}</td>
+              
                 <td className="px-1 py-1 text-center border">
-                  <Image
-                    src={
-                      data?.imageLink ||
-                      "https://maytinh.sharekhoahoc.vn/wp-content/uploads/2021/12/8530d87af9fc1bf1a3617728d8954b16_63b594ba72d04e3bb9688047fa42ab2f_master-400x400.jpg"
-                    }
-                    unoptimized
-                    alt={data.productName || "Product Image"}
-                    width={100}
-                    height={100}
-                    className="bg-center bg-contain"
-                  />
+                  {data.username}
                 </td>
                 <td className="px-1 py-1 text-center border">
-                  {data.productId}
+                  {data.email}
+                </td>
+              
+                <td className="px-1 py-1 text-center border">{data.accountType}</td>
+                <td className="px-1 py-1 text-center border">
+                  <span>{data.status == 1 ? "Active" : "Not working"}</span>
                 </td>
                 <td className="px-1 py-1 text-center border">
-                  {data.productName}
-                </td>
-                <td
-                  className={`px-1 py-1 text-center border ${
-                    data.tdp > 0 ? "text-green-500" : "text-red-500"
-                  }`}
-                >
-                  <span>{data.tdp}</span>
-                </td>
-                <td className="px-1 py-1 text-center border">{data.price}</td>
-                <td className="px-1 py-1 text-center border">
-                  <span>{data.brand}</span>
-                </td>
-                <td className="px-1 py-1 text-center border">{data.warranty}</td>
-                <td className="px-1 py-1 text-center border text-black">
-                  <i class="fa-solid fa-pencil"></i>
-                </td>
-              </tr>
+                    {data.status == 1 ? (
+                    <a onClick={() => changeBanStatus(data.accountID)} className="text-center" style={{cursor:'pointer'}}>Ban</a>
+                    ):(
+                        <a onClick={() => changeUnbanStatus(data.accountID)} className="text-center" style={{cursor:'pointer'}}>Unban</a>
+                    )}
+                    </td>
+                    </tr>
             ))}
           </tbody>
         </table>
