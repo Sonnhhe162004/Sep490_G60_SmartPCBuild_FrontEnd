@@ -21,9 +21,6 @@ export default function Product() {
     }
   };
 
-
-  
-
   useEffect(() => {
     fetchData(currentPage);
   }, [currentPage, itemsPerPage]);
