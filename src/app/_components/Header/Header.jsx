@@ -35,7 +35,6 @@ import "../Header/header.css"
 import { listAllCate } from "@/service/Api-service/apiCategorys";
 import { useRouter } from 'next/router';
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 
 
 export default function Header() {
