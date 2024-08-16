@@ -1,49 +1,133 @@
 "use client";
+import { getDataCate, getDataStore } from "@/service/Api-service/apiCategorys";
 
-import {GetAllProducts} from "@/service/Admin-service/admin-product";
+import {
+  GetAllProducts,
+  deleteProduct,
+  updateProduct,
+} from "@/service/Admin-service/admin-product";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from "@/components/ui/alert-dialog";
 
 export default function Product() {
-  const [listData, setlistData] = useState([]);
-  const fetchData = async () => {
+  const [listData, setListData] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(50);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [listCate, setListCate] = useState([]);
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productPrice, setProductPrice] = useState(0);
+  const [productWarranty, setProductWarranty] = useState("");
+  const [productBrand, setProductBrand] = useState("");
+  const [productTag, setProductTag] = useState("");
+  const [productTPD, setProductTPD] = useState("");
+  const [productStatus, setProductStatus] = useState("");
+  const [productCategory, setProductCategory] = useState("");
+  const [productQuantity, setProductQuantity] = useState("");
+  const [productImage, setProductImage] = useState(null);
+  const [productId, setProductId] = useState(null);
+  
+  const fetchDataCate = async () => {
     try {
-      const res = await GetAllProducts();
-      setlistData(res?.result);
-      console.log(listData);
+      const res = await getDataCate();
+      const sortedData = res.result.sort((a, b) => a.categoryId - b.categoryId);
+      setListCate(sortedData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
+  const fetchData = async (page = 1) => {
+    try {
+      const res = await GetAllProducts({ page, limit: itemsPerPage });
+      setListData(res?.result?.products);
+      setTotalItems(res?.result?.totalItems || 0);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleDelete = async (productId) => {
+    try {
+      await deleteProduct(productId);
+      fetchData(currentPage);
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
+  const handleEdit = (product) => {
+    console.log(product);
+     setProductId(product.productId)
+     setProductBrand(product.brand)
+     setProductCategory(product.categoryID)
+     setProductDescription(product.description)
+     setProductImage(product.imageLink)
+     setProductName(product.productName)
+     setProductPrice(product.price)
+     setProductQuantity
+     setProductStatus
+     setProductTPD(product.tdp)
+     setProductTag(product.tag)
+     setProductWarranty(product.warranty)
+    setIsEditModalOpen(true);
+  };
+
+
+  const handleUpdateProduct = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("ProductName", productName);
+      formData.append("Description", productDescription);
+      formData.append("Price", productPrice);
+      formData.append("Warranty", productWarranty);
+      formData.append("Brand", productBrand);
+      formData.append("Tag", productTag);
+      formData.append("TDP", productTPD);
+      formData.append("Status", productStatus);
+      formData.append("CategoryID", productCategory);
+      formData.append("Quantity", productQuantity);
+      formData.append("ImageFile", productImage);
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+      await updateProduct(productId, formData);
+      setIsEditModalOpen(false);
+      fetchData(currentPage);
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
+  };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type === "image/jpeg") {
+      setProductImage(file);
+    } else {
+      alert("Chỉ được phép tải lên file JPG.");
+    }
+  };
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(currentPage);
+    fetchDataCate()
+  }, [currentPage, itemsPerPage]);
+
   return (
     <div
       className="p-4 bg-card text-card-foreground bg-slate-100"
       style={{ marginLeft: "256px" }}
     >
       <h2 className="text-xl font-semibold mb-4">Danh Sách Sản Phẩm</h2>
-      {/* <div className="flex flex-wrap gap-4 mb-4">
-            <div>
-              <label htmlFor="date" className="block text-sm font-medium">Chọn ngày:</label>
-              <input type="date" id="date" className="mt-1 block w-full border border-input rounded-md shadow-sm focus:border-primary focus:ring focus:ring-primary sm:text-sm" placeholder="Ngày/ Tháng/ Năm" />
-            </div>
-            <div>
-              <label htmlFor="device" className="block text-sm font-medium">Chọn thiết bị:</label>
-              <input type="text" id="device" className="mt-1 block w-full border border-input rounded-md shadow-sm focus:border-primary focus:ring focus:ring-primary sm:text-sm" placeholder="Thiết bị" />
-            </div>
-            <div>
-              <label htmlFor="status" className="block text-sm font-medium">Chọn trạng thái:</label>
-              <select id="status" className="mt-1 block w-full border border-input rounded-md shadow-sm focus:border-primary focus:ring focus:ring-primary sm:text-sm">
-                <option>Trạng thái</option>
-              </select>
-            </div>
-            <div className="flex items-end">
-              <button className="bg-primary text-primary-foreground hover:bg-primary/80 px-4 py-2 rounded-md">Tìm kiếm</button>
-            </div>
-          </div> */}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-border rounded-md">
           <thead className="bg-stone-500 text-primary-foreground">
@@ -60,7 +144,7 @@ export default function Product() {
             </tr>
           </thead>
           <tbody>
-            {listData.length >0 &&  listData?.map((data, index) => (
+            {listData?.map((data, index) => (
               <tr key={index}>
                 <td className="px-1 py-1 text-center border">{index + 1}</td>
                 <td className="px-1 py-1 text-center border">
@@ -93,36 +177,329 @@ export default function Product() {
                 <td className="px-1 py-1 text-center border">
                   <span>{data.brand}</span>
                 </td>
-                <td className="px-1 py-1 text-center border">{data.warranty}</td>
-                <td className="px-1 py-1 text-center border text-black">
-                  <i class="fa-solid fa-pencil"></i>
+                <td className="px-1 py-1 text-center border">
+                  {data.warranty}
+                </td>
+                <td className="px-1 py-1 text-center border">
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleEdit(data)}
+                  >
+                    Sửa
+                  </button>
+
+                  {/* Delete Confirmation Dialog */}
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <button
+                        className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={() => setSelectedProduct(data.productId)}
+                      >
+                        Xóa
+                      </button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <h2 className="text-lg font-semibold">
+                          Bạn có chắc chắn muốn xóa sản phẩm này không? Hành
+                          động không thể hoàn tác!
+                        </h2>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel asChild>
+                          <button className="px-4 py-2 bg-gray-200 text-black rounded">
+                            Hủy
+                          </button>
+                        </AlertDialogCancel>
+                        <AlertDialogAction asChild>
+                          <button
+                            onClick={() => handleDelete(selectedProduct)}
+                            className="px-4 py-2 bg-red-500 text-white rounded"
+                          >
+                            Xác nhận
+                          </button>
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {/* Edit Product Modal */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-semibold mb-4">Sửa Sản Phẩm</h2>
+            <formData>
+              <div className="mb-4">
+                <label
+                  htmlFor="product-name"
+                  className="block text-primary font-semibold mb-2"
+                >
+                  Tên sản phẩm
+                </label>
+                <input
+                  type="text"
+                  id="product-name"
+                  className="w-full p-2 border border-border rounded"
+                  placeholder="Enter tên sản phẩm"
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="product-description"
+                  className="block text-primary font-semibold mb-2"
+                >
+                  Mô tả
+                </label>
+                <input
+                  type="text"
+                  id="product-description"
+                  className="w-full p-2 border border-border rounded"
+                  placeholder="Enter mô tả"
+                  value={productDescription}
+                  onChange={(e) => setProductDescription(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="product-price"
+                  className="block text-primary font-semibold mb-2"
+                >
+                  Giá sản phẩm
+                </label>
+                <input
+                  type="number"
+                  id="product-price"
+                  className="w-full p-2 border border-border rounded"
+                  placeholder="Enter giá"
+                  min={0}
+                  value={productPrice}
+                  onChange={(e) => setProductPrice(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="product-warranty"
+                  className="block text-primary font-semibold mb-2"
+                >
+                  Bảo hành
+                </label>
+                <select
+                  id="product-warranty"
+                  className="w-full p-2 border border-border rounded"
+                  value={productWarranty}
+                  onChange={(e) => setProductWarranty(e.target.value)}
+                  required
+                >
+                  <option value="" hidden>
+                    Chọn thời gian
+                  </option>
+                  <option value="12 Months">12 Months</option>
+                  <option value="24 Months">24 Months</option>
+                  <option value="36 Months">36 Months</option>
+                  <option value="48 Months">48 Months</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="product-brand"
+                  className="block text-primary font-semibold mb-2"
+                >
+                  Thương hiệu
+                </label>
+                <input
+                  type="text"
+                  id="product-brand"
+                  className="w-full p-2 border border-border rounded"
+                  placeholder="Enter brand"
+                  value={productBrand}
+                  onChange={(e) => setProductBrand(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="product-tag"
+                  className="block text-primary font-semibold mb-2"
+                >
+                  Tag
+                </label>
+                <input
+                  type="text"
+                  id="product-tag"
+                  className="w-full p-2 border border-border rounded"
+                  placeholder="Enter tag"
+                  value={productTag}
+                  onChange={(e) => setProductTag(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="product-tpd"
+                  className="block text-primary font-semibold mb-2"
+                >
+                  TPD
+                </label>
+                <input
+                  type="text"
+                  id="product-tpd"
+                  className="w-full p-2 border border-border rounded"
+                  placeholder="Enter TPD"
+                  value={productTPD}
+                  onChange={(e) => setProductTPD(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="product-status"
+                  className="block text-primary font-semibold mb-2"
+                >
+                  Status
+                </label>
+                <select
+                  id="product-status"
+                  className="w-full p-2 border border-border rounded"
+                  value={productStatus}
+                  onChange={(e) => setProductStatus(e.target.value)}
+                  required
+                >
+                  <option value="0">Ngừng kinh doanh</option>
+                  <option value="1">Đang kinh doanh</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="product-category"
+                  className="block text-primary font-semibold mb-2"
+                >
+                  Danh mục sản phẩm
+                </label>
+                <select
+                  id="product-category"
+                  className="w-full p-2 border border-border rounded"
+                  value={productCategory}
+                  onChange={(e) => setProductCategory(e.target.value)}
+                  required
+                >
+                  <option value="">Chọn danh mục</option>
+                  {listCate.map((item) => (
+                    <option key={item.categoryId} value={item.categoryId}>
+                      {item.categoryName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="product-store"
+                  className="block text-primary font-semibold mb-2"
+                >
+                  Số lượng
+                </label>
+                <input
+                  type="number"
+                  id="product-store"
+                  className="w-full p-2 border border-border rounded"
+                  placeholder="Enter quantity"
+                  value={productQuantity}
+                  onChange={(e) => setProductQuantity(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="product-image"
+                  className="block text-primary font-semibold
+ mb-2"
+                >
+                  Ảnh sản phẩm
+                </label>
+                <input
+                  type="file"
+                  id="product-image"
+                  className="w-full p-2 border border-border rounded"
+                  accept=".jpg"
+                  onChange={handleImageChange}
+                  required
+                />
+              </div>
+            </formData>
+            <div className="flex justify-end gap-2 mt-4">
+              <button
+                className="px-4 py-2 bg-gray-200 text-black rounded"
+                onClick={() => setIsEditModalOpen(false)}
+              >
+                Hủy
+              </button>
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded"
+                onClick={handleUpdateProduct}
+              >
+                Lưu
+              </button>
+            </div>
+          </div>
+        </div>
+      )}{" "}
       <div className="flex items-center justify-between mt-4">
-        <span className="text-sm">Hiện 1 đến 5 trong 5 mục</span>
+        <span className="text-sm">
+          Hiện {itemsPerPage * (currentPage - 1) + 1} đến{" "}
+          {Math.min(itemsPerPage * currentPage, totalItems)} trong {totalItems}{" "}
+          mục
+        </span>
         <div className="flex items-center gap-2">
           <button
             className="px-2 py-1 border border-border rounded-md"
-            disabled
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
           >
             «
           </button>
-          <span className="px-2 py-1 border border-border rounded-md bg-primary text-primary-foreground">
-            1
-          </span>
+          {[...Array(Math.ceil(totalItems / itemsPerPage)).keys()].map(
+            (_, index) => (
+              <span
+                key={index}
+                className={`px-2 py-1 border border-border rounded-md ${
+                  currentPage === index + 1
+                    ? "bg-primary text-primary-foreground"
+                    : ""
+                }`}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </span>
+            )
+          )}
           <button
             className="px-2 py-1 border border-border rounded-md"
-            disabled
+            disabled={currentPage === Math.ceil(totalItems / itemsPerPage)}
+            onClick={() => setCurrentPage(currentPage + 1)}
           >
             »
           </button>
           <span>Hiện</span>
-          <select className="border border-input rounded-md shadow-sm focus:border-primary focus:ring focus:ring-primary sm:text-sm">
-            <option>10</option>
+          <select
+            className="border border-input rounded-md shadow-sm focus:border-primary focus:ring focus:ring-primary sm:text-sm"
+            onChange={(e) => {
+              setCurrentPage(1); // Reset về trang 1 khi thay đổi số lượng sản phẩm mỗi trang
+              setItemsPerPage(Number(e.target.value));
+            }}
+            value={itemsPerPage}
+          >
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+            <option value={200}>200</option>
           </select>
           <span>mục</span>
         </div>
