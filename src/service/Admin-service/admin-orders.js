@@ -1,4 +1,3 @@
-import { json } from "react-router-dom";
 import { jwtInterceptor } from "../jwtInterceptor";
 
 export const getListOrdersAdmin = async () => {
