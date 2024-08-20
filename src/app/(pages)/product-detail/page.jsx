@@ -7,18 +7,16 @@ import { useEffect, useState } from "react";
 import { getDetailProduct } from "@/service/Api-service/apiProducts";
 
 import Cookies from 'js-cookie';
+import toast from "react-hot-toast";
 
 export default function ProductDetal() {
   const [productdetail,setProductDetail] = useState("");
-  const [selectedItem, setSelectedItem] = useState([]);
     useEffect(() => {
       const fetchData = async() => {
         const queryString = window.location.search;
-        // Xử lý nếu query string không tồn tại
         if (!queryString) {
           return;
         }
-        // Xử lý nếu query string có tồn tại
         const urlParams = new URLSearchParams(queryString);
         const searchQuery = urlParams.get('idProduct');
        
@@ -29,19 +27,11 @@ export default function ProductDetal() {
     fetchData();
      
     },[])
-
-
-    const handleProductSelected = (item, action) => {
-      if (action === 'add') {
-        setSelectedItem(prevTotal => [...prevTotal, item]);
-      } else if (action === 'remove') {
-        setSelectedItem(prevTotal => prevTotal.filter(i => i !== item));
-      }
-    };
-
+   
     const onOk = () => {
       const existingItemsStr = Cookies.get('selectedItem');
       let existingItems = [];
+    
       if (existingItemsStr) {
         try {
           existingItems = JSON.parse(decodeURIComponent(existingItemsStr));
@@ -49,24 +39,17 @@ export default function ProductDetal() {
           console.error("Error parsing JSON from cookie:", e);
         }
       }
-
-      const updatedItems = selectedItem.map(item => {
-        const existingItem = existingItems.find(i => i.productId === item.productId);
-        if (existingItem) {
-          existingItem.quantity += 1;
-          return existingItem;
-        } else {
-          return { ...item, quantity: 1 };
-        }
-      });
-      existingItems = [
-        ...existingItems.filter(i => !updatedItems.find(u => u.productId === i.productId)),
-        ...updatedItems
-      ];
+      const existingItem = existingItems.find(i => i.productId === productdetail.productId);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        existingItems.push({ ...productdetail, quantity: 1 });
+      }
       const selectedItemStr = JSON.stringify(existingItems);
-      Cookies.set('selectedItem', selectedItemStr, { expires: 7 });
-    
+      Cookies.set('selectedItem', encodeURIComponent(selectedItemStr), { expires: 7 });
+      toast.success("Product has been added to the cart!");
     };
+    
 
 
     return (
