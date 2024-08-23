@@ -44,6 +44,7 @@ export default function Header() {
   const showHeader =
     pathname === "/login" ||
     pathname === "/admin-login" ||
+    pathname === "/forgot" ||
     pathname === "/create-account"
       ? false
       : true;
@@ -92,7 +93,7 @@ export default function Header() {
   };
   return (
     <header className={`${!showHeader && "hidden"} w-full bg-[#026db5]`}>
-      <div className="flex container items-center justify-between py-2 xl:py-4 gap-x-4">
+      <div className="flex container items-center justify-between xl:py-4"   style={{ padding: "1rem !important" }}>
         {/* Logo */}
         <Link href={"/"}>
           {

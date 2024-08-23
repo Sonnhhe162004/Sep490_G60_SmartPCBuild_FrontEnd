@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { TreeSelect } from "antd";
 import toast from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Pencil, Trash2 } from "lucide-react";
 
 const { TreeNode } = TreeSelect;
 export default function Product() {
@@ -105,8 +107,8 @@ export default function Product() {
     setProductImage(product.imageLink);
     setProductName(product.productName);
     setProductPrice(product.price);
-    setProductQuantity;
-    setProductStatus;
+    setProductQuantity(product.quantity);
+    setProductStatus(product.status);
     setProductTPD(product.tdp);
     setProductTag(product.tag);
     setProductWarranty(product.warranty);
@@ -247,13 +249,13 @@ export default function Product() {
                   {data.warranty}
                 </td>
                 <td className="px-1 py-1 text-center border">
+
                   <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => handleEdit(data)}
                   >
-                    Sửa
+                    <Pencil />
                   </button>
-
                   {/* Delete Confirmation Dialog */}
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
@@ -261,7 +263,8 @@ export default function Product() {
                         className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                         onClick={() => setSelectedProduct(data.productId)}
                       >
-                        Xóa
+                                          <Trash2 />                  
+
                       </button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
@@ -297,7 +300,7 @@ export default function Product() {
       {/* Edit Product Modal */}
       {isEditModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-h-[90%] min-w-[40%] overflow-y-auto">
             <h2 className="text-xl font-semibold mb-4">Sửa Sản Phẩm</h2>
             <formData>
               <div className="mb-4">
@@ -476,13 +479,13 @@ export default function Product() {
                   htmlFor="product-status"
                   className="block text-primary font-semibold mb-2"
                 >
-                  Status
+                  Trạng thái 
                 </label>
                 <select
                   id="product-status"
                   className="w-full p-2 border border-border rounded"
                   value={productStatus}
-                  onChange={(e) => setProductStatus(e.target.value)}
+                  onChange={(e) => setProductStatus(parseInt(e.target.value))}
                   required
                 >
                   <option value="0">Ngừng kinh doanh</option>
