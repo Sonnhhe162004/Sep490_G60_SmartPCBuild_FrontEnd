@@ -15,27 +15,33 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "react-hot-toast";
 import { getDataCate } from "@/service/Api-service/apiCategorys";
-import Cookies from 'js-cookie';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateTotalPrice, resetTotalPrice } from "@/app/_utils/store/product.slice";
+import Cookies from "js-cookie";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  updateTotalPrice,
+  resetTotalPrice,
+} from "@/app/_utils/store/product.slice";
 
 export default function BuildConfig() {
   const [configList, setConfigList] = useState([]);
   const [refreshFlag, setRefreshFlag] = useState(false);
   const [selectedItem, setSelectedItem] = useState([]);
-  console.log('selectedItem: ', selectedItem);
   const totalPrice = useSelector((state) => state.product.totalPrice);
   const dispatch = useDispatch();
 
   const handleProductSelected = (item, action) => {
-    console.log('item: ', item);
-    if (action === 'add') {
-      setSelectedItem(prevTotal => [...prevTotal, {
-        ...item,
-        quantityBuy: 1
-      }]);
-    } else if (action === 'remove') {
-      setSelectedItem(prevTotal => prevTotal.filter(i => i.productId !== item.productId));
+    if (action === "add") {
+      setSelectedItem((prevTotal) => [
+        ...prevTotal,
+        {
+          ...item,
+          quantityBuy: 1,
+        },
+      ]);
+    } else if (action === "remove") {
+      setSelectedItem((prevTotal) =>
+        prevTotal.filter((i) => i.productId !== item.productId)
+      );
     }
   };
 
@@ -43,18 +49,24 @@ export default function BuildConfig() {
     if (isNaN(price) || isNaN(quantityItem)) {
       return;
     }
-    if (action === 'add') {
+    if (action === "add") {
       dispatch(updateTotalPrice(price * quantityItem));
-    } else if (action === 'remove') {
+    } else if (action === "remove") {
       dispatch(updateTotalPrice(-price * quantityItem));
     }
   };
 
   const handleQuantityChange = (item, quantity) => {
-    setSelectedItem(selectedItem.map(i => i.productId === item.productId ? {
-      ...i,
-      quantityBuy: quantity
-    } : i));
+    setSelectedItem(
+      selectedItem.map((i) =>
+        i.productId === item.productId
+          ? {
+              ...i,
+              quantityBuy: quantity,
+            }
+          : i
+      )
+    );
   };
 
   const onRefresh = () => {
@@ -64,11 +76,11 @@ export default function BuildConfig() {
   };
 
   const onOk = () => {
-    const existingItemsStr = Cookies.get('selectedItem');
+    const existingItemsStr = Cookies.get("selectedItem");
 
     let existingItems = [];
 
-    if (existingItemsStr && existingItemsStr !== 'undefined') {
+    if (existingItemsStr && existingItemsStr !== "undefined") {
       try {
         existingItems = JSON.parse(decodeURIComponent(existingItemsStr));
       } catch (e) {
@@ -76,8 +88,10 @@ export default function BuildConfig() {
       }
     }
 
-    const updatedItems = selectedItem.map(item => {
-      const existingItem = existingItems.find(i => i.productId === item.productId);
+    const updatedItems = selectedItem.map((item) => {
+      const existingItem = existingItems.find(
+        (i) => i.productId === item.productId
+      );
       if (existingItem) {
         existingItem.quantity += item.quantity || 1;
         return existingItem;
@@ -87,14 +101,15 @@ export default function BuildConfig() {
     });
 
     existingItems = [
-      ...existingItems.filter(i => !updatedItems.find(u => u.productId === i.productId)),
-      ...updatedItems
+      ...existingItems.filter(
+        (i) => !updatedItems.find((u) => u.productId === i.productId)
+      ),
+      ...updatedItems,
     ];
 
     try {
       const selectedItemStr = JSON.stringify(existingItems);
-      console.log(selectedItemStr);
-      Cookies.set('selectedItem', selectedItemStr, { expires: 7 });
+      Cookies.set("selectedItem", selectedItemStr, { expires: 7 });
       toast.success("All products have been added to the cart!");
     } catch (e) {
       console.error("Error setting cookie:", e);
@@ -102,9 +117,11 @@ export default function BuildConfig() {
     }
   };
 
-
   const formatCurrency = (price) => {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
   };
 
   const fetchData = async () => {
@@ -113,7 +130,7 @@ export default function BuildConfig() {
       const sortedData = res.result.sort((a, b) => a.categoryId - b.categoryId);
       setConfigList(sortedData);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -121,7 +138,14 @@ export default function BuildConfig() {
     fetchData();
   }, []);
   useEffect(() => {
-    dispatch(updateTotalPrice(selectedItem.reduce((total, item) => total + item.price * item.quantityBuy, 0)));
+    dispatch(
+      updateTotalPrice(
+        selectedItem.reduce(
+          (total, item) => total + item.price * item.quantityBuy,
+          0
+        )
+      )
+    );
   }, [selectedItem]);
 
   return (
@@ -143,7 +167,8 @@ export default function BuildConfig() {
                   Are you sure you want to refresh all configurations?
                 </AlertDialogTitle>
                 <AlertDialogDescription>
-                  All configurations you added will be refreshed. Please confirm to complete the operation.
+                  All configurations you added will be refreshed. Please confirm
+                  to complete the operation.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -180,7 +205,8 @@ export default function BuildConfig() {
                   Are you sure to add them all?
                 </AlertDialogTitle>
                 <AlertDialogDescription>
-                  All products will be added to the cart. Please confirm to complete the operation.
+                  All products will be added to the cart. Please confirm to
+                  complete the operation.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -194,7 +220,9 @@ export default function BuildConfig() {
 
           <div className="flex items-center gap-x-2 ">
             <strong className="uppercase">Total payment : </strong>
-            <span className="text-red-600 text-2xl font-semibold">{formatCurrency(totalPrice)}</span>
+            <span className="text-red-600 text-2xl font-semibold">
+              {formatCurrency(totalPrice)}
+            </span>
           </div>
         </div>
       </div>
