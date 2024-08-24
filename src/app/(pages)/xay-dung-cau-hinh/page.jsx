@@ -17,20 +17,25 @@ import { toast } from "react-hot-toast";
 import { getDataCate } from "@/service/Api-service/apiCategorys";
 import Cookies from 'js-cookie';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateTotalPrice ,resetTotalPrice} from "@/app/_utils/store/product.slice"; 
+import { updateTotalPrice, resetTotalPrice } from "@/app/_utils/store/product.slice";
 
 export default function BuildConfig() {
   const [configList, setConfigList] = useState([]);
   const [refreshFlag, setRefreshFlag] = useState(false);
   const [selectedItem, setSelectedItem] = useState([]);
+  console.log('selectedItem: ', selectedItem);
   const totalPrice = useSelector((state) => state.product.totalPrice);
   const dispatch = useDispatch();
 
   const handleProductSelected = (item, action) => {
+    console.log('item: ', item);
     if (action === 'add') {
-      setSelectedItem(prevTotal => [...prevTotal, item]);
+      setSelectedItem(prevTotal => [...prevTotal, {
+        ...item,
+        quantityBuy: 1
+      }]);
     } else if (action === 'remove') {
-      setSelectedItem(prevTotal => prevTotal.filter(i => i !== item));
+      setSelectedItem(prevTotal => prevTotal.filter(i => i.productId !== item.productId));
     }
   };
 
@@ -39,27 +44,21 @@ export default function BuildConfig() {
       return;
     }
     if (action === 'add') {
-      dispatch(updateTotalPrice(price * quantityItem)); 
+      dispatch(updateTotalPrice(price * quantityItem));
     } else if (action === 'remove') {
-      dispatch(updateTotalPrice(-price * quantityItem)); 
+      dispatch(updateTotalPrice(-price * quantityItem));
     }
   };
 
   const handleQuantityChange = (item, quantity) => {
-    const existingItem = selectedItem.find(i => i.productId === item.productId);
-    if (existingItem) {
-      const newTotalPrice = totalPrice - (existingItem.price * (existingItem.quantity || 1)) + (item.price * quantity);
-      dispatch(updateTotalPrice(newTotalPrice - totalPrice)); 
-      existingItem.quantity = quantity;
-    } else {
-      const newTotalPrice = item.price * quantity;
-      dispatch(updateTotalPrice(newTotalPrice));
-      setSelectedItem([...selectedItem, item]);
-    }
+    setSelectedItem(selectedItem.map(i => i.productId === item.productId ? {
+      ...i,
+      quantityBuy: quantity
+    } : i));
   };
 
   const onRefresh = () => {
-    dispatch(resetTotalPrice()); 
+    dispatch(resetTotalPrice());
     setRefreshFlag((prev) => !prev);
     toast.success("Configuration refresh successful!");
   };
@@ -121,6 +120,9 @@ export default function BuildConfig() {
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => {
+    dispatch(updateTotalPrice(selectedItem.reduce((total, item) => total + item.price * item.quantityBuy, 0)));
+  }, [selectedItem]);
 
   return (
     <div className="container flex flex-col p-5 lg:py-10 gap-y-4">

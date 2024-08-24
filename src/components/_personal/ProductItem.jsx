@@ -116,8 +116,8 @@ export default function ProductItem({
               {item.productName || "Product Name"}
             </h4>
             <div>
-              {item.status === 0 ? (
-                <span className="text-red-600 font-semibold">Out of Stock</span>
+              {(item.status === 0 || item.quantity === 0) ? (
+                <span className="text-red-600 bg-[#efd0d0cc] font-semibold p-1 rounded-sm">Out of Stock</span>
               ) : (
                 <span className="text-[#026db5] bg-[#0093623d] font-semibold p-1 rounded-sm">
                   Available
@@ -128,7 +128,7 @@ export default function ProductItem({
               {item.price ? formatVND(item.price) : formatVND(240000)}
             </span>
           </div>
-          {item.status !== 0 && (
+          {!(item.status === 0 || item.quantity === 0) && (
             <div
               className="flex items-center justify-end py-4"
               onClick={() => onSelected(item)}

@@ -44,9 +44,9 @@ export default function Header() {
   const [currentUser, setCurrentUser] = useState();
   const showHeader =
     pathname === "/login" ||
-    pathname === "/admin-login" ||
-    pathname === "/forgot" ||
-    pathname === "/create-account"
+      pathname === "/admin-login" ||
+      pathname === "/forgot" ||
+      pathname === "/create-account"
       ? false
       : true;
 
@@ -94,7 +94,7 @@ export default function Header() {
   };
   return (
     <header className={`${!showHeader && "hidden"} w-full bg-[#026db5]`}>
-      <div className="flex container items-center justify-between xl:py-4"   style={{ padding: "1rem !important" }}>
+      <div className="flex container items-center justify-between xl:py-4" style={{ padding: "1rem !important", width: "unset", maxWidth: "unset" }}>
         {/* Logo */}
         <Link href={"/"}>
           {
@@ -114,7 +114,7 @@ export default function Header() {
             <DropdownMenuTrigger asChild>
               <h2 className="hidden lg:flex gap-2 items-center border rounded-sm p-2 px-4 bg-white cursor-pointer text-sm font-semibold">
                 <LayoutGrid className="h-4 w-4 listproduct" />
-                Category
+                <div style={{ whiteSpace: "nowrap" }}>Category</div>
               </h2>
             </DropdownMenuTrigger>
           </DropdownMenu>
@@ -205,12 +205,12 @@ export default function Header() {
               {currentUser ? (
                 <div className="block">
                   <div className="p-2">
-                  <Link href="/profile">Profile</Link>
+                    <Link href="/profile">Profile</Link>
                   </div>
                   <div className="p-2">
-                  <Link href="#" onClick={handleLogout}>
-                    Logout
-                  </Link>
+                    <Link href="#" onClick={handleLogout}>
+                      Logout
+                    </Link>
                   </div>
                 </div>
               ) : (

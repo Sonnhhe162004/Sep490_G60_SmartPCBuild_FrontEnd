@@ -1,26 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    selectedProductIds:  [],
-    totalPrice: 0,
+  selectedProductIds: [],
+  totalPrice: 0,
 };
 const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
     setSelectedProduct: (state, action) => {
-        state.selectedProductIds.push(action.payload);
+      state.selectedProductIds.push(action.payload);
     },
     resetSelectedProduct: (state) => {
       state.selectedProductIds = null;
     },
     removeSelectedProduct: (state, action) => {
-        state.selectedProductIds = state.selectedProductIds.filter(
-          (id) => id !== action.payload
-        );
+      state.selectedProductIds = state.selectedProductIds.filter(
+        (id) => id !== action.payload
+      );
     },
     updateTotalPrice: (state, action) => {
-      state.totalPrice += action.payload;
+      state.totalPrice = action.payload;
     },
     decreTotalPrice: (state, action) => {
       state.totalPrice -= action.payload;
@@ -28,9 +28,9 @@ const productSlice = createSlice({
     resetTotalPrice: (state) => {
       state.totalPrice = 0;
     },
-   
+
   },
 });
 
-export const { setSelectedProduct, resetSelectedProduct, removeSelectedProduct,updateTotalPrice,resetTotalPrice,decreTotalPrice} = productSlice.actions;
+export const { setSelectedProduct, resetSelectedProduct, removeSelectedProduct, updateTotalPrice, resetTotalPrice, decreTotalPrice } = productSlice.actions;
 export default productSlice.reducer;

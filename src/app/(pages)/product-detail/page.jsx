@@ -54,7 +54,7 @@ export default function ProductDetal() {
 
   return (
     <>
-      <div className="container mx-auto mt-11 px-4">
+      <div className="container mx-auto mt-3 px-4">
         <div className="bg-white rounded-md shadow-md p-4 flex flex-wrap">
           <div className="w-full lg:w-1/2 flex flex-col items-start">
             <h1 className="text-2xl font-bold mb-4">{productdetail?.productName}</h1>
@@ -65,12 +65,12 @@ export default function ProductDetal() {
             />
           </div>
           <div className="w-full lg:w-1/2 flex flex-col lg:pl-6">
-            <div className="flex flex-wrap mb-4">
+            {/* <div className="flex flex-wrap mb-4">
               <div className="mr-4">Product ID: <span className="font-semibold">PCHP838</span></div>
               <div className="mr-4">Rating: <span className="font-semibold">0</span></div>
               <div className="mr-4">Comment: <span className="font-semibold">0</span></div>
               <div>View Number: <span className="font-semibold">1244</span></div>
-            </div>
+            </div> */}
             <div className="mb-4">
               <div className="font-semibold mb-2">Product Specification</div>
               <ul className="list-disc pl-5">
@@ -80,11 +80,19 @@ export default function ProductDetal() {
                 <li>Brand: {productdetail?.brand}</li>
                 <li>Tag: {productdetail?.tag}</li>
                 <li>Tdp: {productdetail?.tdp}</li>
+                <li>Quantity: {productdetail?.quantity}</li>
+                <li>Status: <b style={{ color: (productdetail?.status === 0 || productdetail?.quantity === 0) ? "red" : "green" }}>{(productdetail?.status === 0 || productdetail?.quantity === 0) ? "Out of Stock" : "Available"}</b></li>
               </ul>
             </div>
             <button
               onClick={onOk}
               className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+              disabled={productdetail?.status === 0 || productdetail?.quantity === 0}
+              style={productdetail?.status === 0 || productdetail?.quantity === 0 ? {
+                background: "#ddd",
+                color: "#777",
+                cursor: "no-drop"
+              } : {}}
             >
               Order Now
             </button>
@@ -93,12 +101,12 @@ export default function ProductDetal() {
                 REST ASSURED TO BUY
               </div>
               <ul className="list-disc pl-5">
-                <li><a href="https://hacom.vn/gioi-thieu-ve-hacom" className="text-blue-600 hover:underline">Prestige 24 years Top in the market</a></li>
-                <li><a href="https://www.hacom.vn/chinh-sach-hang-chinh-hang" className="text-blue-600 hover:underline">100% Genuine Products</a></li>
-                <li><a href="https://www.hacom.vn/huong-dan-mua-hang-tra-gop" className="text-blue-600 hover:underline">0% interest installment for the entire shopping cart</a></li>
-                <li><a href="https://www.hacom.vn/chinh-sach-bao-hanh" className="text-blue-600 hover:underline">Return the warranty to the place of use</a></li>
-                <li><a href="https://www.hacom.vn/chinh-sach-cho-doanh-nghiep" className="text-blue-600 hover:underline">On-site warranty for businesses</a></li>
-                <li><a href="https://www.hacom.vn/den-hacom-ve-sinh-may-tinh-mien-phi-tren-toan-he-thong" className="text-blue-600 hover:underline">PC lifetime free cleaning</a></li>
+                <li><span className="text-blue-600 ">Prestige 24 years Top in the market</span></li>
+                <li><span className="text-blue-600">100% Genuine Products</span></li>
+                <li><a className="text-blue-600">0% interest installment for the entire shopping cart</a></li>
+                <li><a className="text-blue-600">Return the warranty to the place of use</a></li>
+                <li><a className="text-blue-600">On-site warranty for businesses</a></li>
+                <li><a className="text-blue-600">PC lifetime free cleaning</a></li>
               </ul>
             </div>
             <div className="mt-4">
@@ -112,7 +120,7 @@ export default function ProductDetal() {
             </div>
           </div>
         </div>
-        <div className="mt-8">
+        <div className="mt-8 mb-5">
           <div className="bg-white rounded-md shadow-md p-4">
             <div className="mb-4">
               <h2 className="text-xl font-semibold mb-2">Rate: {productdetail?.productName}</h2>
@@ -157,5 +165,5 @@ export default function ProductDetal() {
       </div>
     </>
   );
-  
+
 }
