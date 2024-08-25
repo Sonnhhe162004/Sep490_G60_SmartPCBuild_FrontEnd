@@ -291,7 +291,7 @@ export default function AddProduct() {
             TPD
           </label>
           <input
-            type="text"
+            type="number"
             id="product-tpd"
             className="w-full p-2 border border-border rounded"
             placeholder="Enter TPD"
