@@ -72,7 +72,7 @@ export default function Login() {
             Login
           </button>
         </form>
-        <div className="mt-4 flex justify-content-between">
+      <div className="mt-4 flex justify-content-between" style={{justifyContent: "space-between"}}>
         <div>
         <p>Do you have account?</p>
         <a className="text-success ml-2 underline" href="/create-account">Sign Up</a>

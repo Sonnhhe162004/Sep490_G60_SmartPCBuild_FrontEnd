@@ -37,24 +37,41 @@ export default function ProductDetal() {
         console.error("Error parsing JSON from cookie:", e);
       }
     }
-    let existingItem = existingItems.find(
-      (i) => i.productId === productdetail.productId
-    );
     if (existingItems.find((i) => i.productId === productdetail.productId)) {
-      existingItems = existingItems.map((i) =>
-        i.productId === productdetail.productId
-          ? { ...i, quantity: i.quantity + 1, quantityBuy: i.quantityBuy + 1 }
-          : i
-      );
+      existingItems = existingItems.map((i) => {
+        if (i.productId === productdetail.productId) {
+          if (i.quantity < i.quantityOfProduct) {
+            toast.success("Product has been added to the cart!");
+            return {
+              ...i,
+              quantity:
+                i.quantity < i.quantityOfProduct ? i.quantity + 1 : i.quantity,
+              quantityBuy:
+                i.quantityBuy < i.quantityOfProduct
+                  ? i.quantityBuy + 1
+                  : i.quantityBuy,
+            };
+          } else {
+            toast.error("Quantity of Product in cart is maximum!");
+            return i;
+          }
+        }
+        return i;
+      });
     } else {
       if (!productdetail) return;
-      existingItems.push({ ...productdetail, quantity: 1, quantityBuy: 1 });
+      existingItems.push({
+        ...productdetail,
+        quantity: 1,
+        quantityBuy: 1,
+        quantityOfProduct: productdetail.quantity,
+      });
+      toast.success("Product has been added to the cart!");
     }
     const selectedItemStr = JSON.stringify(existingItems);
     Cookies.set("selectedItem", encodeURIComponent(selectedItemStr), {
       expires: 7,
     });
-    toast.success("Product has been added to the cart!");
   };
 
   return (

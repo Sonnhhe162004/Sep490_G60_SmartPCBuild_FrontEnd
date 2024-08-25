@@ -27,15 +27,14 @@ export default function ProductSearch() {
   const urlParams = new URLSearchParams(queryString);
   const [searchProduct, setSearchProduct] = useState("");
   const [cateID, setCateID] = useState(urlParams.get("searchCate"));
+  const [cateSelected, setCateSelected] = useState();
   const [DataFilter, setDataFilter] = useState([]);
-  console.log("cateID: ", cateID);
   const [startprice, setStartPrice] = useState("");
   const [endprice, setEndPrice] = useState("");
   const [listSearchProduct, setListSearchProduct] = useState([]);
   const [listBrand, setListBrand] = useState([]);
   const [listCate, setListCate] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
-  console.log("selectedFilters: ", selectedFilters);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,23 +90,22 @@ export default function ProductSearch() {
   }, [cateID]);
   const handleCheckboxChange = async (filterName, value) => {
     let newFilters = selectedFilters.filter(
-        (filter) => Object.keys(filter)[0] !== filterName
+      (filter) => Object.keys(filter)[0] !== filterName
     );
     const isSelected = selectedFilters.some(
-    (filter) => filter[filterName] === value
+      (filter) => filter[filterName] === value
     );
 
     if (!isSelected) {
-    newFilters = [...newFilters, { [filterName]: value }];
+      newFilters = [...newFilters, { [filterName]: value }];
     }
-    console.log("newFilters",newFilters)
-    setSelectedFilters(newFilters)
+    setSelectedFilters(newFilters);
     const response = await getData({
-        cate_id: cateID,
-        filters: newFilters,
-        smartbuild: [],
-      });
-    setListSearchProduct(response?.result)
+      cate_id: cateID,
+      filters: newFilters,
+      smartbuild: [],
+    });
+    setListSearchProduct(response?.result);
   };
   const onChange = (e) => {
     const name = e.target.name;
@@ -145,15 +143,16 @@ export default function ProductSearch() {
     setListSearchProduct(response);
   };
   const searchByCate = async (id) => {
+    setCateSelected(id);
     const response = await getProductByNameandCate(searchProduct, id);
     setListSearchProduct(response?.result);
   };
   const searchByOpionCate = async () => {
     const response = await getData({
-        cate_id: cateID,
-        filters: selectedFilters,
-        smartbuild: [],
-      });
+      cate_id: cateID,
+      filters: selectedFilters,
+      smartbuild: [],
+    });
     setListSearchProduct(response?.result);
   };
 
@@ -255,32 +254,47 @@ export default function ProductSearch() {
                               listStyleType: "none",
                               paddingLeft: 0,
                               marginTop: "30px",
+                              display: "flex",
+                              flexDirection: "column",
                             }}
                           >
                             {listBrand ? (
                               listBrand?.map((val, index) => (
-                                <>
-                                  <li>
-                                    <input
-                                      type="checkbox"
-                                      onClick={() => searchbyBrand(val)}
-                                    />
-                                    {val}
-                                  </li>
-                                </>
+                                <label
+                                  key={idx}
+                                  style={{
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    marginBottom: 4,
+                                  }}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    onClick={() => searchbyBrand(val)}
+                                  />
+                                  {val}
+                                </label>
                               ))
                             ) : (
                               <>
                                 {listCate?.result?.map((item, idx) => (
-                                  <li key={idx}>
+                                  <label
+                                    key={idx}
+                                    style={{
+                                      fontSize: 14,
+                                      fontWeight: 500,
+                                      marginBottom: 4,
+                                    }}
+                                  >
                                     <input
                                       type="checkbox"
+                                      checked={cateSelected === item.categoryId}
                                       onClick={() =>
                                         searchByCate(item.categoryId)
                                       }
                                     />
                                     {item.categoryName}
-                                  </li>
+                                  </label>
                                 ))}
                               </>
                             )}

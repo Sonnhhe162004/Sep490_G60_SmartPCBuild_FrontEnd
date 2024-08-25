@@ -20,6 +20,7 @@ import { createOrders } from "@/service/Api-service/apiOrders";
 export default function Cart() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  console.log("selectedItems", selectedItems);
   const [currentItem, setCurrentItem] = useState(null);
   const [selectAll, setSelectAll] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -59,6 +60,10 @@ export default function Cart() {
   const handleIncrement = (productId) => {
     const updatedItems = selectedItems.map((item) => {
       if (item.productId === productId) {
+        if (item.quantity >= item.quantityOfProduct) {
+          toast.error(`Quantity of Product is ${item.quantityOfProduct}!`);
+          return item;
+        }
         return { ...item, quantity: item.quantity + 1 };
       }
       return item;
@@ -87,6 +92,10 @@ export default function Cart() {
     if (!isNaN(value) && value > 0) {
       const updatedItems = selectedItems.map((item) => {
         if (item.productId === productId) {
+          if (value > item.quantityOfProduct) {
+            toast.error(`Quantity of Product is ${item.quantityOfProduct}!`);
+            return item;
+          }
           return { ...item, quantity: value };
         }
         return item;
