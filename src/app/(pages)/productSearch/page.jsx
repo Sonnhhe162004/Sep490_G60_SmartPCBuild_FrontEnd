@@ -314,7 +314,7 @@ export default function ProductSearch() {
                                 {/* <select style={{ width: '30%' }}>
                                                                     <option value="">Tình trạng kho hàng</option>
                                                                     <option value="in-stock">In Stock</option>
-                                                                    <option value="out-of-stock">Out of Stock</option>
+                                                                    <option value="out-of-stock">Deactivated</option>
                                                                 </select> */}
                                 {/* <select style={{ width: '30%' }}>
                                                                     <option value="">Tất cả kho</option>

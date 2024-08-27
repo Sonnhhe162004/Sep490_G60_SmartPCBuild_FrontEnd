@@ -6,28 +6,29 @@ import { usePathname } from "next/navigation";
 export default function Footer() {
   const pathname = usePathname();
   const showHeader =
-    pathname === "/sign-in" || pathname === "/create-account" || pathname === "/login"   ? false : true;
+    pathname === "/sign-in" ||
+    pathname === "/create-account" ||
+    pathname === "/login"
+      ? false
+      : true;
   return (
     <footer
-      className={`${
-        !showHeader && "hidden"
-      } bg-[#e4e8ec] flex flex-col w-full`}
+      className={`${!showHeader && "hidden"} bg-[#e4e8ec] flex flex-col w-full`}
     >
       <div className="container relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 pt-8 mb-10 gap-y-4">
         <div className="flex flex-col gap-y-4 lg:gap-y-8 px-4 text-left text-sm">
-          <h3 className="text-base font-semibold uppercase">GIỚI THIỆU</h3>
+          <h3 className="text-base font-semibold uppercase">INTRODUCTION</h3>
           <p>
-            Chuyên mua bán các loại linh kiện PC – chính hãng tại Hà Nội. Cung
-            cấp hỗ trợ các loại giấy tờ CO, CQ, chứng thư bán hàng.
+            Specializing in buying and selling all kinds of genuine PC
+            components in Hanoi. Providing support for all kinds of CO, CQ
+            documents, sales certificates.
           </p>
-          <p>Hỗ trợ chương trình bán hàng </p>
-          <p>Hỗ trợ giá tốt nhất tại thời điểm giao dịch</p>
-          <p>Luôn mang đến khách hàng sản phẩm và dịch vụ tốt nhất</p>
+          <p>Sale Supports </p>
+          <p>Best Price</p>
+          <p>Best Customer Supports</p>
         </div>
         <div className="flex flex-col gap-y-4 lg:gap-y-8 px-4 text-left text-sm">
-          <h3 className="text-base font-semibold uppercase">
-            THÔNG TIN LIÊN HỆ
-          </h3>
+          <h3 className="text-base font-semibold uppercase">CONTACTS</h3>
           <Link href={"/"} className="hover:text-red-500">
             <span>
               <strong>Zalo:</strong> 0123.456.789
@@ -43,8 +44,8 @@ export default function Footer() {
             className="hover:text-red-500"
           >
             <span>
-              <strong>Address:</strong> Khu Giáo dục và Đào tạo – Khu Công nghệ
-              cao Hòa Lạc – Km29 Đại lộ Thăng Long, H. Thạch Thất, TP. Hà Nội
+              <strong>Address:</strong> FPT University, Hoa Lac High-tech Park,
+              Thach That, Hanoi
             </span>
           </Link>
           <Link
@@ -66,22 +67,22 @@ export default function Footer() {
         </div>
         <div className="flex flex-col gap-y-4 lg:gap-y-8 px-4 text-left text-sm">
           <h3 className="text-base font-semibold uppercase">
-            HỖ TRỢ KHÁCH HÀNG
+            CUSTOMER SUPPORTS
           </h3>
           <Link href={"/san-pham"} className="hover:text-red-500">
-            <span>Danh sách sản phẩm</span>
+            <span>Product Lists</span>
           </Link>
           <Link href={"/kiem-tra-thanh-toan"} className="hover:text-red-500">
-            <span>Tra cứu đơn hàng của bạn</span>
+            <span>Order Tracking</span>
           </Link>
           <Link href={"/admin-login"} className="hover:text-red-500">
             <span>Account</span>
           </Link>
           <Link href={"/chuyen-muc/tin-tuc"} className="hover:text-red-500">
-            <span>Tin tức mới</span>
+            <span>News</span>
           </Link>
           <Link href={"/lien-he"} className="hover:text-red-500">
-            <span>Liên hệ với chúng tôi</span>
+            <span>Contact Us</span>
           </Link>
         </div>
       </div>
