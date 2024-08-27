@@ -47,6 +47,18 @@ export default function BuildConfig() {
       setSelectedItem((prevTotal) =>
         prevTotal.filter((i) => i.productId !== item.productId)
       );
+    if (action === "add") {
+      setSelectedItem((prevTotal) => [
+        ...prevTotal,
+        {
+          ...item,
+          quantityBuy: 1,
+        },
+      ]);
+    } else if (action === "remove") {
+      setSelectedItem((prevTotal) =>
+        prevTotal.filter((i) => i.productId !== item.productId)
+      );
     }
   };
 
@@ -54,6 +66,10 @@ export default function BuildConfig() {
     if (isNaN(price) || isNaN(quantityItem)) {
       return;
     }
+    if (action === "add") {
+      dispatch(updateTotalPrice(price * quantityItem));
+    } else if (action === "remove") {
+      dispatch(updateTotalPrice(-price * quantityItem));
     if (action === "add") {
       dispatch(updateTotalPrice(price * quantityItem));
     } else if (action === "remove") {
@@ -72,9 +88,20 @@ export default function BuildConfig() {
           : i
       )
     );
+    setSelectedItem(
+      selectedItem.map((i) =>
+        i.productId === item.productId
+          ? {
+              ...i,
+              quantityBuy: quantity,
+            }
+          : i
+      )
+    );
   };
 
   const onRefresh = () => {
+    dispatch(resetTotalPrice());
     dispatch(resetTotalPrice());
     setRefreshFlag((prev) => !prev);
     toast.success("Configuration refresh successful!");
@@ -82,9 +109,11 @@ export default function BuildConfig() {
 
   const onOk = () => {
     const existingItemsStr = Cookies.get("selectedItem");
+    const existingItemsStr = Cookies.get("selectedItem");
 
     let existingItems = [];
 
+    if (existingItemsStr && existingItemsStr !== "undefined") {
     if (existingItemsStr && existingItemsStr !== "undefined") {
       try {
         existingItems = JSON.parse(decodeURIComponent(existingItemsStr));
@@ -93,6 +122,10 @@ export default function BuildConfig() {
       }
     }
 
+    const updatedItems = selectedItem.map((item) => {
+      const existingItem = existingItems.find(
+        (i) => i.productId === item.productId
+      );
     const updatedItems = selectedItem.map((item) => {
       const existingItem = existingItems.find(
         (i) => i.productId === item.productId
@@ -110,10 +143,15 @@ export default function BuildConfig() {
         (i) => !updatedItems.find((u) => u.productId === i.productId)
       ),
       ...updatedItems,
+      ...existingItems.filter(
+        (i) => !updatedItems.find((u) => u.productId === i.productId)
+      ),
+      ...updatedItems,
     ];
 
     try {
       const selectedItemStr = JSON.stringify(existingItems);
+      Cookies.set("selectedItem", selectedItemStr, { expires: 7 });
       Cookies.set("selectedItem", selectedItemStr, { expires: 7 });
       toast.success("All products have been added to the cart!");
     } catch (e) {
@@ -161,6 +199,10 @@ export default function BuildConfig() {
       style: "currency",
       currency: "VND",
     }).format(price);
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(price);
   };
 
   const fetchData = async () => {
@@ -169,6 +211,7 @@ export default function BuildConfig() {
       const sortedData = res.result.sort((a, b) => a.categoryId - b.categoryId);
       setConfigList(sortedData);
     } catch (error) {
+      console.error("Error fetching data:", error);
       console.error("Error fetching data:", error);
     }
   };
@@ -227,6 +270,8 @@ export default function BuildConfig() {
                 <AlertDialogDescription>
                   All configurations you added will be refreshed. Please confirm
                   to complete the operation.
+                  All configurations you added will be refreshed. Please confirm
+                  to complete the operation.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -263,6 +308,8 @@ export default function BuildConfig() {
                   Are you sure to add them all?
                 </AlertDialogTitle>
                 <AlertDialogDescription>
+                  All products will be added to the cart. Please confirm to
+                  complete the operation.
                   All products will be added to the cart. Please confirm to
                   complete the operation.
                 </AlertDialogDescription>
