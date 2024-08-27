@@ -34,19 +34,8 @@ export default function BuildConfig() {
   const totalPrice = useSelector((state) => state.product.totalPrice);
   const dispatch = useDispatch();
   const [data, setData] = useState("");
+
   const handleProductSelected = (item, action) => {
-    if (action === "add") {
-      setSelectedItem((prevTotal) => [
-        ...prevTotal,
-        {
-          ...item,
-          quantityBuy: 1,
-        },
-      ]);
-    } else if (action === "remove") {
-      setSelectedItem((prevTotal) =>
-        prevTotal.filter((i) => i.productId !== item.productId)
-      );
     if (action === "add") {
       setSelectedItem((prevTotal) => [
         ...prevTotal,
@@ -70,10 +59,6 @@ export default function BuildConfig() {
       dispatch(updateTotalPrice(price * quantityItem));
     } else if (action === "remove") {
       dispatch(updateTotalPrice(-price * quantityItem));
-    if (action === "add") {
-      dispatch(updateTotalPrice(price * quantityItem));
-    } else if (action === "remove") {
-      dispatch(updateTotalPrice(-price * quantityItem));
     }
   };
 
@@ -88,20 +73,9 @@ export default function BuildConfig() {
           : i
       )
     );
-    setSelectedItem(
-      selectedItem.map((i) =>
-        i.productId === item.productId
-          ? {
-              ...i,
-              quantityBuy: quantity,
-            }
-          : i
-      )
-    );
   };
 
   const onRefresh = () => {
-    dispatch(resetTotalPrice());
     dispatch(resetTotalPrice());
     setRefreshFlag((prev) => !prev);
     toast.success("Configuration refresh successful!");
@@ -109,11 +83,9 @@ export default function BuildConfig() {
 
   const onOk = () => {
     const existingItemsStr = Cookies.get("selectedItem");
-    const existingItemsStr = Cookies.get("selectedItem");
 
     let existingItems = [];
 
-    if (existingItemsStr && existingItemsStr !== "undefined") {
     if (existingItemsStr && existingItemsStr !== "undefined") {
       try {
         existingItems = JSON.parse(decodeURIComponent(existingItemsStr));
@@ -122,10 +94,6 @@ export default function BuildConfig() {
       }
     }
 
-    const updatedItems = selectedItem.map((item) => {
-      const existingItem = existingItems.find(
-        (i) => i.productId === item.productId
-      );
     const updatedItems = selectedItem.map((item) => {
       const existingItem = existingItems.find(
         (i) => i.productId === item.productId
@@ -143,15 +111,10 @@ export default function BuildConfig() {
         (i) => !updatedItems.find((u) => u.productId === i.productId)
       ),
       ...updatedItems,
-      ...existingItems.filter(
-        (i) => !updatedItems.find((u) => u.productId === i.productId)
-      ),
-      ...updatedItems,
     ];
 
     try {
       const selectedItemStr = JSON.stringify(existingItems);
-      Cookies.set("selectedItem", selectedItemStr, { expires: 7 });
       Cookies.set("selectedItem", selectedItemStr, { expires: 7 });
       toast.success("All products have been added to the cart!");
     } catch (e) {
@@ -159,6 +122,7 @@ export default function BuildConfig() {
       toast.error("Add to cart fail!");
     }
   };
+
   const callChatGPT = async () => {
     setShowVideoEditorInput(false);
     setShowGamingInput(false);
@@ -179,7 +143,6 @@ export default function BuildConfig() {
       setData(typeof content === "string" ? content : JSON.stringify(content));
       if (res.statusCode === 200 || res.statusCode === 201) {
         toast.success(res.message);
-        // setData(res)
       } else {
         toast.error(
           <ul>
@@ -191,14 +154,10 @@ export default function BuildConfig() {
       }
     } catch (error) {
       toast.error("Thất bại");
-      // console.error("Error submitting edit:", error);
     }
   };
+
   const formatCurrency = (price) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(price);
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",
       currency: "VND",
@@ -212,13 +171,13 @@ export default function BuildConfig() {
       setConfigList(sortedData);
     } catch (error) {
       console.error("Error fetching data:", error);
-      console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
   useEffect(() => {
     dispatch(
       updateTotalPrice(
@@ -229,6 +188,7 @@ export default function BuildConfig() {
       )
     );
   }, [selectedItem]);
+
   const handleGamingInputClick = () => {
     setShowGamingInput(true);
     setPurpose("Gaming");
@@ -242,6 +202,7 @@ export default function BuildConfig() {
     setInputValue("");
     setShowGamingInput(false);
   };
+
   const renderHTML = (rawHTML) =>
     rawHTML
       .replace(/\n/g, "<br/>")
@@ -268,8 +229,6 @@ export default function BuildConfig() {
                   Are you sure you want to refresh all configurations?
                 </AlertDialogTitle>
                 <AlertDialogDescription>
-                  All configurations you added will be refreshed. Please confirm
-                  to complete the operation.
                   All configurations you added will be refreshed. Please confirm
                   to complete the operation.
                 </AlertDialogDescription>
@@ -310,8 +269,6 @@ export default function BuildConfig() {
                 <AlertDialogDescription>
                   All products will be added to the cart. Please confirm to
                   complete the operation.
-                  All products will be added to the cart. Please confirm to
-                  complete the operation.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -323,65 +280,57 @@ export default function BuildConfig() {
             </AlertDialogContent>
           </AlertDialog>
 
-          <div className="flex items-center gap-x-2 ">
-            <strong className="uppercase">Total payment : </strong>
-            <span className="text-red-600 text-2xl font-semibold">
-              {formatCurrency(totalPrice)}
-            </span>
-          </div>
+          <h4 className="uppercase">
+            Total Price: {formatCurrency(totalPrice)}
+          </h4>
         </div>
-       
-        <div className="flex justify-between">
-          <div className="">
-            <button
+        <div className="w-full grid gap-4">
+          <div className="flex justify-start gap-x-2">
+            <Button
+              className="bg-slate-600 hover:bg-slate-500 uppercase"
               onClick={handleGamingInputClick}
-              className="bg-red-500 hover:bg-red-700 text-white p-3 uppercase rounded"
             >
-              GAMING
-            </button>
-            {showGamingInput && (
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Enter gaming input"
-                className="ml-2 p-2 border rounded"
-              />
-            )}
-          </div>
-          <div>
-            {showVideoEditorInput && (
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Enter video editor input"
-                className="ml-2 p-2 border rounded"
-              />
-            )}
-            <button
+              Gaming
+            </Button>
+            <Button
+              className="bg-slate-600 hover:bg-slate-500 uppercase"
               onClick={handleVideoEditorInputClick}
-              className="bg-red-500 hover:bg-red-700 text-white p-3 uppercase rounded"
             >
-              graphic design
-            </button>
+              Video Editing
+            </Button>
           </div>
+          {showGamingInput && (
+            <div>
+              <input
+                type="text"
+                className="border rounded-md px-3 py-2"
+                placeholder="Enter your favorite game"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              <Button onClick={callChatGPT}>OK</Button>
+            </div>
+          )}
+          {showVideoEditorInput && (
+            <div>
+              <input
+                type="text"
+                className="border rounded-md px-3 py-2"
+                placeholder="Enter the software you use for video editing"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              <Button onClick={callChatGPT}>OK</Button>
+            </div>
+          )}
         </div>
-        <div className="flex justify-center">
-          <button
-            onClick={callChatGPT}
-            className="bg-green-500 text-white p-3 rounded"
-          >
-            PREVIEW PERFORMANCE TEST
-          </button>
-        </div>
-        {data && data !== 'null' && (
-              <div
-              className="p-4 bg-gray-100 border border-gray-300 rounded"
-              dangerouslySetInnerHTML={{ __html: renderHTML(data) }}
-            />
-            )}
-        
+        {data && (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: renderHTML(data),
+            }}
+          />
+        )}
       </div>
     </div>
   );
