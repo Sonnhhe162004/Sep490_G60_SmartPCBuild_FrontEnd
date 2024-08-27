@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { editUser, getDataProfile } from "@/service/Api-service/apiAccount";
+import { changePassword, editUser, getDataProfile } from "@/service/Api-service/apiAccount";
 import toast from "react-hot-toast";
 import Modal from "antd/es/modal/Modal";
 
@@ -13,28 +13,11 @@ export default function Widget() {
   });
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
   const [passwordData, setPasswordData] = useState({
-    oldPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+    oldPass: "",
+    newPass: "",
+    resetPass: "",
   });
 
-  const fetchDataUser = async () => {
-    try {
-      const res = await getDataProfile();
-      setDatUser(res?.result);
-      setEditData({
-        fullName: res?.result?.fullName || "",
-        address: res?.result?.address || "",
-        phone: res?.result?.phone || "",
-      });
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchDataUser();
-  }, []);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -73,11 +56,12 @@ export default function Widget() {
     console.log(passwordData);
     // Xử lý logic đổi mật khẩu ở đây
     try {
-      // Ví dụ gọi API đổi mật khẩu ở đây
-      // const res = await changePassword(passwordData);
-      // toast.success(res.message);
-      toast.success("Password changed successfully!");
-      setShowChangePasswordModal(false);
+      const res = await changePassword(passwordData);
+        if(res.statusCode === 200 || res.statusCode === 201) {
+          toast.success("Password changed successfully!");
+        } else {
+          toast.error(res.errorMessages)
+        }
     } catch (error) {
       toast.error("Đổi mật khẩu thất bại");
       console.error("Error changing password:", error);
@@ -95,45 +79,45 @@ export default function Widget() {
               <div className="mb-4">
                 <label
                   className="block text-sm font-medium text-muted-foreground"
-                  htmlFor="oldPassword"
+                  htmlFor="oldPass"
                 >
                   Mật khẩu cũ
                 </label>
                 <input
                   className="mt-1 block w-full border border-border rounded-md p-2"
                   type="password"
-                  id="oldPassword"
-                  value={passwordData.oldPassword}
+                  id="oldPass"
+                  value={passwordData.oldPass}
                   onChange={handlePasswordChange}
                 />
               </div>
               <div className="mb-4">
                 <label
                   className="block text-sm font-medium text-muted-foreground"
-                  htmlFor="newPassword"
+                  htmlFor="newPass"
                 >
                   Mật khẩu mới
                 </label>
                 <input
                   className="mt-1 block w-full border border-border rounded-md p-2"
                   type="password"
-                  id="newPassword"
-                  value={passwordData.newPassword}
+                  id="newPass"
+                  value={passwordData.newPass}
                   onChange={handlePasswordChange}
                 />
               </div>
               <div className="mb-4">
                 <label
                   className="block text-sm font-medium text-muted-foreground"
-                  htmlFor="confirmPassword"
+                  htmlFor="resetPass"
                 >
                   Nhập lại mật khẩu mới
                 </label>
                 <input
                   className="mt-1 block w-full border border-border rounded-md p-2"
                   type="password"
-                  id="confirmPassword"
-                  value={passwordData.confirmPassword}
+                  id="resetPass"
+                  value={passwordData.resetPass}
                   onChange={handlePasswordChange}
                 />
               </div>

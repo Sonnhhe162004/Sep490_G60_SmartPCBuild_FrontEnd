@@ -274,7 +274,7 @@ export default function Account() {
           </thead>
           <tbody>
             {listData
-              ?.filter((x) => x.accountType != "ADMIN")
+              // ?.filter((x) => x.accountType != "ADMIN")
               .map((data, index) => (
                 <tr key={index}>
                   <td className="px-1 py-1 text-center border">

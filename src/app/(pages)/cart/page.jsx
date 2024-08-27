@@ -20,7 +20,6 @@ import { createOrders } from "@/service/Api-service/apiOrders";
 export default function Cart() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
-  console.log("selectedItems", selectedItems);
   const [currentItem, setCurrentItem] = useState(null);
   const [selectAll, setSelectAll] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);

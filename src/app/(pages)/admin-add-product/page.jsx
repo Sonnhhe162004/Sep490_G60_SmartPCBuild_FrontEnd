@@ -19,7 +19,7 @@ export default function AddProduct() {
   const [productBrand, setProductBrand] = useState("");
   const [productTag, setProductTag] = useState([]);
   const [productTPD, setProductTPD] = useState("");
-  const [productStatus, setProductStatus] = useState("");
+  const [productStatus, setProductStatus] = useState(1);
   const [productCategory, setProductCategory] = useState("");
   const [productQuantity, setProductQuantity] = useState("");
   const [productImage, setProductImage] = useState(null);
@@ -103,14 +103,14 @@ export default function AddProduct() {
         toast.success("Thêm sản phẩm thành công");
       } else {
         console.log(response);
-        toast.error("Thêm sản phẩm thất bại!");
-        // toast.error(
-        //   <ul>
-        //     {response.errorMessages?.length
-        //       ? response.errorMessages.map((i, idx) => <li key={idx}>{i}</li>)
-        //       : response.errorMessages}
-        //   </ul>
-        // );
+        // toast.error("Thêm sản phẩm thất bại!");
+        toast.error(
+          <ul>
+            {response.errorMessages?.length
+              ? response.errorMessages.map((i, idx) => <li key={idx}>{i}</li>)
+              : response.errorMessages}
+          </ul>
+        );
       }
     } catch (error) {
       toast.error("Thêm sản phẩm thất bại!");
@@ -291,7 +291,7 @@ export default function AddProduct() {
             TPD
           </label>
           <input
-            type="number"
+            type="text"
             id="product-tpd"
             className="w-full p-2 border border-border rounded"
             placeholder="Enter TPD"
@@ -314,8 +314,8 @@ export default function AddProduct() {
             onChange={(e) => setProductStatus(e.target.value)}
             required
           >
-            <option value="0">Ngừng kinh doanh</option>
-            <option value="1">Đang kinh doanh</option>
+            <option value={0}>Ngừng kinh doanh</option>
+            <option value={1}>Đang kinh doanh</option>
           </select>
         </div>
         <div className="mb-4">
