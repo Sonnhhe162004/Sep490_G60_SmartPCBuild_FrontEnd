@@ -23,7 +23,7 @@ export default function AdminSidebar() {
   const showHeader = pathname !== "/admin-login";
 
   function onClickLogout() {
-    window.location.href = "/admin-login";
+    window.location.href = "/login";
     localStorage.clear();
   }
 
@@ -31,23 +31,27 @@ export default function AdminSidebar() {
     const response = JSON.parse(localStorage.getItem("currentUser"));
     if (response) {
       const decodedToken = jwtDecode(response.tokenInformation.accessToken);
-      setRole(decodedToken.role); // Cập nhật role vào state
+      const userRole = decodedToken?.role;  
+      setRole(userRole);  
+      if (userRole === "CUSTOMER") { 
+        window.location.href = "/";  
+      }
     }
   };
-
+  
   useEffect(() => {
     checkRole();
   }, []);
 
   return (
     <div className={`${!showHeader && "hidden"} `}>
-      <nav className="bg-slate-400 fixed left-0 top-0 flex flex-col h-full px-3 py-4 shadow-md pt-3 z-10 w-48 lg:w-60 md:w-56 sm:w-32">
+      <nav className="bg-slate-400 fixed left-0 top-0 flex flex-col h-full px-3 py-4 shadow-md pt-3 z-10 w-40 lg:w-52 md:w-52 sm:w-48">
         <div className="mx-auto flex w-full flex-wrap items-center justify-between px-0">
           <div>
             <ul className="flex list-none flex-col w-full">
-            <hr className="my-4 w-full" />
+              <hr className="my-4 w-full" />
               <span className="mr-2 block pb-4 pt-1 text-sm font-bold uppercase text-info w-full">
-                 Trang chủ
+                Trang chủ
               </span>
 
               <li className="flex items-center">
