@@ -29,60 +29,42 @@ export default function Footer() {
         </div>
         <div className="flex flex-col gap-y-4 lg:gap-y-8 px-4 text-left text-sm">
           <h3 className="text-base font-semibold uppercase">CONTACTS</h3>
-          <Link href={"/"} className="hover:text-red-500">
             <span>
               <strong>Zalo:</strong> 0123.456.789
             </span>
-          </Link>
-          <Link href={"/"} className="hover:text-red-500">
             <span>
               <strong>Hotline:</strong> 0123.456.789
             </span>
-          </Link>
-          <Link
-            href={"https://maps.app.goo.gl/yGwCj46oZEW5zNWn7"}
-            className="hover:text-red-500"
-          >
             <span>
               <strong>Address:</strong> FPT University, Hoa Lac High-tech Park,
               Thach That, Hanoi
             </span>
-          </Link>
-          <Link
-            href={"https://www.facebook.com/"}
-            className="hover:text-red-500"
-          >
+          
             <span>
               <strong>Facebook:</strong> fb.com
             </span>
-          </Link>
-          <Link
-            href={"https://maps.app.goo.gl/yGwCj46oZEW5zNWn7"}
-            className="hover:text-red-500"
-          >
             <span>
               <strong>Gmail:</strong> daihocfpt@fpt.edu.vn
             </span>
-          </Link>
         </div>
         <div className="flex flex-col gap-y-4 lg:gap-y-8 px-4 text-left text-sm">
           <h3 className="text-base font-semibold uppercase">
             CUSTOMER SUPPORTS
           </h3>
-          <Link href={"/san-pham"} className="hover:text-red-500">
-            <span>Product Lists</span>
+          <Link href={"/xay-dung-cau-hinh"} className="hover:text-red-500">
+            <span>SmartBuild</span>
           </Link>
-          <Link href={"/kiem-tra-thanh-toan"} className="hover:text-red-500">
+          <Link href={"/orders-manager"} className="hover:text-red-500">
             <span>Order Tracking</span>
           </Link>
-          <Link href={"/admin-login"} className="hover:text-red-500">
+          <Link href={"/profile"} className="hover:text-red-500">
             <span>Account</span>
           </Link>
-          <Link href={"/chuyen-muc/tin-tuc"} className="hover:text-red-500">
-            <span>News</span>
+          <Link href={"/cart"} className="hover:text-red-500">
+            <span>Cart</span>
           </Link>
-          <Link href={"/lien-he"} className="hover:text-red-500">
-            <span>Contact Us</span>
+          <Link href={"/"} className="hover:text-red-500">
+            <span>Home</span>
           </Link>
         </div>
       </div>
