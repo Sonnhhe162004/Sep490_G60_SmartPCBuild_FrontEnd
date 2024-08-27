@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import {  LoginAdmin } from '@/service/Login/login';
+import { LoginAdmin } from '@/service/Login/login';
 import toast from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
 import { ArrowBigLeft } from 'lucide-react';
@@ -8,26 +8,26 @@ import { ArrowBigLeft } from 'lucide-react';
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      if(username == '' || password == ''){
+      if (username == '' || password == '') {
         toast.error("Do not leave your account or password blank")
         return
       }
-      const data = {email: username, password: password}
+      const data = { email: username, password: password }
       const response = await LoginAdmin(data);
-      if(response.statusCode === 200 || response.statusCode === 201) {
-        
+      if (response.statusCode === 200 || response.statusCode === 201) {
+
         const decodedToken = jwtDecode(response?.tokenInformation?.accessToken);
         toast.success(response.message);
         localStorage.setItem('currentUser', JSON.stringify(response));
-        if(decodedToken?.role == "ADMIN" || decodedToken?.role == "STAFF"){
+        if (decodedToken?.role == "ADMIN" || decodedToken?.role == "STAFF") {
           window.location.href = '/admin-dashboard';
         } else {
           window.location.href = '/';
-         }
+        }
       }
       else {
         toast.error(response.errorMessages)
@@ -43,7 +43,7 @@ export default function Login() {
         <h2 className="text-center text-2xl font-bold text-zinc-800 dark:text-zinc-200 mb-6">Welcome To Smart PC Build</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-zinc-700 dark:text-zinc-300 mb-2" htmlFor="username">Username</label>
+            <label className="block text-zinc-700 dark:text-zinc-300 mb-2" htmlFor="username">Gmail</label>
             <input
               className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-zinc-300"
               type="text"
@@ -71,12 +71,12 @@ export default function Login() {
             Login
           </button>
         </form>
-      <div className="mt-4 flex justify-content-between" style={{justifyContent: "space-between"}}>
-        <div>
-        <p>Do you have account?</p>
-        <a className="text-success ml-2 underline" href="/create-account">Sign Up</a>
-        </div>
-        <a href="/" className='p-3 bg-blue-500 rounded-xl'><ArrowBigLeft className="text-2xl" /></a>
+        <div className="mt-4 flex justify-content-between" style={{ justifyContent: "space-between" }}>
+          <div>
+            <p>Do you have account?</p>
+            <a className="text-success ml-2 underline" href="/create-account">Sign Up</a>
+          </div>
+          <a href="/" className='p-3 bg-blue-500 rounded-xl'><ArrowBigLeft className="text-2xl" /></a>
         </div>
         <div className='text-center mt-4 '>
           <a href="/forgot" className='text-blue-500'>Forgot Password</a>
